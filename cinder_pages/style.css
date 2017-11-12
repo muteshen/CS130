@@ -5,7 +5,7 @@
     border-radius: 0;
 }
 
-/* for "Cinder" on navbar */
+/* for "Cinder" branding on navbar */
 .navbar-default .navbar-brand {
     color: white;
     text-shadow: 2px 2px 1px #000000;
@@ -14,7 +14,7 @@
 .navbar-default .navbar-brand:focus {
     color: white;
 }
-/* for Tabs on navbar */
+/* for tabs on navbar */
 .navbar-default .navbar-nav > li > a {
     color: white;
     font-size: 16px;
@@ -26,15 +26,13 @@
 }
 
 /*for hamburger icon when navbar is collapsed*/
-
-.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
-    background-color: white !important;
+.navbar-default .navbar-toggle:focus  {
+    background-color: #FFB978 !important;
 }
 
-.navbar-default .navbar-toggle:hover ~ .icon-bar {
-	background-color: #FFB978;
+.navbar-default .navbar-toggle:hover{
+	background-color: white !important;
 }
-
 
 .navbar-default .navbar-collapse{
 	border-color: white;

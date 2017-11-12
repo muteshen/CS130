@@ -8,14 +8,17 @@
 
 	<title>Cinder</title>
 
+	<!-- To change color of hamburger icon when hovering over it -->
 	<script type="text/javascript">
-		$(function() {
-		  $('#hamburger').hover(function() {
-		    $('.icon-bar').css('background-color', '#FFB978');
-		  }, function() {
-		    // on mouseout, reset the background colour
-		    $('.icon-bar').css('background-color', '');
-		  });
+		$(document).ready(function(){
+			$(function() {
+			  $('#hamburger').hover(function() {
+			    $('.icon-bar').css('background-color', '#FFB978');
+			  }, function() {
+			    // on mouseout, reset the background colour
+			    $('.icon-bar').css('background-color', '');
+			  });
+			});
 		});
 	</script>
 </head>
@@ -23,7 +26,7 @@
 
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<!-- This is for the mobile navbar display -->
+			<!-- This is for the mobile navbar display, hamburger icon displayed -->
 			<div class="navbar-header">
 		        <button id="hamburger" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-options" aria-expanded="false">
 			        <span class="sr-only">Toggle navigation</span>
@@ -34,7 +37,7 @@
       			<a class="navbar-brand" href="#">Cinder</a>
     		</div>
 
-    		<!-- This is for desktop/wider screens, i.e. not collapsed -->
+    		<!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
     		<div class="collapse navbar-collapse" id="navbar-options">
     			<ul class="nav navbar-nav">
     				<li><a href="./home.html">Meet People</a></li>
