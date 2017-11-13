@@ -2,7 +2,8 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css', _external=True) }}">
+	<link rel="stylesheet" type="text/css" href="../src/css/style.css">
+	<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='../src/css/style.css', _external=True) }}"> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -88,14 +89,22 @@
 		</div>
 	</div>
 
-	<div class="container">
+	<div class="container section-two">
 		<div class="row">
 			<div class="col-xs-12">
-				<h2 class="second-header">Test Right Here</h2>
+				<h1 class="second-header">Communicate Thoroughly</h1>
 			</div>
 		</div>
 		<div class="row">
+			<div class="col-xs-12 col-sm-6" style="text-align: center;">
+				<img id="mockup_img" src="../src/images/monitor.png">
+			</div>
 			<div class="col-xs-12 col-sm-6">
+				<ol class="landing-list">
+					<li class="list-text"><span class="selling-pt">Go on dates.</span> Find people that share similar interests with our matching platform and go on real dates!</li>
+					<li class="list-text"><span class="selling-pt">Give Feedback.</span> Sometimes Cinder will ask you for general feeback and sometimes more personal questions. Either way, your responses will get you and your date talking more openly.</li>
+					<li class="list-text"><span class="selling-pt">Improve Future Dates.</span> Go on more dates knowing exactly what your partner is looking for.</li>
+				</ol>
 			</div>
 		</div>
 	</div>
