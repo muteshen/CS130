@@ -2,7 +2,7 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="./style.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css', _external=True) }}">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -88,7 +88,7 @@
 		</div>
 	</div>
 	<div class="container">
-	
+			<img src="{{url_for('static', filename='img/dream.jpg', _external=True)}}">
 	</div>
 </body>
 </html>

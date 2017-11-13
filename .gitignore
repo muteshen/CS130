@@ -1,5 +1,12 @@
-# Mac Stuff
-.DS_STORE
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
