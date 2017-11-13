@@ -57,7 +57,7 @@
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
-@media screen and (min-width: 768px){ 
+@media screen and (min-width: 768px){
 .header-top{
 	margin-top: 120px;
 }
@@ -71,7 +71,7 @@
 	width: 100%;
 	padding-left: 20px;
 	padding-right: 20px;
-	background-image: url("images/dream.jpg");
+	background-image: url("../img/dream.jpg");
 }
 
 /* Facebook login button, code from https://codepen.io/davidelrizzo/pen/vEYvyv*/
@@ -138,7 +138,7 @@
 .sign-up-form{
 	font-family: "Avenir";
 	border-top: 0px;
-	border-right: 0px; 
+	border-right: 0px;
 	border-left: 0px;
 	border-bottom: 2px solid grey;
 	box-shadow: none;
@@ -169,4 +169,3 @@
 	text-align: center;
 	margin-top: 30px;
 }
-
