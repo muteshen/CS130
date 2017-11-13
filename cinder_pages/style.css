@@ -8,6 +8,7 @@
 
 /* for "Cinder" branding on navbar */
 .navbar-default .navbar-brand {
+	font-family: "Avenir";
     color: white;
     text-shadow: 2px 2px 1px #000000;
 }
@@ -18,6 +19,7 @@
 /* for tabs on navbar */
 .navbar-default .navbar-nav > li > a {
     color: white;
+    font-family: "Avenir";
     font-size: 16px;
 }
 .navbar-default .navbar-nav > li > a:hover,
@@ -49,6 +51,7 @@
 
 /*for header text at top of login page*/
 .main-header{
+	font-family: "Avenir";
 	text-align: center;
 	color: white;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
@@ -73,6 +76,7 @@
 
 /* Facebook login button, code from https://codepen.io/davidelrizzo/pen/vEYvyv*/
 .loginBtn {
+  font-family: "Avenir";
   box-sizing: border-box;
   position: relative;
   /* width: 13em;  - apply for fixed size */
@@ -127,10 +131,12 @@
 }
 
 .sign-up-header{
+	font-family: "Avenir";
 	text-align: center;
 }
 
 .sign-up-form{
+	font-family: "Avenir";
 	border-top: 0px;
 	border-right: 0px; 
 	border-left: 0px;
@@ -150,5 +156,17 @@
 
 .form-control:focus{
 	-webkit-box-shadow: none;
+}
+
+.sign-btn{
+	font-family: "Avenir";
+}
+
+/*Second section header*/
+.second-header{
+	color: black;
+	font-family: "Avenir";
+	text-align: center;
+	margin-top: 30px;
 }
 
