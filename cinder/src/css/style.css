@@ -162,10 +162,59 @@
 	font-family: "Avenir";
 }
 
-/*Second section header*/
+/*Second section header, margin*/
+.section-two{
+  margin-left: 50px;
+  margin-right: 50px;
+  width: auto !important;
+}
+
+
 .second-header{
-	color: black;
+	color: #FFB978;
+  text-shadow: -1px 0 grey, 0 1px grey, 1px 0 grey, 0 -1px grey;
 	font-family: "Avenir";
 	text-align: center;
-	margin-top: 30px;
+	margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+/*Second section image and list*/
+#mockup_img{
+  height: auto;
+  width: 350px;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.landing-list{
+  text-align: left;
+}
+
+@media screen and (max-width: 768px){
+  .section-two{
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+
+@media screen and (min-width: 768px){
+.landing-list{
+  margin-left: 20px;
+}
+}
+
+.list-text{
+  font-family: "Avenir";
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+
+.selling-pt{
+  font-family: "Avenir";
+  font-size: 26px;
+  font-weight: 500;
+  color: #FFB978;
 }
