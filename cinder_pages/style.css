@@ -50,10 +50,11 @@
 /*for header text at top of login page*/
 .main-header{
 	text-align: center;
-	color: black;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
-@media screen and (min-width: 576px){ 
+@media screen and (min-width: 768px){ 
 .header-top{
 	margin-top: 120px;
 }
@@ -67,7 +68,7 @@
 	width: 100%;
 	padding-left: 20px;
 	padding-right: 20px;
-	background-image: url("https://az616578.vo.msecnd.net/files/2016/10/06/636113893889315663181955301_Dream--Cover.jpg");
+	background-image: url("images/dream.jpg");
 }
 
 /* Facebook login button, code from https://codepen.io/davidelrizzo/pen/vEYvyv*/
