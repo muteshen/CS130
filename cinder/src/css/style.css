@@ -1,0 +1,220 @@
+/*Base navbar color and border*/
+.navbar-default {
+    background-color: #FFB978;
+    border-color:#FFB978;
+    border-radius: 0;
+    margin-bottom: 0px;
+}
+
+/* for "Cinder" branding on navbar */
+.navbar-default .navbar-brand {
+	font-family: "Avenir";
+    color: white;
+    text-shadow: 2px 2px 1px #000000;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: white;
+}
+/* for tabs on navbar */
+.navbar-default .navbar-nav > li > a {
+    color: white;
+    font-family: "Avenir";
+    font-size: 16px;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: white;
+    text-shadow: 2px 2px 1px #000000;
+}
+
+/*for hamburger icon when navbar is collapsed*/
+.navbar-default .navbar-toggle:focus  {
+    background-color: #FFB978 !important;
+}
+
+.navbar-default .navbar-toggle:hover{
+	background-color: white !important;
+}
+
+.navbar-default .navbar-collapse{
+	border-color: white;
+}
+
+.navbar-default .navbar-toggle{
+	border-color: white;
+}
+
+.navbar-default .navbar-toggle .icon-bar{
+	background-color: white;
+}
+
+/*for header text at top of login page*/
+.main-header{
+	font-family: "Avenir";
+	text-align: center;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+@media screen and (min-width: 768px){
+.header-top{
+	margin-top: 120px;
+}
+}
+
+.header-bottom{
+
+}
+
+#header-section{
+	width: 100%;
+	padding-left: 20px;
+	padding-right: 20px;
+	background-image: url("../img/dream.jpg");
+}
+
+/* Facebook login button, code from https://codepen.io/davidelrizzo/pen/vEYvyv*/
+.loginBtn {
+  font-family: "Avenir";
+  box-sizing: border-box;
+  position: relative;
+  /* width: 13em;  - apply for fixed size */
+  margin: 0.2em;
+  padding: 0 15px 0 46px;
+  border: none;
+  text-align: left;
+  line-height: 34px;
+  white-space: nowrap;
+  border-radius: 0.2em;
+  font-size: 16px;
+  color: #FFF;
+}
+.loginBtn:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 100%;
+}
+.loginBtn:focus {
+  outline: none;
+}
+.loginBtn:active {
+  box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);
+}
+
+.loginBtn--facebook {
+  background-color: #4C69BA;
+  background-image: linear-gradient(#4C69BA, #3B55A0);
+  /*font-family: "Helvetica neue", Helvetica Neue, Helvetica, Arial, sans-serif;*/
+  text-shadow: 0 -1px 0 #354C8C;
+}
+.loginBtn--facebook:before {
+  border-right: #364e92 1px solid;
+  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_facebook.png') 6px 6px no-repeat;
+}
+.loginBtn--facebook:hover,
+.loginBtn--facebook:focus {
+  background-color: #5B7BD5;
+  background-image: linear-gradient(#5B7BD5, #4864B1);
+}
+
+/*sign-up box css*/
+#sign-up-jumbotron{
+	margin-top: 30px;
+	background-color: white;
+	padding-top: 10px;
+	padding-bottom: 20px;
+}
+
+.sign-up-header{
+	font-family: "Avenir";
+	text-align: center;
+}
+
+.sign-up-form{
+	font-family: "Avenir";
+	border-top: 0px;
+	border-right: 0px;
+	border-left: 0px;
+	border-bottom: 2px solid grey;
+	box-shadow: none;
+	border-radius: 0px;
+	padding-left: 0px;
+}
+
+.sign-up-form:hover{
+	border-bottom: 2px solid #FFB978;
+}
+
+.sign-up-form:focus{
+	border-bottom: 2px solid #FFB978;
+}
+
+.form-control:focus{
+	-webkit-box-shadow: none;
+}
+
+.sign-btn{
+	font-family: "Avenir";
+}
+
+/*Second section header, margin*/
+.section-two{
+  margin-left: 50px;
+  margin-right: 50px;
+  width: auto !important;
+}
+
+
+.second-header{
+	color: #FFB978;
+  text-shadow: -1px 0 grey, 0 1px grey, 1px 0 grey, 0 -1px grey;
+	font-family: "Avenir";
+	text-align: center;
+	margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+/*Second section image and list*/
+#mockup_img{
+  height: auto;
+  width: 350px;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.landing-list{
+  text-align: left;
+}
+
+@media screen and (max-width: 768px){
+  .section-two{
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+
+@media screen and (min-width: 768px){
+.landing-list{
+  margin-left: 20px;
+}
+}
+
+.list-text{
+  font-family: "Avenir";
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+
+.selling-pt{
+  font-family: "Avenir";
+  font-size: 26px;
+  font-weight: 500;
+  color: #FFB978;
+}
