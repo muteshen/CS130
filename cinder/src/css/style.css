@@ -218,3 +218,57 @@
   font-weight: 500;
   color: #FFB978;
 }
+
+
+
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #FFB978;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+#content {
+    width: calc(100% - 250px);
+    padding: 40px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 50px;
+    right: 0;
+}
+#content.active {
+    width: 100%;
+}
+
+
+/* ---------------------------------------------------
+    Feedbacks
+----------------------------------------------------- */
+.feedback_container {
+  width: 900px;
+  display: flex;
+  padding:20px;
+  justify-content: flex-start;
+
+}
+.feedback_meta_container{
+  display: flex;
+  justify-content: flex-start; 
+  flex-direction: column;
+  padding: 20px;
+}
