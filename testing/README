@@ -15,13 +15,15 @@ $ wget geckodriver-v0.19.1-linux64.tar.gz (using linux 64 in my case)
 
 untar it and move geckodriver into venv/bin
 
-cp testfolder into venv
-cd into testfolder
 
 use your favorite text editor to modify seleniumExample.py
 
-modify my_path to whatever current directory you are in,
-for example my_path = "file://DIRECTORY_NAME/testfolder/
+modify my_path to file://DIRECTORY_NAME/cs130-cinder/testing/cinder/public/
+
+eg.
+for example my_path = "file://home/USER_NAME/Desktop/cs130-cinder/testing/cinder/public/
+
+cp seleniumExample.py into venv
 
 run seleniumExample.py
 
