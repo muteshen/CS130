@@ -7,8 +7,6 @@ $virtualenv venv
 $source venv/bin/activate
 $pip install selenium
 
-cd into venv
-
 download geckodriver from https://github.com/mozilla/geckodriver/releases
 
 $ wget geckodriver-v0.19.1-linux64.tar.gz (using linux 64 in my case)
@@ -24,6 +22,8 @@ eg.
 for example my_path = "file://home/USER_NAME/Desktop/cs130-cinder/testing/cinder/public/
 
 cp seleniumExample.py into venv
+
+cd into venv
 
 run seleniumExample.py
 
