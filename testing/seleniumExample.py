@@ -39,21 +39,35 @@ def test1(driver,path):
 class testing(unittest.TestCase):    
     def setUp(self):
         self.driver = webdriver.Firefox()
-
-    def test_runtest1(self):
+        
+    def test_runtest2(self):
         driver = self.driver
         driver.get(my_path + "home.html")
         driver.find_element_by_link_text('Meet People').click()
         time.sleep(1)
 
-    def test_runtest2(self):
+    def test_runtest3(self):
         driver = self.driver
         driver.get(my_path + "home.html")
         driver.find_element_by_link_text('Feedback').click()
         driver.find_element_by_link_text('Meet People').click()
         driver.find_element_by_link_text('Cinder').click()
         time.sleep(1)
-        
+
+
+    def test_runtest1(self):
+        driver = self.driver
+        driver.get(my_path + "home.html")
+        elem = driver.find_element_by_name("first")
+        elem.send_keys("John")
+        elem = driver.find_element_by_name("last")
+        elem.send_keys("Winchester")
+        elem.send_keys(Keys.RETURN)
+        elem = driver.find_element_by_name("email")
+        elem.send_keys("coolio@gmail.com")
+        elem = driver.find_element_by_name("sign").click()
+        time.sleep(1)
+    
     def tearDown(self):
         self.driver.close()
 
@@ -63,7 +77,7 @@ class PythonOrgSearch(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
 
-    def test_search_in_python_org(self):
+     def test_search_in_python_org(self):
         driver = self.driver
         driver.get("http://www.python.org")
         self.assertIn("Python", driver.title)
@@ -71,6 +85,7 @@ class PythonOrgSearch(unittest.TestCase):
         elem.send_keys("pycon")
         elem.send_keys(Keys.RETURN)
         assert "No results found." not in driver.page_source
+
 
 
     def tearDown(self):
