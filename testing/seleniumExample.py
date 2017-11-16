@@ -11,7 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
-my_path = "file:///home/avwong13/Desktop/cs130-cinder/testing/cinder/public/"
+my_path = "file:///home/avwong13/Desktop/cs130-cinder/cinder/public/"
 
 def init_driver():
     driver = webdriver.Firefox()
