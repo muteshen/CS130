@@ -1,4 +1,4 @@
-on linux:
+running on linux Ubuntu 16.04:
 
 sudo apt-get install python-virtualenv
 
