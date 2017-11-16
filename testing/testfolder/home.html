@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../src/css/style.css">
+	<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='../src/css/style.css', _external=True) }}"> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<title>Cinder</title>
+
+	<!-- To change color of hamburger icon when hovering over it -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(function() {
+			  $('#hamburger').hover(function() {
+			    $('.icon-bar').css('background-color', '#FFB978');
+			  }, function() {
+			    // on mouseout, reset the background colour
+			    $('.icon-bar').css('background-color', '');
+			  });
+			});
+		});
+	</script>
+</head>
+<body>
+
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- This is for the mobile navbar display, hamburger icon displayed -->
+			<div class="navbar-header">
+		        <button id="hamburger" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-options" aria-expanded="false">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+		        </button>
+      			<a class="navbar-brand" href="home.html">Cinder</a>
+    		</div>
+
+    		<!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
+    		<div class="collapse navbar-collapse" id="navbar-options">
+    			<ul class="nav navbar-nav">
+    				<li><a href="./meet.html">Meet People</a></li>
+    				<li><a href="home.html">Matches</a></li>
+    				<li><a href="home.html">Feedback</a></li>
+    			</ul>
+    		</div>
+		</div>
+	</nav>
+	<div class="container" id="header-section">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6">
+				<h1 class="main-header header-top">We focus on the hard conversations.</h1>
+				<h1 class="main-header header-bottom">You focus on having fun.</h1>
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<div class="jumbotron" id="sign-up-jumbotron">
+					<h3 class="sign-up-header">Start Dating Smarter</h3>
+					<form>
+						<div class="form-group">
+							 <input type="text" class="form-control sign-up-form"  placeholder="First Name">
+						</div>
+						<div class="form-group">
+							 <input type="text" class="form-control sign-up-form"  placeholder="Last Name">
+						</div>
+						<div class="form-group">
+							 <input type="email" class="form-control sign-up-form"  aria-describedby="emailHelp" placeholder="Email" required>
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control sign-up-form" placeholder="Password">
+						</div>
+						<div class="row" style="text-align: center;">
+							<div class="col-xs-4 col-xs-offset-2">
+								<button type="submit" class="sign-btn btn btn-success" data-toggle="modal" data-target="#sign-modal">Sign Up</button>
+							</div>
+						<!-- Modal Sign in popup -->
+						<div id="sign-modal" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+
+						    <!-- Modal content-->
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        <h4 class="modal-title">A Few More Questions</h4>
+						      </div>
+						      <form>
+						      <div class="modal-body">
+						        <button>
+						        	
+						        </button>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						      </div>
+						      </form>
+						    </div>
+
+						  </div>
+						</div>
+						<!-- *************** -->
+							<div class="col-xs-4">
+								<button type="submit" class="sign-btn btn btn-warning">Log In</button>
+							</div>
+						</div>
+					</form>
+					<h5 style="text-align: center;">OR</h5>
+					<div style="text-align: center;">
+						<button class="loginBtn loginBtn--facebook">Login with Facebook</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container section-two">
+		<div class="row">
+			<div class="col-xs-12">
+				<h1 class="second-header">Communicate Thoroughly</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6" style="text-align: center;">
+				<img id="mockup_img" src="../src/images/monitor.png">
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<ol class="landing-list">
+					<li class="list-text"><span class="selling-pt">Go on dates.</span> Find people that share similar interests with our matching platform and go on real dates!</li>
+					<li class="list-text"><span class="selling-pt">Give Feedback.</span> Sometimes Cinder will ask you for general feeback and sometimes more personal questions. Either way, your responses will get you and your date talking more openly.</li>
+					<li class="list-text"><span class="selling-pt">Improve Future Dates.</span> Go on more dates knowing exactly what your partner is looking for.</li>
+				</ol>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

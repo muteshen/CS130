@@ -1,0 +1,28 @@
+on linux:
+
+sudo apt-get install python-virtualenv
+
+run:
+$virtualenv venv
+$source venv/bin/activate
+$pip install selenium
+
+cd into venv
+
+download geckodriver from https://github.com/mozilla/geckodriver/releases
+
+$ wget geckodriver-v0.19.1-linux64.tar.gz (using linux 64 in my case)
+
+untar it and move geckodriver into venv/bin
+
+cp testfolder into venv
+cd into testfolder
+
+use your favorite text editor to modify seleniumExample.py
+
+modify my_path to whatever current directory you are in,
+for example my_path = "file://DIRECTORY_NAME/testfolder/
+
+run seleniumExample.py
+
+type deactivate to exit out of venv

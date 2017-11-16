@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../src/css/meet.css">
+  <link rel="stylesheet" type="text/css" href="../src/css/style.css">
+	<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='../src/css/style.css', _external=True) }}"> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<title>Cinder</title>
+
+	<!-- To change color of hamburger icon when hovering over it -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(function() {
+			  $('#hamburger').hover(function() {
+			    $('.icon-bar').css('background-color', '#FFB978');
+			  }, function() {
+			    // on mouseout, reset the background colour
+			    $('.icon-bar').css('background-color', '');
+			  });
+			});
+		});
+	</script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- This is for the mobile navbar display, hamburger icon displayed -->
+			<div class="navbar-header">
+		        <button id="hamburger" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-options" aria-expanded="false">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+		        </button>
+      			<a class="navbar-brand" href="home.html">Cinder</a>
+    		</div>
+
+    		<!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
+    		<div class="collapse navbar-collapse" id="navbar-options">
+    			<ul class="nav navbar-nav">
+    				<li><a href="./meet.html">Meet People</a></li>
+    				<li><a href="home.html">Matches</a></li>
+    				<li><a href="home.html">Feedback</a></li>
+    				<li><a href="home.html">Logout</a></li>
+    			</ul>
+    		</div>
+		</div>
+	</nav>
+  <div class="page-container">
+		<span
+			class="glyphicon glyphicon-chevron-left"
+			aria-hidden="true"
+			id="chevron-left">
+		</span>
+    <div class="jumbotron user-container">
+      <div class="thumbnail">
+        <img class="profile-pic" src="../src/images/static-profile.png" alt="User Profile Picture">
+      </div>
+      <div class="right-col">
+        <div>
+          <div class="user-header">
+            <div class="name">Selena</div>
+            <div class="age">25</div>
+          </div>
+          <hr></hr>
+          <div class="bio">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+        </div>
+        <div class="location">
+          Los Angeles
+        </div>
+      </div>
+    </div>
+		<span
+			class="glyphicon glyphicon-chevron-right"
+			aria-hidden="true"
+			id="chevron-right">
+		</span>
+  </div>
+	<script src="../src/js/meet.js">
+		// document.getElementById('chevron-right').onClick = handleSwipe('right');
+	</script>
+</body>
+</html>
