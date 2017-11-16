@@ -2,6 +2,7 @@
 #you need to "pip install selenium" and the Firefox webdriver(geckodriver)
 #see https://github.com/mozilla/geckodriver/releases
 #add geckodriver to your path/ put the exe in you usr/local/bin then this should work
+import os
 import unittest
 import time
 from selenium import webdriver
@@ -12,6 +13,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
 my_path = "file:///home/avwong13/Desktop/cs130-cinder/cinder/public/"
+def my_path():
+    temp = os.getcwd()
+    my_path = "file://" + temp[:-12] + "cinder/public/"    
+    return my_path
 
 def init_driver():
     driver = webdriver.Firefox()
@@ -40,31 +45,35 @@ class testing(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         
-    def test_runtest2(self):
+    def test_runtest3(self):
         driver = self.driver
-        driver.get(my_path + "home.html")
+        driver.get(my_path() + "home.html")
         driver.find_element_by_link_text('Meet People').click()
         time.sleep(1)
 
-    def test_runtest3(self):
+    def test_runtest2(self):
         driver = self.driver
-        driver.get(my_path + "home.html")
+        driver.get(my_path() + "home.html")
         driver.find_element_by_link_text('Feedback').click()
-        driver.find_element_by_link_text('Meet People').click()
+        time.sleep(2)
         driver.find_element_by_link_text('Cinder').click()
         time.sleep(1)
 
 
     def test_runtest1(self):
         driver = self.driver
-        driver.get(my_path + "home.html")
+        driver.get(my_path() + "home.html")
         elem = driver.find_element_by_name("first")
         elem.send_keys("John")
+        time.sleep(1)
         elem = driver.find_element_by_name("last")
         elem.send_keys("Winchester")
-        elem.send_keys(Keys.RETURN)
+        time.sleep(1)
+        elem.send_keys(Keys.ENTER)
+        time.sleep(1)
         elem = driver.find_element_by_name("email")
         elem.send_keys("coolio@gmail.com")
+        time.sleep(1)
         elem = driver.find_element_by_name("sign").click()
         time.sleep(1)
     
@@ -100,4 +109,6 @@ if __name__ == "__main__":
  #   test1(driver, my_path)
   #  time.sleep(5)
    # driver.quit()
+    print my_path()
+    time.sleep(5)
     unittest.main()
