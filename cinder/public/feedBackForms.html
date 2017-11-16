@@ -4,15 +4,18 @@
 <head>
   <title>FeedBackForm</title>
   <meta charset="utf-8" />
-  <link rel="stylesheet" type="text/css" href="../src/css/style.css">
+
   <!-- Scrollbar Custom CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
   <!-- To change color of hamburger icon when hovering over it -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    <!-- To change color of hamburger icon when hovering over it -->
+     <link rel="stylesheet" type="text/css" href="../src/css/style.css">
     <script type="text/javascript">
-        
+
+
         $(document).ready(function(){
             $(function() {
               $('#hamburger').hover(function() {
@@ -23,6 +26,7 @@
               });
             });
         });
+
         var m_data = [  {name:"Sarah", date:"10-10-2017", prompt: "how do you", feedbackGiven: false, feedBack: "", image:"sarah.jpeg"},
                         {name:"Becky", date:"11-11-2017", prompt: "some prompt", feedbackGiven: true, feedBack: "i thought you were nice", image:"sarah.jpeg"},
                         {name:"Mandy", date:"12-12-2017", prompt: "what do you think?", feedbackGiven: false, feedBack:"", image: "sarah.jpeg"}];
@@ -57,6 +61,19 @@
         //     image.classList.add("img-circle");
         //     m_fb_container.classList.add("feedback_container");
         //     metaData.classList.add("feedback_meta_container");
+
+
+
+
+        // function addFeedbackToList(name, date, feedbackGiven, feedback) {
+        //     var ul = document.getElementById("feedbackList");
+        //     var li = document.createElement("li");
+        //     li.classList.add("list-group-item-warning");
+            
+        //     var metaData = document.createElement("div");
+        //     var image = document.createElement("img");
+        //     image.classList.add("img-circle");
+        //     metaData.classList.add("feedback_container");
 
         //     //add content for metaData and image
         //     //then append both to li
@@ -112,7 +129,11 @@
                 <h1>Help your Dates by giving them feedback for further dates</h1>
                 <div class="list-group" id="feedbackList">
 
+
                   <!-- <li class="list-group-item-warning">
+
+                  <li class="list-group-item-warning">
+
                     <div class="feedback_container">
                         <img src="sarah.jpeg" class="img-circle">
                         <div class="feedback_meta_container">
@@ -141,20 +162,16 @@
                             <h2>Click here to give feedback or display feedback if given</h2>
                         </div>
                     </div>
-                  </li> -->
+
+
+                  </li>-->
+
                 
             </div>
         </div>
 
 
  
- 
-  <!-- jQuery CDN -->
-  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-  <!-- Bootstrap Js CDN -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- Custom Scroller Js CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
   
 </body>
 
