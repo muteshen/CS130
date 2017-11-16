@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FeedBackForm</title>
+  <meta charset="utf-8" />
+
+
+  <!-- Scrollbar Custom CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+  <!-- To change color of hamburger icon when hovering over it -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <!-- To change color of hamburger icon when hovering over it -->
+
+     <link rel="stylesheet" type="text/css" href="../src/css/style.css">
+    <script type="text/javascript">
+
+
+        $(document).ready(function(){
+            $(function() {
+              $('#hamburger').hover(function() {
+                $('.icon-bar').css('background-color', '#FFB978');
+              }, function() {
+                // on mouseout, reset the background colour
+                $('.icon-bar').css('background-color', '');
+              });
+            });
+        });
+
+
+
+        var m_data = [  {name:"Sarah", date:"10-10-2017", prompt: "how do you", feedbackGiven: false, feedBack: "", image:"sarah.jpeg"},
+                        {name:"Becky", date:"11-11-2017", prompt: "some prompt", feedbackGiven: true, feedBack: "i thought you were nice", image:"sarah.jpeg"},
+                        {name:"Mandy", date:"12-12-2017", prompt: "what do you think?", feedbackGiven: false, feedBack:"", image: "sarah.jpeg"}];
+
+        // $.fn.addItem = function(date) {
+        //     var m_feedBack;
+        //     if(date.feedbackGiven)
+        //         m_feedBack = "<h2>" + date.feedBack + "</h2>";
+        //     else
+        //         m_feedBack = "<a href="trigger the feedBack form to appear"> Click here to give feedback</a>";
+        //     $(".list-group").prepend("<a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+        //                                 <div class="feedback_container">
+        //                                     <img src=" + date.image + " class="img-circle">
+        //                                     <div class="feedback_meta_container">
+        //                                         <h1>" + date.name + " - " + date.date + "</h1>" + 
+        //                                         "<h2>Prompt - " + date.prompt + "</h2>
+        //                                         <h2>" + m_feedBack + "</h2>
+        //                                     </div>
+        //                                 </div>
+        //                             </a>");
+        // };
+
+        // function addFeedbackToList(date) {
+        //     var ul = document.getElementById("feedbackList");
+        //     var m_fb = document.createElement("a");
+        //     m_fb.classList.add("list-group-item");
+        //     m_fb.classList.add("list-group-item-action");
+
+        //     var m_fb_container = document.createElement("div");
+        //     var image = document.createElement("img");
+        //     var metaData = document.createElement("div");
+        //     image.classList.add("img-circle");
+        //     m_fb_container.classList.add("feedback_container");
+        //     metaData.classList.add("feedback_meta_container");
+
+
+        //     //add content for metaData and image
+        //     //then append both to li
+        //     //then append li to ul
+        // }
+
+    </script>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- This is for the mobile navbar display, hamburger icon displayed -->
+            <div class="navbar-header">
+                <button id="hamburger" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-options" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Cinder</a>
+            </div>
+
+            <!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
+            <div class="collapse navbar-collapse" id="navbar-options">
+                <ul class="nav navbar-nav">
+                    <li><a href="./home.html">Meet People</a></li>
+                    <li><a href="home.html">Matches</a></li>
+                    <li><a href="home.html">Feedback</a></li>
+                    <li><a href="home.html">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+     <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+
+                <ul class="list-unstyled components">
+                    <li>
+                        <a href="#">Your Feedbacks</a>
+                    </li>
+                    <li>
+                        <a href="#">Give Feedbacks</a>
+                    </li>
+                </ul>
+            </nav>
+    </div>
+    
+     <!-- Page Content Holder -->
+            <div id="content">
+                <h1>Help your Dates by giving them feedback for further dates</h1>
+                <div class="list-group" id="feedbackList">
+
+
+                  <!-- <li class="list-group-item-warning">
+
+                  <li class="list-group-item-warning">
+
+
+                    <div class="feedback_container">
+                        <img src="sarah.jpeg" class="img-circle">
+                        <div class="feedback_meta_container">
+                            <h1>Date Name - Date date</h1>
+                            <h2>Prompt - some prompt</h2>
+                            <h2>Click here to give feedback or display feedback if given</h2>
+                        </div>
+                    </div>
+                  </li>
+                   <li class="list-group-item-warning">
+                    <div class="feedback_container">
+                        <img src="sarah.jpeg" class="img-circle">
+                        <div class="feedback_meta_container">
+                            <h1>Date Name - Date date</h1>
+                            <h2>Prompt - some prompt</h2>
+                            <h2>Click here to give feedback or display feedback if given</h2>
+                        </div>
+                    </div>
+                  </li>
+                   <li class="list-group-item-warning">
+                    <div class="feedback_container">
+                        <img src="sarah.jpeg" class="img-circle">
+                        <div class="feedback_meta_container">
+                            <h1>Date Name - Date date</h1>
+                            <h2>Prompt - some prompt</h2>
+                            <h2>Click here to give feedback or display feedback if given</h2>
+                        </div>
+                    </div>
+
+                  </li> -->
+
+                
+            </div>
+        </div>
+
+
+  
+</body>
+
+</html>
