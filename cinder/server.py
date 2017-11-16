@@ -4,6 +4,8 @@ from flask_script import Manager
 from flask_social import Social
 import pprint
 
+import sampleDB
+
 client = MongoClient('mongodb://admin:admin1@ds259255.mlab.com:59255/cinder')
 db = client.cinder
 collection = db.newcollection
@@ -27,6 +29,34 @@ def index():
 @app.route('/profile')
 def profile():
     return "<h1>HELLO PROFILE</h1>"
+
+@app.route('/api/getUsers', methods=["GET"])
+def getUsers():
+    return sampleDB.profiles[:2]
+
+@app.route('/api/Swipe', methods=["GET", "POST"])
+def swipe():
+    return sampleDB.isMatch
+
+@app.route('/api/myFeedback', methods=["GET", "POST"])
+def myFeedback():
+    return sampleDB.feedback
+
+@app.route('/api/myProfile', methods=["GET", "POST"])
+def myProfile():
+    return sampleDB.myprofile
+
+@app.route('/api/login', methods=["GET", "POST"])
+def login():
+    return sampleDB.login
+
+@app.route('/api/logout', methods=["GET", "POST"])
+def logout():
+    return sampleDB.Logout
+
+@app.route('/api/updateProfile', methods=["GET", "POST"])
+def updateProfile():
+    return sampleDB.profile
 
 if __name__ == "__main__":
     manager.run()
