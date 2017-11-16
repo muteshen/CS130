@@ -29,13 +29,15 @@ def lookup(driver, query):
         print("Box or Button not found in google.com")
 
 def test1(driver,path):
-    driver.get(my_path + "/home.html")
-
+    driver.get(my_path + "home.html")
+    driver.find_element_by_link_text('Meet People').click()
+    time.sleep(3)
+    
 if __name__ == "__main__":
     driver = init_driver()
-    my_path = "file:///home/avwong13/Desktop/cs130-cinder/testing/venv/examples/public/"
+    my_path = "file:///home/avwong13/Desktop/cs130-cinder/testing/venv/testfolder/"
 
-    lookup(driver, "Selenium")
+   # lookup(driver, "Selenium")
     test1(driver, my_path)
     time.sleep(5)
     driver.quit()
