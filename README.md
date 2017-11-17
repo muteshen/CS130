@@ -32,9 +32,15 @@ Test Four - Swiping Right. We expect clicking the right pointing arrow on the "M
 Directory Structure
 -----------------------
 /cinder - main project files
+
 /cinder/public - contains the html files used for the web app pages
+
 /cinder/src - contains the images and css files for styling the html pages
+
 /cinder/docs - autogenerate documentation with Sphinx
+
 /cinder/config.py, sampleDB.py, manage.py, etc. are related to mongoDB
+
 /public/main - server related files
+
 /testing - testing files
