@@ -3,14 +3,14 @@ Team "Need One More" from Lab 1A
 
 Running Server
 ------------------
-In the main cinder folder run the command:
+In the outmost folder run the command:
 
-python server.py runserver -d
+python manage.py runserver -d
 
-The -d makes it restart the server on any file save
+The -r makes it restart the server on any file save so you don't have to
 
 To select port:
-  python server.py runserver -d -p [PORT]
+  python manage.py runserver -d -p [PORT]
 
 Templating
 -------------------
