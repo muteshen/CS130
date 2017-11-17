@@ -44,15 +44,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Cinder</a>
+                <a class="navbar-brand" href="./home.html">Cinder</a>
             </div>
 
             <!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
             <div class="collapse navbar-collapse" id="navbar-options">
                 <ul class="nav navbar-nav">
-                    <li><a href="./home.html">Meet People</a></li>
+                    <li><a href="home.html">Profile</a></li>
+                    <li><a href="./meet.html">Meet People</a></li>
                     <li><a href="home.html">Matches</a></li>
-                    <li><a href="home.html">Feedback</a></li>
+                    <li><a href="./yourFeedback.html">Feedback</a></li>
                     <li><a href="home.html">Logout</a></li>
                 </ul>
             </div>
@@ -81,12 +82,12 @@
         <!-- The Modal -->
         <div id="myModal" class="modal">
             <!-- Modal content -->
-          <div class="modal-content">
-            <div class="modal-header">
+          <div id="modalContent" class="modal-content">
+            <div id="modalHeader" class="modal-header">
               <span class="close">&times;</span>
               <h2>Feedback for Sarah</h2>
             </div>
-            <div class="modal-body">
+            <div  id="modalBody" class="modal-body">
             <form>
                 <div class="form-group">
                     <label for="feedBackTextArea">Prompt: Some prompt</label>
@@ -94,7 +95,7 @@
                 </div>
             </form>
             </div>
-            <div class="modal-footer">
+            <div id="modalFooter" class="modal-footer">
               <h3>Your feedback will only be delivered once your date gives you feedback</h3>
               <button type="button" onclick="submitFeedback()" class="btn btn-outline-dark btn-sm">Submit</button>
             </div>
