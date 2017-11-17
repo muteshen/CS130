@@ -11,7 +11,7 @@
 	<title>Cinder</title>
 
 	<!-- To change color of hamburger icon when hovering over it -->
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$(document).ready(function(){
 
 			$("#chevron-right").click(function(){
@@ -31,7 +31,7 @@
 			  });
 			});
 		});
-	</script>
+	</script> -->
 </head>
 
 <body>
@@ -61,6 +61,8 @@
     		</div>
 		</div>
 	</nav>
+
+	<!-- Main content that shows current user people in the area -->
   <div class="page-container">
 		<span
 			class="glyphicon glyphicon-chevron-left"
@@ -69,22 +71,22 @@
 		</span>
     <div class="jumbotron user-container">
       <div class="thumbnail">
-        <img class="profile-pic" src="../src/images/static-profile.png" alt="User Profile Picture">
+        <img
+					class="profile-pic"
+					src="../src/images/static-profile.png"
+					alt="User Profile Picture"
+					id="profile-pic">
       </div>
       <div class="right-col">
         <div>
           <div class="user-header">
-            <div class="name">Selena</div>
-            <div class="age">25</div>
+            <div class="name" id="name"></div>
+            <div class="age" id="age"></div>
           </div>
           <hr></hr>
-          <div class="bio">
-            I like fro-yo and yo-yos. I wish I was Lonzo Ball because I've always wanted to visit relatives in China. Went to UCLA, love dogs and hate cats. Always down for the beach.
-          </div>
+          <div class="bio" id="bio"></div>
         </div>
-        <div class="location">
-          Los Angeles
-        </div>
+        <div class="location" id="location"></div>
       </div>
     </div>
 		<span
@@ -93,8 +95,42 @@
 			id="chevron-right">
 		</span>
   </div>
-	<script src="../src/js/meet.js">
-		// document.getElementById('chevron-right').onClick = handleSwipe('right');
-	</script>
+	<script src="../src/js/meet.js"></script>
+
+	<!-- Modal that indicates when a swipe right renders a match -->
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal--header">
+					<img
+						class="match-checkmark"
+						src="../src/images/checkmark-circle.png"
+						alt="Check!"
+						>
+					<div class="match-confirmation">Matched!</div>
+				</div>
+				<hr></hr>
+				<div class="modal--bottom-container">
+					<div class="modal--content-left">
+						<div class="match-name" id="match-name"></div>
+						<img
+							class="match-picture"
+							src="../src/images/static-profile.png"
+							id="match-pic">
+					</div>
+					<div class="modal--content-right">
+						<div class="modal--button">
+							<a href="matches.html" class="matches-link">Go to matches</a>
+						</div>
+						<button
+							class="modal--button"
+							id="close-modal">
+							Back to swiping
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
