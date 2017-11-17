@@ -51,6 +51,40 @@
     		</div>
 		</div>
 	</nav>
+
+	<!-- Modal that indicates when a swipe right renders a match -->
+	<div class="modal" id="myModal">
+		<div class="modal--header">
+			<img
+				class="match-checkmark"
+				src="../src/images/checkmark-circle.png"
+				alt="Check!"
+				>
+			<div class="match-confirmation">Matched!</div>
+		</div>
+		<hr></hr>
+		<div class="modal--bottom-container">
+			<div class="modal--content-left">
+				<div class="match-name" id="match-name"></div>
+				<img
+					class="match-picture"
+					src="../src/images/static-profile.png"
+					id="match-pic">
+			</div>
+			<div class="modal--content-right">
+				<div class="modal--button">
+					<a href="matches.html" class="matches-link">Go to matches</a>
+				</div>
+				<button
+					class="modal--button"
+					id="close-modal">
+					Back to swiping
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Main content that shows current user people in the area -->
   <div class="page-container">
 		<span
 			class="glyphicon glyphicon-chevron-left"
@@ -59,22 +93,22 @@
 		</span>
     <div class="jumbotron user-container">
       <div class="thumbnail">
-        <img class="profile-pic" src="../src/images/static-profile.png" alt="User Profile Picture">
+        <img
+					class="profile-pic"
+					src="../src/images/static-profile.png"
+					alt="User Profile Picture"
+					id="profile-pic">
       </div>
       <div class="right-col">
         <div>
           <div class="user-header">
-            <div class="name">Selena</div>
-            <div class="age">25</div>
+            <div class="name" id="name"></div>
+            <div class="age" id="age"></div>
           </div>
           <hr></hr>
-          <div class="bio">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </div>
+          <div class="bio" id="bio"></div>
         </div>
-        <div class="location">
-          Los Angeles
-        </div>
+        <div class="location" id="location"></div>
       </div>
     </div>
 		<span
@@ -83,8 +117,6 @@
 			id="chevron-right">
 		</span>
   </div>
-	<script src="../src/js/meet.js">
-		// document.getElementById('chevron-right').onClick = handleSwipe('right');
-	</script>
+	<script src="../src/js/meet.js"></script>
 </body>
 </html>
