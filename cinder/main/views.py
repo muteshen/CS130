@@ -1,7 +1,8 @@
-from flask import render_template, session, redirect, url_for
+from flask import render_template, session, redirect, url_for, jsonify
 from . import main
 from .. import db
 from ..models import *
+from ..sampleDB import *
 
 @main.route('/', methods=["GET", "POST"])
 def index():
@@ -15,28 +16,35 @@ def profile():
 
 @main.route('/api/getUsers/<uid>', methods=["GET"])
 def getUsers(uid):
-    return sampleDB.profiles
+    return profiles
 
-@main.route('/api/Swipe', methods=["GET", "POST"])
+@main.route('/api/Swipe', methods=["POST"])
 def swipe():
-    return sampleDB.isMatch
+    return isMatch
 
-@main.route('/api/myFeedback', methods=["GET", "POST"])
+@main.route('/api/myFeedback', methods=["POST"])
 def myFeedback():
-    return sampleDB.feedback
+    return feedback1
 
-@main.route('/api/myProfile', methods=["GET", "POST"])
+@main.route('/api/myProfile', methods=["POST"])
 def myProfile():
-    return sampleDB.myprofile
+    resp = jsonify(user1)
+    return resp
 
-@main.route('/api/login', methods=["GET", "POST"])
+@main.route('/api/login', methods=["POST"])
 def login():
-    return sampleDB.login
+    return True
 
-@main.route('/api/logout', methods=["GET", "POST"])
+@main.route('/api/logout', methods=["POST"])
 def logout():
-    return sampleDB.Logout
+    return True
 
-@main.route('/api/updateProfile', methods=["GET", "POST"])
+@main.route('/api/updateProfile', methods=["POST"])
 def updateProfile():
-    return sampleDB.profile
+    resp = jsonify(user1)
+    return resp
+
+@main.route('/api/createProfile', methods=["POST"])
+def createProfile():
+    resp = jsonify(user1)
+    return resp
