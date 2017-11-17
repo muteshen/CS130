@@ -11,6 +11,12 @@
 	<!-- To change color of hamburger icon when hovering over it -->
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$("#modal-submit").click(function(){
+				window.location = "./meet.html";
+				alert("Thank you for making an account!");
+			});
+
+
 			$(function() {
 			  $('#hamburger').hover(function() {
 			    $('.icon-bar').css('background-color', '#FFB978');
@@ -40,6 +46,7 @@
     		<!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
     		<div class="collapse navbar-collapse" id="navbar-options">
     			<ul class="nav navbar-nav">
+    				<li><a href="home.html">Profile</a></li>
     				<li><a href="./meet.html">Meet People</a></li>
     				<li><a href="home.html">Matches</a></li>
     				<li><a href="home.html">Feedback</a></li>
@@ -58,20 +65,20 @@
 					<h3 class="sign-up-header">Start Dating Smarter</h3>
 					<form>
 						<div class="form-group">
-							 <input type="text" class="form-control sign-up-form"  placeholder="First Name">
+							 <input type="text" class="form-control sign-up-form" name="first" placeholder="First Name">
 						</div>
 						<div class="form-group">
-							 <input type="text" class="form-control sign-up-form"  placeholder="Last Name">
+							 <input type="text" name="last" class="form-control sign-up-form"  placeholder="Last Name">
 						</div>
 						<div class="form-group">
-							 <input type="email" class="form-control sign-up-form"  aria-describedby="emailHelp" placeholder="Email" required>
+							 <input type="email" name="email" class="form-control sign-up-form"  aria-describedby="emailHelp" placeholder="Email" required>
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control sign-up-form" placeholder="Password">
+							<input type="password" name="password" class="form-control sign-up-form" placeholder="Password">
 						</div>
 						<div class="row" style="text-align: center;">
 							<div class="col-xs-4 col-xs-offset-2">
-								<button type="submit" class="sign-btn btn btn-success" data-toggle="modal" data-target="#sign-modal">Sign Up</button>
+								<button type="button" class="sign-btn btn btn-success" name="sign" data-toggle="modal" data-target="#sign-modal">Sign Up</button>
 							</div>
 						<!-- Modal Sign in popup -->
 						<div id="sign-modal" class="modal fade" role="dialog">
@@ -85,12 +92,32 @@
 						      </div>
 						      <form>
 						      <div class="modal-body">
-						        <button>
 
-						        </button>
+						      	<div class="form-group">
+						      		<input type="number" name="age" class="form-control"  placeholder="Age">
+						      	</div>
+						      	<label for="gender-select">Select your Gender</label>
+							    <select class="form-control" name="gender" id="gender-select">
+							      <option>Male</option>
+							      <option>Female</option>
+							      <option>Other</option>
+							    </select>
+							    <label for="interest-select">Interested In:</label>
+							    <select name="interest" class="form-control" id="interest-select">
+							      <option>Male</option>
+							      <option>Female</option>
+							      <option>Other</option>
+							    </select>
+							    <div class="form-group">
+								    <label for="bio">Please Write a Short Bio:</label>
+								    <textarea name="bio" class="form-control" id="bio" rows="5"></textarea>
+								</div>
+								<button class="sign-btn btn btn-warning">
+									Upload a Photo
+								</button>
 						      </div>
 						      <div class="modal-footer">
-						        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						        <button id="modal-submit" name="sub"type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
 						      </div>
 						      </form>
 						    </div>
