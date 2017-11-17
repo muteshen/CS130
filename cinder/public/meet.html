@@ -13,6 +13,15 @@
 	<!-- To change color of hamburger icon when hovering over it -->
 	<script type="text/javascript">
 		$(document).ready(function(){
+
+			$("#chevron-right").click(function(){
+				$(".name").html("Alexa");
+				$(".location").html("Santa Monica");
+				$(".age").html("23");
+				$(".bio").html("I like to ride bikes and go on hikes. Don't want kids, never wanted little tikes. Santa isn't real, please buy me a meal.")
+				$(".profile-pic").attr('src',"../src/images/static-profile2.jpg");
+			});
+
 			$(function() {
 			  $('#hamburger').hover(function() {
 			    $('.icon-bar').css('background-color', '#FFB978');
@@ -70,7 +79,7 @@
           </div>
           <hr></hr>
           <div class="bio">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            I like fro-yo and yo-yos. I wish I was Lonzo Ball because I've always wanted to visit relatives in China. Went to UCLA, love dogs and hate cats. Always down for the beach.
           </div>
         </div>
         <div class="location">
