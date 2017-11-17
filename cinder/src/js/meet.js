@@ -242,7 +242,7 @@ window.onload = () => {
     // matchPic = matchedUser.pic
     console.log(matchedUser)
     matchName.innerHTML = matchedUser.name
-    modal.hidden = false
+    $("#myModal").modal("show")
   }
 
   /* Author: Ryan Stenberg
@@ -253,9 +253,9 @@ window.onload = () => {
   const hideModal = () => {
     // Code to make modal hidden
     match = {}
-    modal.hidden = true
+    $("#myModal").modal("hide")
   }
-  closeModalButton.onClick = hideModal()
+  closeModalButton.addEventListener('click', hideModal)
 
   // initialize the page on window load
   initialize()

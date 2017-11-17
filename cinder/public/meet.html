@@ -11,8 +11,17 @@
 	<title>Cinder</title>
 
 	<!-- To change color of hamburger icon when hovering over it -->
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$(document).ready(function(){
+
+			$("#chevron-right").click(function(){
+				$(".name").html("Alexa");
+				$(".location").html("Santa Monica");
+				$(".age").html("23");
+				$(".bio").html("I like to ride bikes and go on hikes. Don't want kids, never wanted little tikes. Santa isn't real, please buy me a meal.")
+				$(".profile-pic").attr('src',"../src/images/static-profile2.jpg");
+			});
+
 			$(function() {
 			  $('#hamburger').hover(function() {
 			    $('.icon-bar').css('background-color', '#FFB978');
@@ -22,7 +31,7 @@
 			  });
 			});
 		});
-	</script>
+	</script> -->
 </head>
 
 <body>
@@ -43,46 +52,15 @@
     		<!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
     		<div class="collapse navbar-collapse" id="navbar-options">
     			<ul class="nav navbar-nav">
+    				<li><a href="home.html">Profile</a><li>
     				<li><a href="./meet.html">Meet People</a></li>
     				<li><a href="home.html">Matches</a></li>
-    				<li><a href="home.html">Feedback</a></li>
+    				<li><a href="./yourFeedback.html">Feedback</a></li>
     				<li><a href="home.html">Logout</a></li>
     			</ul>
     		</div>
 		</div>
 	</nav>
-
-	<!-- Modal that indicates when a swipe right renders a match -->
-	<div class="modal" id="myModal">
-		<div class="modal--header">
-			<img
-				class="match-checkmark"
-				src="../src/images/checkmark-circle.png"
-				alt="Check!"
-				>
-			<div class="match-confirmation">Matched!</div>
-		</div>
-		<hr></hr>
-		<div class="modal--bottom-container">
-			<div class="modal--content-left">
-				<div class="match-name" id="match-name"></div>
-				<img
-					class="match-picture"
-					src="../src/images/static-profile.png"
-					id="match-pic">
-			</div>
-			<div class="modal--content-right">
-				<div class="modal--button">
-					<a href="matches.html" class="matches-link">Go to matches</a>
-				</div>
-				<button
-					class="modal--button"
-					id="close-modal">
-					Back to swiping
-				</button>
-			</div>
-		</div>
-	</div>
 
 	<!-- Main content that shows current user people in the area -->
   <div class="page-container">
@@ -118,5 +96,41 @@
 		</span>
   </div>
 	<script src="../src/js/meet.js"></script>
+
+	<!-- Modal that indicates when a swipe right renders a match -->
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal--header">
+					<img
+						class="match-checkmark"
+						src="../src/images/checkmark-circle.png"
+						alt="Check!"
+						>
+					<div class="match-confirmation">Matched!</div>
+				</div>
+				<hr></hr>
+				<div class="modal--bottom-container">
+					<div class="modal--content-left">
+						<div class="match-name" id="match-name"></div>
+						<img
+							class="match-picture"
+							src="../src/images/static-profile.png"
+							id="match-pic">
+					</div>
+					<div class="modal--content-right">
+						<div class="modal--button">
+							<a href="matches.html" class="matches-link">Go to matches</a>
+						</div>
+						<button
+							class="modal--button"
+							id="close-modal">
+							Back to swiping
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

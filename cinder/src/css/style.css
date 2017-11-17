@@ -4,6 +4,7 @@
     border-color:#FFB978;
     border-radius: 0;
     margin-bottom: 0px;
+    z-index: 1000;
 }
 
 /* for "Cinder" branding on navbar */
@@ -218,3 +219,188 @@
   font-weight: 500;
   color: #FFB978;
 }
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+#content {
+    width: calc(100% - 250px);
+    padding: 40px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    font-family: "Avenir";
+}
+#content h1{
+  font-size: 25px;
+}
+#content.active {
+    width: 100%;
+}
+
+
+/* ---------------------------------------------------
+    Feedbacks
+----------------------------------------------------- */
+.feedback_container {
+  width: 900px;
+  display: flex;
+  padding:20px;
+  justify-content: flex-start;
+
+}
+
+.feedback_meta_container{
+  display: flex;
+  justify-content: flex-start; 
+  flex-direction: column;
+  padding: 20px;
+}
+.feedback_meta_container button {
+  background-color: #f4a142;
+  color: #fff;
+}
+
+.list-group-item{
+  background-color: #f4a142;
+  border-color: #070707;
+}
+.list-group-item-action a:hover{
+  background-color: #f4a142;
+}
+
+/* ---------------------------------------------------
+    Sidebar
+----------------------------------------------------- */
+.wrapper{
+  display: flex;
+  align-items: stretch;
+}
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    z-index: 999;
+    background: #f4a142;
+    color: #fff;
+    transition: all 0.3s;
+
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar ul.components {
+    margin-top:100px;
+    padding: 40px 0;
+    /*border-bottom: 1px solid #47748b;*/
+}
+
+#sidebar ul li a {
+    padding: 40px;
+    font-size: 1.1em;
+    display: block;
+    color: #fff;
+}
+#sidebar ul li a:hover {
+    color: #f48f41;
+    background: #fff;
+
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    background: #f48f41;
+}
+
+/* ---------------------------------------------------
+    Modal
+----------------------------------------------------- */
+
+ /* The Modal (background) */
+#myModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-left: 250px;
+}
+
+/* Modal Content/Box */
+#modalContent {
+    background-color: #fefefe;
+    margin: 15% auto;  /*15% from the top and centered */
+    padding: 20px;
+    width: 80%; /* Could be more or less, depending on screen size */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+} 
+/* Modal Header */
+#modalHeader {
+    padding: 2px 16px;
+    background-color: #f4a142;
+    color: white;
+}
+
+/* Modal Body */
+#modalBody {
+    padding: 2px 16px;
+    background-color: #f4a142;
+  }
+
+/* Modal Footer */
+#modalFooter {
+    padding: 10px 16px;
+    background-color: #f4a142;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+#modalFooter h3{
+  font-size: 12px;
+}
+
+textarea{
+  cols: 100;
+}
+
