@@ -6,8 +6,8 @@ from ..sampleDB import *
 
 @main.route('/', methods=["GET", "POST"])
 def index():
-    # for user in User.objects:
-    #     print(user.email)
+    for user in User.objects:
+        print(user.email)
     return render_template("home.html")
 
 @main.route('/profile')
