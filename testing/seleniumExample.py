@@ -94,7 +94,13 @@ class testing(unittest.TestCase):
         time.sleep(1)
         elem = driver.find_element_by_name("sub")
         driver.find_element_by_name("sub")
-    
+
+    def test_runtest4(self):
+        driver = self.driver
+        driver.get(my_path() + "meet.html")
+        driver.find_element_by_id('chevron-right').click()
+        time.sleep(4)
+        
     def tearDown(self):
         self.driver.close()
 

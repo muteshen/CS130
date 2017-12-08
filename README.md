@@ -27,6 +27,7 @@ Test Two - Sign-up workflow. We expect filling out the required information and 
 
 Test Three - Feedback Response. We expect navigating to the "Feedback" page and clicking "Give Feedback" will open a pop-up feedback form.
 
+
 Test Four - Swiping Right. We expect clicking the right pointing arrow on the "Meet People" page will 'swipe right' to a new user (currently dummy data).
 
 Directory Structure
