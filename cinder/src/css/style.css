@@ -159,8 +159,15 @@
 	-webkit-box-shadow: none;
 }
 
+.modal-btn{
+  font-family: "Avenir";
+}
+
 .sign-btn{
 	font-family: "Avenir";
+  font-size: 18px;
+  font-weight: 400;
+  width: 60%;
 }
 
 /*Second section header, margin*/
@@ -186,8 +193,8 @@
   width: 350px;
   margin-top: 15px;
   margin-bottom: 30px;
-  position: relative;
 }
+
 
 .landing-list{
   text-align: left;
@@ -403,4 +410,8 @@
 textarea{
   cols: 100;
 }
+
+/* Profile Page Styling */
+
+
 
