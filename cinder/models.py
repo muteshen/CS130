@@ -1,5 +1,7 @@
 from mongoengine import *
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+from . import login_manager
 
 GENDERS = ('M', 'F')
 class Profile(EmbeddedDocument):
@@ -10,7 +12,7 @@ class Profile(EmbeddedDocument):
     photo = FileField() #GridGS
     bio = StringField()
 
-class User(Document):
+class User(UserMixin, Document):
     email = EmailField(required=True)
     new_matches = BooleanField()
     password_hash = StringField()
@@ -34,19 +36,19 @@ class User(Document):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    # # Flask-Login integration
-    # def is_authenticated(self):
-    #     return True
-    #
-    # def is_active(self):
-    #     return True
-    #
-    # def is_anonymous(self):
-    #     return False
-    #
-    # def get_id(self):
-    #     return str(self.id)
-    #
-    # @staticmethod
-    # def validate_login(password_hash, password):
-    #     return check_password_hash(password_hash, password)
+    # Flask-Login integration
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return str(self.id)
+
+    @login_manager.user_loader
+    def load_user(uid):
+        return User
