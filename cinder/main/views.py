@@ -44,3 +44,16 @@ def meet():
 @main.route('/profile')# @login_required
 def profile():
     return render_template('profile.html')
+
+
+@main.route('/meet')
+@login_required
+def meet():
+    return render_template("meet.html")
+
+
+
+
+
+
+
