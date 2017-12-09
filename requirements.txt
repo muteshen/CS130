@@ -29,7 +29,6 @@ Flask-Script==2.0.6
 Flask-Security==3.0.0
 Flask-Social==1.6.2
 Flask-WTF==0.14.2
-get==0.0.0
 httplib2==0.10.3
 idna==2.6
 imagesize==0.7.1
@@ -40,16 +39,12 @@ MarkupSafe==1.0
 mongoengine==0.15.0
 oauth2==1.9.0.post1
 passlib==1.7.1
-post==0.0.0
-public==0.0.0
 pycparser==2.18
 Pygments==2.2.0
 PyJWT==1.5.3
 pymongo==3.5.1
 pyOpenSSL==17.3.0
 pytz==2017.2
-query-string==0.0.0
-request==0.0.0
 requests==2.18.4
 setupfiles==0.0.50
 six==1.11.0
