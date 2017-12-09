@@ -17,7 +17,29 @@
 		$(document).ready(function(){
 
 			$("#modal-submit").submit(function(){
-				alert("Thank you for making an account!");
+
+		var first = $("input[name=first]").val();
+		var last = $("input[name=last]").val();
+		var email = $("input[name=email-modal]").val();
+		var password = $("input[name=pswd]").val();
+		var age = $("input[name=age]").val();
+		var gender = $("input[name=gender]").val();
+		var interest = $("input[name=interest]").val();
+		var bio = $("input[name=bio]").val();
+
+		var form = $(this);
+
+		$.ajax({
+		url: 'api.createProfile',
+		data : form.serialize(),
+		type: 'POST',
+		success: function(response) {
+		console.log(response);
+		},
+		error : function(error) {
+		console.log(error);
+		}
+		});
 			});
 
 			// $('#sign-modal').on('shown.bs.modal', initialize());
@@ -31,6 +53,22 @@
 			    $('.icon-bar').css('background-color', '');
 			  });
 			});
+		});
+
+		$("#log-in-form").submit(function(){
+		var form = $(this);
+		$.ajax({
+		url: 'api.login',
+		data : form.serialize(),
+		type: 'POST',
+		success: function(response) {
+		console.log(response);
+		},
+		error : function(error) {
+		console.log(error);
+		}ls
+
+		});
 		});
 	</script>
 </head>
