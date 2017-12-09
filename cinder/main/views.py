@@ -28,15 +28,29 @@ def index():
     print("Testing Here")
     return render_template("home.html")
 
-@main.route('/profile')
-@login_required
+@main.route('/give_feedback')
+def give_feedback():
+    return render_template('giveFeedback.html')
+
+@main.route('/your_feedback')
+def your_feedback():
+    return render_template('yourFeedback.html')
+
+
+@main.route('/meet')
+def meet():
+    return render_template('meet.html')
+
+@main.route('/profile')# @login_required
 def profile():
-    return "<h1>HELLO PROFILE</h1>"
+    return render_template('profile.html')
+
 
 @main.route('/meet')
 @login_required
 def meet():
     return render_template("meet.html")
+
 
 
 

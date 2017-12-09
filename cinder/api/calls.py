@@ -8,9 +8,13 @@ from .. import db
 
 #note all these routes must be prefixed with /api to be accessed
 #ie localhost:5000/api/createProfile
-@api.route('/getUsers/<uid>', methods=["GET"])
+
+@api.route('/getUsers/', methods=["GET"])
 def getUsers():
-    return profiles
+    defaultGender = 'M'
+    users = User.objects(profile__gender=defaultGender).only('profile','id')[:5]
+    return jsonify(result = users.to_json())
+
 
 @api.route('/swipe', methods=["POST"])
 def swipe():
