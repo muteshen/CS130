@@ -5,6 +5,7 @@ First Time Setup
 -------------------
 In the outermost folder, make sure you have python 2.7 installed and pip
 Maybe, use a virtual environment
+
 `pip install -r requirements.txt`
 
 Running Server
