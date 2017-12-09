@@ -59,10 +59,7 @@ window.onload = () => {
     }
   */
   var upcomingUsers = []
-  upcomingUsers = dummyUsers  // Only needed for testing
-
-  // Local storage of current user's coordinates
-  var coords = {}
+  // upcomingUsers = dummyUsers  // Only needed for testing
 
   // Current user being looked at on Meet page
   var currentPotentialMatch = {}
@@ -108,29 +105,13 @@ window.onload = () => {
    *        then get info for first 30 users in the area
    */
   const initialize = () => {
+      console.log("Initializing...")
+      console.log("Getting current location")
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(setCoords)
       } else {
         console.error("Geolocation is not supported by this browser.")
       }
-
-      var xhttp = new XMLHttpRequest()
-      xhttp.onreadstatechange = () => {
-        if (this.readyState == 4 && this.status == 404) {
-          const response = this.responseText
-          const userJson = JSON.parse(response)
-          for (user in userJson) {
-            upcomingUsers.push(userJson[user])
-          }
-          setNextUserAsCurrent()
-        }
-      }
-      const url = '/api/getUsers'
-      xhttp.open("GET", url)
-      xhttp.send()
-
-      // Temporary placeholder
-      setNextUserAsCurrent()
   }
 
   /* Author: Ryan Stenberg
@@ -142,18 +123,40 @@ window.onload = () => {
    */
   const setCoords = (position) => {
     const { latitude, longitude } = position.coords
-    coords[lat] = latitude
-    coords[lon] = longitude
+    console.log(`Setting coordinates of current user to (${latitude},${longitude})`)
 
     if (latitude && longitude) {
       var xhttp = new XMLHttpRequest()
       xhttp.onreadstatechange = () => {
-        if (this.status == 404) console.error('404: Could not send location.')
+        if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText)
+          console.log('Update profile coordinates successful.')
+
+          // Get users
+          var xhttp = new XMLHttpRequest()
+          xhttp.onreadstatechange = () => {
+            if (this.readyState == 4 && this.status == 404) {
+              console.log('Retrieved first set of users.')
+              const response = this.responseText
+              const userJson = JSON.parse(response)
+              for (user in userJson) {
+                upcomingUsers.push(userJson[user])
+              }
+              setNextUserAsCurrent()
+            }
+          }
+          const url = '/getUsers'
+          xhttp.open("GET", url)
+          xhttp.send()
+
+        } else if (this.status == 404) {
+          console.error('404: Could not send location.')
+        }
       }
-      const url = "/api/updateProfile"
-      var jsonStr = JSON.stringify({location: `${latitude},${longitude}`})
-      xhttp.setRequestHeader('Content-Type', 'application/json')
-      xhttp.open("POST", url)
+      const url = '/api/updateProfile'
+      const jsonStr = JSON.stringify({location: `${latitude},${longitude}`})
+      xhttp.open('POST', url)
+      xhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
       xhttp.send(jsonStr)
     }
 
@@ -178,7 +181,7 @@ window.onload = () => {
         }
       }
     }
-    const url = '/api/getUsers'
+    const url = '/getUsers'
     xhttp.open("GET", url)
     xhttp.send()
   }
@@ -186,7 +189,7 @@ window.onload = () => {
   const fillUserQueue = () => {
     // Fill queue to 10-15 users
     const numCalls = 2 - (upcomingUsers.length / 5)
-    for (var i = 0; i < numCalls); i++)
+    for (var i = 0; i < numCalls; i++)
       getNextUsers() // Always retrieves 5 users
   }
 
