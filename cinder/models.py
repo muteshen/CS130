@@ -3,25 +3,25 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from . import login_manager
 
-GENDERS = ('M', 'F')
+GENDERS = ('M', 'F', 'N')
 class Profile(EmbeddedDocument):
     first = StringField(max_length=50)
     last = StringField(max_length=50)
     gender = StringField(max_length=1, choices=GENDERS)
-    age = IntField()
+    birthday = DateTimeField()
     photo = FileField() #GridGS
     bio = StringField()
 
 class User(UserMixin, Document):
+    cid = ReferenceField('Connection')
     email = EmailField(required=True)
     new_matches = BooleanField()
     password_hash = StringField()
-    profile = EmbeddedDocumentField(Profile)
-    interested_in = StringField(max_length=1, choices=GENDERS)
+    facebook = StringField()
+    profile = EmbeddedDocumentField(Profile, required=True)
+    interested_in = StringField(max_length=1, choices=GENDERS, required=True)
     answers = ListField(StringField())
     location = StringField()
-    connectionid = StringField()
-    cid = IntField()
     # login = StringField(max_length=80, unique=True)
 
     @property
@@ -51,4 +51,28 @@ class User(UserMixin, Document):
 
     @login_manager.user_loader
     def load_user(uid):
-        return User
+        return User.objects(id=uid).first()
+
+class Connection(Document):
+    #_id = StringField()
+    #uid = ReferenceField(required=True, unique=True)
+    liked_you = SortedListField(ReferenceField(User))
+    swiped = SortedListField(ReferenceField(User))
+
+class Match(Document):
+    #_id = StringField()
+    uid1 = ReferenceField(User, required=True)
+    uid2 = ReferenceField(User, required=True)
+    match_date = DateTimeField(required=True)
+    feedback_id = ReferenceField('Feedback')
+
+class Response(EmbeddedDocument):
+    date = DateTimeField(required=True)
+    from_uid1 = StringField()
+    from_uid2 = StringField()
+
+class Feedback(Document):
+    #_id = StringField()
+    uid1 = ReferenceField(User, required=True)
+    uid2 = ReferenceField(User, required=True)
+    response = ListField(EmbeddedDocumentField(Response))

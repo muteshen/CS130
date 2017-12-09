@@ -6,7 +6,6 @@ from .. import db
 
 #note all these routes must be prefixed with /api to be accessed
 #ie localhost:5000/api/createProfile
-
 @api.route('/getUsers/<uid>', methods=["GET"])
 def getUsers(uid):
     return profiles
