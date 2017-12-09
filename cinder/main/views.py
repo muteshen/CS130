@@ -36,11 +36,6 @@ def give_feedback():
 def your_feedback():
     return render_template('yourFeedback.html')
 
-
-@main.route('/meet')
-def meet():
-    return render_template('meet.html')
-
 @main.route('/profile')# @login_required
 def profile():
     return render_template('profile.html')
@@ -50,10 +45,3 @@ def profile():
 @login_required
 def meet():
     return render_template("meet.html")
-
-
-
-
-
-
-

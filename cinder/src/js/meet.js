@@ -135,7 +135,7 @@ window.onload = () => {
           // Get users
           var xhttp = new XMLHttpRequest()
           xhttp.onreadstatechange = () => {
-            if (this.readyState == 4 && this.status == 404) {
+            if (this.readyState == 4 && this.status == 200) {
               console.log('Retrieved first set of users.')
               const response = this.responseText
               const userJson = JSON.parse(response)
@@ -151,6 +151,8 @@ window.onload = () => {
 
         } else if (this.status == 404) {
           console.error('404: Could not send location.')
+        } else {
+          console.log(`Status: ${this.status}`)
         }
       }
       const url = '/api/updateProfile'
