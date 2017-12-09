@@ -7,7 +7,7 @@ In the outmost folder run the command:
 
 python manage.py runserver -d
 
-The -r makes it restart the server on any file save so you don't have to
+The -d makes it restart the server on any file save so you don't have to
 
 To select port:
   python manage.py runserver -d -p [PORT]
