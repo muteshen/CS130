@@ -5,17 +5,24 @@
 	<link rel="stylesheet" type="text/css" href="../src/css/style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDioh5mGQkod645juHXUlcPQsx-e8uhZDg&libraries=places"></script>
+
 
 	<title>Cinder</title>
 
+    
+
 	<!-- To change color of hamburger icon when hovering over it -->
 	<script type="text/javascript">
-		$(document).submit(function(){
+		$(document).ready(function(){
+
 			$("#modal-submit").submit(function(){
 				alert("Thank you for making an account!");
 			});
 
-		
+			// $('#sign-modal').on('shown.bs.modal', initialize());
+	
+
 			$(function() {
 			  $('#hamburger').hover(function() {
 			    $('.icon-bar').css('background-color', '#FFB978');
@@ -87,7 +94,7 @@
 					</form>
 					<h5 style="text-align: center;">OR</h5>
 					<div style="text-align: center;">
-								<button type="button" class="sign-btn btn btn-success" name="sign" data-toggle="modal" data-target="#sign-modal">Sign Up</button>
+								<button type="button" class="sign-btn btn btn-success" name="sign" data-toggle="modal" data-target="#sign-modal" onclick="initialize();">Sign Up</button>
 							</div>
 						<!-- Modal Sign in popup -->
 						<div id="sign-modal" class="modal fade" role="dialog">
@@ -116,6 +123,15 @@
 						      	<div class="form-group">
 						      		<input type="number" name="age" class="form-control"  placeholder="Age" required>
 						      	</div>
+						      	<div class="form-group">
+								    <input id="autocomplete" class="form-control" placeholder="Location" type="text" required/>
+							    </div>
+							    <div class="form-group">
+								    <input id="cityLat" type="text" hidden/>
+							    </div>
+							    <div class="form-group">
+								    <input id="cityLng" type="text" hidden/>
+							    </div>
 						      	<label for="gender-select">Select your Gender</label>
 							    <select class="form-control" name="gender" id="gender-select">
 							      <option>Male</option>
@@ -171,5 +187,19 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		function initialize() {
+			var input = document.getElementById('autocomplete');
+			var autocomplete = new google.maps.places.Autocomplete((input), {types: ['(cities)']});
+			google.maps.event.addListener(autocomplete, 'place_changed', function() {
+         	var place = autocomplete.getPlace();
+            document.getElementById('cityLat').value = place.geometry.location.lat();
+            document.getElementById('cityLng').value = place.geometry.location.lng();
+   		 });  
+		}
+
+		google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
 </body>
 </html>
