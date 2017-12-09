@@ -126,40 +126,43 @@ window.onload = () => {
     console.log(`Setting coordinates of current user to (${latitude},${longitude})`)
 
     if (latitude && longitude) {
-      var xhttp = new XMLHttpRequest()
-      xhttp.onreadstatechange = () => {
-        if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText)
+      var updateRequest = new XMLHttpRequest()
+      updateRequest.onreadystatechange = function() {
+        if (updateRequest.readyState == 4 && updateRequest.status == 200) {
           console.log('Update profile coordinates successful.')
 
           // Get users
-          var xhttp = new XMLHttpRequest()
-          xhttp.onreadstatechange = () => {
-            if (this.readyState == 4 && this.status == 200) {
+          var getUsersRequest = new XMLHttpRequest()
+          getUsersRequest.onreadystatechange = function() {
+            if (getUsersRequest.readyState == XMLHttpRequest.DONE && getUsersRequest.status == 200) {
               console.log('Retrieved first set of users.')
-              const response = this.responseText
-              const userJson = JSON.parse(response)
-              for (user in userJson) {
-                upcomingUsers.push(userJson[user])
+
+              // Parse response into JSON
+              const responseText = getUsersRequest.responseText
+              const responseJSON = JSON.parse(responseText)
+
+              // Parse response JSON to get users
+              const userArr = JSON.parse(responseJSON.result)
+              for (var i = 0; i < userArr.length; i++) {
+                const user = userArr[i]
+                upcomingUsers.push(user)
               }
               setNextUserAsCurrent()
             }
           }
-          const url = '/getUsers'
-          xhttp.open("GET", url)
-          xhttp.send()
+          const url = '/api/getUsers'
+          getUsersRequest.open("GET", url)
+          getUsersRequest.send()
 
-        } else if (this.status == 404) {
+        } else if (updateRequest.status == 404) {
           console.error('404: Could not send location.')
-        } else {
-          console.log(`Status: ${this.status}`)
         }
       }
       const url = '/api/updateProfile'
       const jsonStr = JSON.stringify({location: `${latitude},${longitude}`})
-      xhttp.open('POST', url)
-      xhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
-      xhttp.send(jsonStr)
+      updateRequest.open('POST', url)
+      updateRequest.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
+      updateRequest.send(jsonStr)
     }
 
     // Temporary placeholder
@@ -174,7 +177,7 @@ window.onload = () => {
    */
   const getNextUsers = () => {
     var xhttp = new XMLHttpRequest()
-    xhttp.onreadstatechange = () => {
+    xhttp.onreadystatechange = () => {
       if (this.readyState == 4 && this.status == 200) {
         const response = this.responseText
         const userJson = JSON.parse(response)
@@ -183,7 +186,7 @@ window.onload = () => {
         }
       }
     }
-    const url = '/getUsers'
+    const url = '/api/getUsers'
     xhttp.open("GET", url)
     xhttp.send()
   }
@@ -206,10 +209,11 @@ window.onload = () => {
       console.error('Invalid swipe direction.')
 
     var xhttp = new XMLHttpRequest()
-    xhttp.onreadstatechange = () => {
-      if (this.readyState == 4 && this.status == 200) {
-        const response = this.responseText
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+        const response = xhttp.responseText
         const json = JSON.parse(response)
+        console.log(json)
         if (json.isMatch) {
           match = {
             id: json.id,
@@ -219,12 +223,13 @@ window.onload = () => {
         }
       }
     }
-    const url = "users/..."
+    const url = '/api/swipe'
     const jsonStr = JSON.stringify({
-      id: `${currentPotentialMatch.id}`,
-      like: `${dir === 'right' ? true : false}`,
+      id: `${currentPotentialMatch._id.$oid}`,
+      like: dir === 'right' ? true : false,
     })
     xhttp.open("POST", url)
+    xhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
     xhttp.send(jsonStr)
 
     // Temporary placeholder
@@ -247,7 +252,7 @@ window.onload = () => {
       currentPotentialMatch = nextUser[0]
 
       // profilePic.innerHTML = currentPotentialMatch.profilePic
-      name.innerHTML = currentPotentialMatch.profile.name
+      name.innerHTML = currentPotentialMatch.profile.first + ' ' + currentPotentialMatch.profile.last
       age.innerHTML = currentPotentialMatch.profile.age
       bio.innerHTML = currentPotentialMatch.profile.bio
       location.innerHTML = currentPotentialMatch.profile.location
