@@ -64,6 +64,7 @@ window.onload = () => {
   // Local storage of current user's coordinates
   var coords = {}
 
+  // Current user being looked at on Meet page
   var currentPotentialMatch = {}
 
   // Match if it currently exists (when modal is showing)
@@ -183,8 +184,10 @@ window.onload = () => {
   }
 
   const fillUserQueue = () => {
-    const numUsersNeeded = 30 - upcomingUsers.length
-    getNextUsers(numUsersNeeded)
+    // Fill queue to 10-15 users
+    const numCalls = 2 - (upcomingUsers.length / 5)
+    for (var i = 0; i < numCalls); i++)
+      getNextUsers() // Always retrieves 5 users
   }
 
   /* Author: Ryan Stenberg
@@ -239,10 +242,10 @@ window.onload = () => {
       currentPotentialMatch = nextUser[0]
 
       // profilePic.innerHTML = currentPotentialMatch.profilePic
-      name.innerHTML = currentPotentialMatch.name
-      age.innerHTML = currentPotentialMatch.age
-      bio.innerHTML = currentPotentialMatch.bio
-      location.innerHTML = currentPotentialMatch.location
+      name.innerHTML = currentPotentialMatch.profile.name
+      age.innerHTML = currentPotentialMatch.profile.age
+      bio.innerHTML = currentPotentialMatch.profile.bio
+      location.innerHTML = currentPotentialMatch.profile.location
     }
   }
 
