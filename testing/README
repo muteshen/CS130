@@ -16,12 +16,12 @@ untar it and move geckodriver into venv/bin
 
 use your favorite text editor to modify seleniumExample.py
 
-modify my_path to file://DIRECTORY_NAME/cs130-cinder/testing/cinder/public/
-
-eg.
-for example my_path = "file://home/USER_NAME/Desktop/cs130-cinder/testing/cinder/public/
 
 cp seleniumExample.py into venv
+
+MAKE SURE your current Directory is venv so the seleniumExample.py
+because in the seleniumExample.py script the script assumes the script
+is in ~/CS130-cinder/testing/venv and you are currently in venv
 
 cd into venv
 
