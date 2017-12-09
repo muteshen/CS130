@@ -8,22 +8,24 @@ from datetime import *
 
 @main.route('/', methods=["GET", "POST"])
 def index():
-    c = Connection(liked_you = [], swiped = []).save()
-    p = Profile(first="Solomon", last="Wang", gender="M", birthday="1995-09-25", photo="www.google.com", bio="haha")
-    u1 = User(cid=c, email="sw@gmail.com", profile=p, new_matches=False, interested_in="F",
-            location="Los Angeles", answers=[])
-    u1.password = "password123" #needed to hash password
-    u1.save()
-    users = []
-    for user in User.objects:
-        users += [user]
-    f = Feedback(uid1=users[0], uid2=users[1], response=[]).save()
-    m = Match(uid1=users[0], uid2=users[1], match_date=datetime.today(), feedback_id=f).save()
+    # c = Connection(liked_you = [], swiped = []).save()
+    # p = Profile(first="Solomon", last="Wang", gender="M", age=23, photo="www.google.com", bio="haha")
+    # u1 = User(cid=c, email="sw@gmail.com", profile=p, new_matches=False, interested_in="F",
+    #         location="Los Angeles", answers=[])
+    # u1.password = "password123" #needed to hash password
+    # u1.save()
+    # users = []
+    # for user in User.objects:
+    #     users += [user]
+    # f = Feedback(uid1=users[0], uid2=users[1], response=[]).save()
+    # m = Match(uid1=users[0], uid2=users[1], match_date=datetime.today(), feedback_id=f).save()
 
     # for m in Match.objects:
     #     print(m.match_date)
 
-    print(users[0])
+    # print(users[0])
+
+    # User.objects(email="sw@gmail.com").delete()
 
     print("Testing Here")
     return render_template("home.html")
