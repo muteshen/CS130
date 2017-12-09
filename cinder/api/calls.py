@@ -1,13 +1,15 @@
-from flask import render_template, session, redirect, url_for, jsonify
+from flask import render_template, session, redirect, url_for, jsonify, request
+from flask_login import login_user
 from . import api
 from ..models import *
 from ..sampleDB import *
 from .. import db
 
+
 #note all these routes must be prefixed with /api to be accessed
 #ie localhost:5000/api/createProfile
 @api.route('/getUsers/<uid>', methods=["GET"])
-def getUsers(uid):
+def getUsers():
     return profiles
 
 @api.route('/swipe', methods=["POST"])
@@ -25,7 +27,17 @@ def myProfile():
 
 @api.route('/login', methods=["POST"])
 def login():
-    return True
+    email = request.form['email']
+    password = request.form['password']
+    user = User.objects(email=email)
+    if user is None or len(user) == 0:
+        return render_template('home.html')
+    user = user[0]
+    if user.password_hash == password:#user.verify_password(password):
+        login_user(user, True)
+        return redirect(url_for('main.meet'))
+    return render_template('home.html')
+    #return True
 
 @api.route('/logout', methods=["POST"])
 def logout():

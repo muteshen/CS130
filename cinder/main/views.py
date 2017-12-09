@@ -32,3 +32,14 @@ def index():
 @login_required
 def profile():
     return "<h1>HELLO PROFILE</h1>"
+
+@main.route('/meet')
+@login_required
+def meet():
+    return render_template("meet.html")
+
+
+
+
+
+
