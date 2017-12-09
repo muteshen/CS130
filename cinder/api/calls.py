@@ -9,7 +9,7 @@ from .. import db
 @api.route('/getUsers/', methods=["GET"])
 def getUsers():
     defaultGender = 'M'
-    users = User.objects(profile__gender=defaultGender).only('profile')[:5]
+    users = User.objects(profile__gender=defaultGender).only('profile','id')[:5]
     return jsonify(result = users.to_json())
 
 @api.route('/swipe', methods=["POST"])
