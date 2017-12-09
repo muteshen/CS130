@@ -21,7 +21,7 @@ class User(UserMixin, Document):
     profile = EmbeddedDocumentField(Profile, required=True)
     interested_in = StringField(max_length=1, choices=GENDERS, required=True)
     answers = ListField(StringField())
-    location = StringField()
+    location = StringField() #coordinates seperated by a comma
     # login = StringField(max_length=80, unique=True)
 
     @property
