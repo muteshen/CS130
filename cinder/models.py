@@ -8,7 +8,7 @@ class Profile(EmbeddedDocument):
     first = StringField(max_length=50)
     last = StringField(max_length=50)
     gender = StringField(max_length=1, choices=GENDERS)
-    birthday = DateTimeField()
+    age = IntField()
     photo = FileField() #GridGS
     bio = StringField()
 
