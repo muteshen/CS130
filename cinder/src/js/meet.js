@@ -4,6 +4,7 @@
  */
 
 // Only needed for testing
+/********************** DUMMY DATA START **************************
 const dummyUsers = [
   {
     id: 'ankfq214n5011',
@@ -41,6 +42,7 @@ const dummyUsers = [
     location: 'Los Gatos',
   },
 ]
+********************** DUMMY DATA END ***************************/
 
 window.onload = () => {
 
@@ -57,11 +59,9 @@ window.onload = () => {
     }
   */
   var upcomingUsers = []
-  upcomingUsers = dummyUsers  // Only needed for testing
+  // upcomingUsers = dummyUsers  // Only needed for testing
 
-  // Local storage of current user's coordinates
-  var coords = {}
-
+  // Current user being looked at on Meet page
   var currentPotentialMatch = {}
 
   // Match if it currently exists (when modal is showing)
@@ -105,27 +105,13 @@ window.onload = () => {
    *        then get info for first 30 users in the area
    */
   const initialize = () => {
-      // if (navigator.geolocation) {
-      //   navigator.geolocation.getCurrentPosition(setCoords)
-      // } else {
-      //   console.error("Geolocation is not supported by this browser.")
-      // }
-
-      // var xhttp = new XMLHttpRequest()
-      // xhttp.onreadstatechange = () => {
-      //   if (this.readyState == 4 && this.status == 404) {
-      //     const userString = this.responseText
-      //     upcomingUsers = // code to parse string of userJsons into array
-      //     setNextUserAsCurrent()
-      //   }
-      // }
-      // const url = "users/..."
-      // const data = `${myId}, 30`
-      // xhttp.open("POST", url)
-      // xhttp.send(data)
-
-      // Temporary placeholder
-      setNextUserAsCurrent()
+      console.log("Initializing...")
+      console.log("Getting current location")
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(setCoords)
+      } else {
+        console.error("Geolocation is not supported by this browser.")
+      }
   }
 
   /* Author: Ryan Stenberg
@@ -137,22 +123,50 @@ window.onload = () => {
    */
   const setCoords = (position) => {
     const { latitude, longitude } = position.coords
-    coords[lat] = latitude
-    coords[lon] = longitude
+    console.log(`Setting coordinates of current user to (${latitude},${longitude})`)
 
     if (latitude && longitude) {
-      // var xhttp = new XMLHttpRequest()
-      // xhttp.onreadstatechange = () => {
-      //   if (this.status == 404) console.error('404: Could not send location.')
-      // }
-      // const url = "users/..."
-      // const data = `${myId}, ${latitude}, ${longitude}`
-      // xhttp.open("POST", url)
-      // xhttp.send(data)
+      var updateRequest = new XMLHttpRequest()
+      updateRequest.onreadystatechange = function() {
+        if (updateRequest.readyState == 4 && updateRequest.status == 200) {
+          console.log('Update profile coordinates successful.')
+
+          // Get users
+          var getUsersRequest = new XMLHttpRequest()
+          getUsersRequest.onreadystatechange = function() {
+            if (getUsersRequest.readyState == XMLHttpRequest.DONE && getUsersRequest.status == 200) {
+              console.log('Retrieved first set of users.')
+
+              // Parse response into JSON
+              const responseText = getUsersRequest.responseText
+              const responseJSON = JSON.parse(responseText)
+
+              // Parse response JSON to get users
+              const userArr = JSON.parse(responseJSON.result)
+              for (var i = 0; i < userArr.length; i++) {
+                const user = userArr[i]
+                upcomingUsers.push(user)
+              }
+              setNextUserAsCurrent()
+            }
+          }
+          const url = '/api/getUsers'
+          getUsersRequest.open("GET", url)
+          getUsersRequest.send()
+
+        } else if (updateRequest.status == 404) {
+          console.error('404: Could not send location.')
+        }
+      }
+      const url = '/api/updateProfile'
+      const jsonStr = JSON.stringify({location: `${latitude},${longitude}`})
+      updateRequest.open('POST', url)
+      updateRequest.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
+      updateRequest.send(jsonStr)
     }
 
     // Temporary placeholder
-    console.log(latitude, longitude)
+    // console.log(latitude, longitude)
   }
 
   /* Author: Ryan Stenberg
@@ -161,25 +175,27 @@ window.onload = () => {
    * Notes: Fills upcomingUsers array with next num users in the local area
    *        Swipe right means user is interested
    */
-  const getNextUsers = (num) => {
-    if (num > 0) {
-      // var xhttp = new XMLHttpRequest()
-      // xhttp.onreadstatechange = () => {
-      //   if (this.readyState == 4 && this.status == 200) {
-      //     const userJson = this.responseText
-      //     upcomingUsers.push(// Code to parse string into dictionary)
-      //   }
-      // }
-      // const url = "users/..."
-      // const data = `${myId}, ${num}`
-      // xhttp.open("POST", url)
-      // xhttp.send(data)
-    } else console.error("Need location in order to retrieve nearby users.")
+  const getNextUsers = () => {
+    var xhttp = new XMLHttpRequest()
+    xhttp.onreadystatechange = () => {
+      if (this.readyState == 4 && this.status == 200) {
+        const response = this.responseText
+        const userJson = JSON.parse(response)
+        for (user in userJson) {
+          upcomingUsers.push(userJson[user])
+        }
+      }
+    }
+    const url = '/api/getUsers'
+    xhttp.open("GET", url)
+    xhttp.send()
   }
 
   const fillUserQueue = () => {
-    const numUsersNeeded = 30 - upcomingUsers.length
-    getNextUsers(numUsersNeeded)
+    // Fill queue to 10-15 users
+    const numCalls = 2 - (upcomingUsers.length / 5)
+    for (var i = 0; i < numCalls; i++)
+      getNextUsers() // Always retrieves 5 users
   }
 
   /* Author: Ryan Stenberg
@@ -192,27 +208,37 @@ window.onload = () => {
     if (dir !== 'left' && dir !== 'right')
       console.error('Invalid swipe direction.')
 
-    // var xhttp = new XMLHttpRequest()
-    // xhttp.onreadstatechange = () => {
-    //   if (this.readyState == 4 && this.status == 200) {
-    //     matchObject = this.responseText
-    //     if (matchObject)
-    //       match = matchObject
-    //       showModal(match)
-    //   }
-    // }
-    // const url = "users/..."
-    // const data = `${myId}, ${currentPotentialMatch.id}, ${dir === 'right'}`
-    // xhttp.open("POST", url)
-    // xhttp.send(data)
+    var xhttp = new XMLHttpRequest()
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+        const response = xhttp.responseText
+        const json = JSON.parse(response)
+        console.log(json)
+        if (json.isMatch) {
+          match = {
+            id: json.id,
+            profile: json.profile,
+          }
+          showModal(match)
+        }
+      }
+    }
+    const url = '/api/swipe'
+    const jsonStr = JSON.stringify({
+      id: `${currentPotentialMatch._id.$oid}`,
+      like: dir === 'right' ? true : false,
+    })
+    xhttp.open("POST", url)
+    xhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
+    xhttp.send(jsonStr)
 
     // Temporary placeholder
-    if (dir === 'right') showModal(currentPotentialMatch)
+    // if (dir === 'right') showModal(currentPotentialMatch)
 
     setNextUserAsCurrent()
 
-    // if (upcomingUsers.length < 10)
-    //   fillUserQueue()
+    if (upcomingUsers.length < 4)
+      fillUserQueue()
   }
 
   /* Author: Ryan Stenberg
@@ -226,10 +252,10 @@ window.onload = () => {
       currentPotentialMatch = nextUser[0]
 
       // profilePic.innerHTML = currentPotentialMatch.profilePic
-      name.innerHTML = currentPotentialMatch.name
-      age.innerHTML = currentPotentialMatch.age
-      bio.innerHTML = currentPotentialMatch.bio
-      location.innerHTML = currentPotentialMatch.location
+      name.innerHTML = currentPotentialMatch.profile.first + ' ' + currentPotentialMatch.profile.last
+      age.innerHTML = currentPotentialMatch.profile.age
+      bio.innerHTML = currentPotentialMatch.profile.bio
+      location.innerHTML = currentPotentialMatch.profile.location
     }
   }
 
@@ -241,7 +267,7 @@ window.onload = () => {
   const showModal = (matchedUser) => {
     // matchPic = matchedUser.pic
     console.log(matchedUser)
-    matchName.innerHTML = matchedUser.name
+    matchName.innerHTML = matchedUser.profile.name
     $("#myModal").modal("show")
   }
 
