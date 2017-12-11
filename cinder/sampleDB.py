@@ -10,6 +10,7 @@ user1 = {
     'gender': 'female',
     'interest': 'male',
     'location': 'chicago',
+    'success': True,
     'bio': "I like long walks on the sidewalks and short jumps into the pit of despair. LOL"
 }
 
