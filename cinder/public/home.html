@@ -15,6 +15,19 @@
 	<!-- To change color of hamburger icon when hovering over it -->
 	<script type="text/javascript">
 		$(document).ready(function(){
+	
+
+			$(document).on('change', ':file', function() {
+			    var input = $(this),
+			        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+			        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+			    input.trigger('fileselect', [numFiles, label]);
+			});
+
+
+			$(':file').on('fileselect', function(event, numFiles, label) {
+		        $("#file_name").val(label);
+			});
 
 			$("#upload-btn").click(function(e){
 				e.preventDefault();
@@ -247,8 +260,20 @@
 								    <textarea name="bio" class="form-control" id="bio" rows="5"></textarea>
 								</div>
 								<!-- Photo Upload -->
-								<button id="upload-btn" class="modal-btn btn btn-warning" style="text-align: center;">Upload a Photo
-								</button>
+								<h3 class="photo-upload-header">Upload a Profile Photo:</h3>
+								
+								 <div class="form-group">
+								    <input type="file" accept="image/*" class="form-control-file" name="profile_image" required>
+								 </div>
+<!-- 
+								<div class="form-group bottom-group">
+									<label class="btn btn-warning modal-btn">
+									    Browse <input type="file" accept="image/*" style="display: none;" name="profile_image">
+									</label>
+									<input type="text" id="file_name" value="No file selected" name="file-name" required readonly>
+								</div>
+								<small id="file-error" class="form-text">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small> -->
+
 						      </div>
 						      <!-- Submit button -->
 						      <div class="modal-footer">

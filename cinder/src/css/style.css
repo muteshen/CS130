@@ -424,6 +424,21 @@ textarea{
   font-weight: 300 !important;
 }
 
+.custom-file-input{
+  font-weight: 300;
+}
+
+.photo-upload-header{
+  font-size: 14px;
+  font-weight: 700; 
+}
+
+#file_name{
+  width: 80% !important;
+  border: none !important;
+}
+
+
 /* Profile Page Styling */
 
 
