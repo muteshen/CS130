@@ -3,7 +3,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from . import login_manager
 
-GENDERS = ('M', 'F', 'N')
+#o=other
+GENDERS = ('M', 'F', 'O')
 class Profile(EmbeddedDocument):
     first = StringField(max_length=50)
     last = StringField(max_length=50)

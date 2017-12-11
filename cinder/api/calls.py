@@ -1,24 +1,31 @@
 from flask import render_template, session, redirect, url_for, jsonify, request
 from flask_login import login_user
+from werkzeug.security import generate_password_hash, check_password_hash
 from . import api
-from ..models import *
+from ..models import User, Profile, Connection, Match, Response, Feedback
 from ..sampleDB import *
 from .. import db
+from random import random
+from .forms import RegistrationForm
 
 
 #note all these routes must be prefixed with /api to be accessed
 #ie localhost:5000/api/createProfile
-
+defaultGender = 'M'
 @api.route('/getUsers/', methods=["GET"])
 def getUsers():
-    defaultGender = 'M'
     users = User.objects(profile__gender=defaultGender).only('profile','id')[:5]
-    return jsonify(result = users.to_json())
-
+    resp = jsonify(result = users.to_json())
+    return resp
 
 @api.route('/swipe', methods=["POST"])
 def swipe():
-    return isMatch
+    if random() < 0.5: #TODO: Check user connections to see if he was swiped back
+        return ('', 204) #empty response
+    else:
+        users = User.objects(profile__gender=defaultGender).only('profile','id')[0]
+        return jsonify(result = users.to_json())
+
 
 @api.route('/myFeedback', methods=["POST"])
 def myFeedback():
@@ -54,5 +61,13 @@ def updateProfile():
 
 @api.route('/createProfile', methods=["POST"])
 def createProfile():
-    resp = jsonify(user1)
-    return resp
+    form = request.form
+    print form
+    profile = Profile(first=form['first'], last=form['last'], gender=form['gender'][0], age=form['age'], bio=form['bio']) #need photo
+    connection = Connection().save()
+    user = User(cid=connection, email=form['email'], new_matches=False, profile=profile,
+        interested_in=form['interest'][0]).save() #need location
+    user.password_hash = generate_password_hash(form['pswd'])
+    user.save()
+    login_user(user, True)
+    return "<h4> header help </h4>"
