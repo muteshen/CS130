@@ -53,7 +53,7 @@
                     </li>
                     <li class="matches_button">
                     	<button type="button" class="btn btn-primary active" onclick="displayUnmatchModal()">unmatch</button>
-						<button type="button" class="btn btn-primary active">report</button>
+						<button type="button" class="btn btn-primary active" onclick="displayReportModal()">report</button>
                     </li>
                 </ul>
             </nav>
@@ -67,14 +67,13 @@
     	<div class="matchProfileItem">
 	    	<p id="match_profile_bio"></p>
 	    </div>
-	    
     </div>
 
     <div id="myUnmatchModal" class="modal myModal">
             <!-- Modal content -->
           <div class="modal-content modalContent">
-            <div id="modalHeader" class="modal-header">
-              <span class="close">&times;</span>
+            <div id="modalHeader" class="modal-header matchModalHeader">
+              <span class="close" id="closeUnmatch">&times;</span>
               <h2>Are you sure you want to unmatch?</h2>
               <div id="unmatchModalButtons">
               	<button type="button" class="btn btn-primary active">Yes</button>
@@ -87,19 +86,18 @@
     <div id="myDateModal" class="modal myModal">
             <!-- Modal content -->
           <div class="modal-content modalContent">
-            <div id="modalHeader" class="modal-header">
-              <span class="close">&times;</span>
+            <div id="dateModalHeader" class="modal-header matchModalHeader">
+              <span class="close" id="closeDate">&times;</span>
               <h2>Pick a date for your 'date'!</h2>
             </div>
             <div id="dateModalBody" class="modal-body">
             <!-- calendar interface -->
             	<div class="month"> 
 				  <ul>
-				    <li class="prev">&#10094;</li>
-				    <li class="next">&#10095;</li>
-				    <li>
-				      August<br>
-				      <span style="font-size:18px">2017</span>
+				    <li class="prev"><a href="#" onclick="setMonth(-1)">&#10094;</a>></li>
+				    <li class="next"><a href="#" onclick="setMonth(1)">&#10095;</a></li>
+				    <li id="monthText">
+				     
 				    </li>
 				  </ul>
 				</div>
@@ -114,19 +112,53 @@
 				  <li>Su</li>
 				</ul>
 
-				<ul class="days"> 
-				  <li>1</li>
-				  <li>2</li>
-				  <li>3</li>
-				  <li>4</li>
-				  <li>5</li>
-				  <li>6</li>
-				  <li>7</li>
-				  <li>8</li>
-				  <li>9</li>
-				  <li><span class="active">10</span></li>
-				  <li>11</li>
+				<ul class="days" id="dayList"> 
 				</ul>
+            </div>
+            <div id="modalFooter" class="modal-footer">
+              <button type="button" onclick="submitDate()" class="btn btn-outline-dark btn-sm">Submit</button>
+            </div>
+          </div>
+    </div>
+
+    <div id="myReportModal" class="modal myModal">
+            <!-- Modal content -->
+          <div class="modal-content modalContent">
+            <div id="reportModalHeader" class="modal-header matchModalHeader">
+              <span class="close" id="closeReport">&times;</span>
+              <h2>Report User</h2>
+              <h3>Is this person bothering you? Tell us what they did.</h3>
+              <ul style="list-style-type:disc">
+            		<li>
+            			<a href="#">Inappropriate Messages</a>
+            		</li>
+            		<li>
+            			<a href="#">Inappropriate Photos</a>
+            		</li>
+            		<li>
+            			<a href="#">Bad offline Behavior</a>
+            		</li>
+            		<li>
+            			<a href="#">Feels Like Spam</a>
+            		</li>
+            		<li>
+            			<a href="#">Other</a>
+            		</li>
+            	</ul>
+            </div>
+          </div>
+    </div>
+
+     <div id="myCongratsModal" class="modal myModal">
+            <!-- Modal content -->
+          <div class="modal-content modalContent">
+            <div id="congratsModalHeader" class="modal-header matchModalHeader">
+              <span class="close" id="closeCongrats">&times;</span>
+	             <h3 id="sureDateText">Are you sure you want your date to be on</h3>
+	              <div id="unmatchModalButtons">
+	              	<button type="button" class="btn btn-primary active">Yes</button>
+				  	<button type="button" class="btn btn-primary active">No</button>
+				  </div>
             </div>
           </div>
     </div>
@@ -171,32 +203,259 @@
 
 	 // Get the modal
     var unmatchModal = document.getElementById('myUnmatchModal');
+	var dateModal = document.getElementById('myDateModal');
+    var reportModal = document.getElementById('myReportModal');
+    var congratsModal = document.getElementById('myCongratsModal');
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+    var span1 = document.getElementById("closeUnmatch");
+    var span2 = document.getElementById("closeDate");
+    var span3 = document.getElementById("closeReport");
+    var span4 = document.getElementById("closeCongrats");
 
-    var dateModal = document.getElementById('myDateModal');
+    var curr_date;
+    var date_date;
+    
+    function displayDateModal()
+    {
+    	var m_date = new Date();
+    	curr_date = {date: m_date.getDate(), day: m_date.getDay(), month: m_date.getMonth(), year: m_date.getFullYear()};
+    	date_date = curr_date;
+
+    	var num_days = 0;
+    	var leap_year = 0;
+    	if(curr_date.year%4 == 0)
+    	{
+    		if(curr_date.year%100 == 0){
+    			if(curr_date.year%400 == 0)
+    				leap_year = 1;
+    		}else
+    			leap_year = 1;
+    	}
+
+    	if(	curr_date.month == 0 ||
+    		curr_date.month == 2 ||
+    		curr_date.month == 4 ||
+    		curr_date.month == 6 ||
+    		curr_date.month == 7 ||
+    		curr_date.month == 9 ||
+    		curr_date.month == 11)
+    		num_days = 31;
+    	else if(curr_date.month == 1)
+    		num_days = 28 + leap_year;
+    	else if(curr_date.month == 3 || curr_date.month == 5 || curr_date.month == 8 || curr_date.month == 10)
+    		num_days = 30;
+    	else
+ 			num_days = -1;
+ 		if(num_days == -1)
+ 			console.log("date error, month is invalid");
+ 		var month_text = document.getElementById("monthText");
+ 		var month_string;
+		switch(curr_date.month)
+		{
+			case 0:
+				month_string = "January";
+				break;
+			case 1:
+				month_string = "February";
+				break;
+			case 2:
+				month_string = "March";
+				break;
+			case 3:
+				month_string = "April";
+				break;
+			case 4:
+				month_string = "May";
+				break;
+			case 5:
+				month_string = "June";
+				break;
+			case 6:
+				month_string = "July";
+				break;
+			case 7:
+				month_string = "August";
+				break;
+			case 8:
+				month_string = "September";
+				break;
+			case 9:
+				month_string = "October";
+				break;
+			case 10:
+				month_string = "November";
+				break;
+			case 11:
+				month_string = "December";
+				break;
+			default:
+				month_string = "";
+				console.log("month error");
+		}
+    	while(monthText.firstChild){
+    		monthText.removeChild(monthText.firstChild);
+    	}
+    	var month_node = document.createTextNode(month_string);
+    	month_text.appendChild(month_node);
+		$('#monthText').append("<br>");
+		$('#monthText').append("<span style='font-size:18px'>2017</span>");
+
+    	var day_list = document.getElementById("dayList");
+    	while(day_list.firstChild){
+    		day_list.removeChild(day_list.firstChild);
+    	}
+    	for(var i = 1; i <= num_days;i++)
+    	{
+    		var m_string;
+    		if(i == curr_date.date)
+    		{
+    			m_string = "<li><span class='active'><a href='#' onclick='setDate(" + i + "," + date_date.month + ", curr_date.year)'>" + i + "</a></span></li>";
+    		}else
+    		{
+    			m_string = "<li><a href='#' onclick='setDate(" + i + ", curr_date.month, curr_date.year)'>" + i + "</a></li>"
+    		}
+    		$('#dayList').append(m_string);
+    	}
+    	dateModal.style.display = "block";
+    }
+
+    function setMonth(inc)
+    {
+    	var m_month = date_date.month + inc;
+    	if(m_month > 11)
+    	{
+    		m_month = 0;
+    		date_date.year = date_date.year + 1;
+    	}
+    	else if(m_month < 0){
+    		m_month = 11;
+    		date_date.year = date_date.year - 1;
+    	}
+    	date_date.month = m_month;
+
+    	//now alter the month display in calendar
+    	var myNode = document.getElementById("monthText");
+    	while(myNode.firstChild){
+    		myNode.removeChild(myNode.firstChild);
+    	}
+    	var month_string;
+		switch(m_month)
+		{
+			case 0:
+				month_string = "January";
+				break;
+			case 1:
+				month_string = "February";
+				break;
+			case 2:
+				month_string = "March";
+				break;
+			case 3:
+				month_string = "April";
+				break;
+			case 4:
+				month_string = "May";
+				break;
+			case 5:
+				month_string = "June";
+				break;
+			case 6:
+				month_string = "July";
+				break;
+			case 7:
+				month_string = "August";
+				break;
+			case 8:
+				month_string = "September";
+				break;
+			case 9:
+				month_string = "October";
+				break;
+			case 10:
+				month_string = "November";
+				break;
+			case 11:
+				month_string = "December";
+				break;
+			default:
+				month_string = "";
+				console.log("month error");
+		}
+    	var month_node = document.createTextNode(month_string);
+    	myNode.appendChild(month_node);
+		$('#monthText').append("<br>");
+		$('#monthText').append("<span style='font-size:18px'>" + date_date.year + "</span>");
+
+    }
+
+    function setDate(day, month, year)
+    {
+    	// console.log(day);
+    	// console.log(month);
+    	// console.log(year);
+    	date_date.date = day;
+    }
+
+    //this function hides the dateModal and brings up the congratsModal
+    function submitDate()
+    {
+    	dateModal.style.display = "none";
+    	congratsModal.style.display = "block";
+    	var temp = document.getElementById("sureDateText");
+    	var m_string = date_date.month + "/" + date_date.date + "/" + date_date.year;
+    	var string_node = document.createTextNode(m_string + "?");
+    	temp.appendChild(string_node);
+    }
+
+
+    function displayReportModal()
+    {
+    	reportModal.style.display = "block";
+    }
 
     function displayUnmatchModal()
     {
     	unmatchModal.style.display = "block";
     }
 
-    function displayDateModal()
+    function testStuff()
     {
-    	dateModal.style.display = "block";
+    	var m_date = new Date();
+    	var curr_date = {date: m_date.getDate(), day: m_date.getDay(), month: m_date.getMonth(), year: m_date.getFullYear()};
+    	console.log(curr_date.date);
+    	console.log(curr_date.day);
+    	console.log(curr_date.month);
+    	console.log(curr_date.year);
+
     }
 
     // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-    	dateModal.style.display = "none";
+    span1.onclick = function() {
     	unmatchModal.style.display = "none";
+    }
+    span2.onclick = function() {
+    	dateModal.style.display = "none";
+    }
+    span3.onclick = function() {
+    	reportModal.style.display = "none";
+    }
+    span4.onclick = function(){
+    	congratsModal.style.display = "none";
     }
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
-    	if (event.target == modal) {
+    	if (event.target == unmatchModal) {
             unmatchModal.style.display = "none";
+        }
+        if (event.target == dateModal) {
+            dateModal.style.display = "none";
+        }
+        if (event.target == reportModal) {
+            reportModal.style.display = "none";
+        }
+        if (event.target == congratsModal) {
+            congratsModal.style.display = "none";
         }
     }
 </script>
