@@ -5,16 +5,45 @@
 	<link rel="stylesheet" type="text/css" href="../src/css/style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDioh5mGQkod645juHXUlcPQsx-e8uhZDg&libraries=places"></script>
+
 
 	<title>Cinder</title>
+
+
 
 	<!-- To change color of hamburger icon when hovering over it -->
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#modal-submit").click(function(){
-				window.location = "./meet.html";
-				alert("Thank you for making an account!");
+
+			$("#modal-submit").submit(function(){
+
+				var first = $("input[name=first]").val();
+				var last = $("input[name=last]").val();
+				var email = $("input[name=email-modal]").val();
+				var password = $("input[name=pswd]").val();
+				var age = $("input[name=age]").val();
+				var gender = $("input[name=gender]").val();
+				var interest = $("input[name=interest]").val();
+				var bio = $("input[name=bio]").val();
+				var location = $("input[name=locaiton]").val();
+
+				var form = $(this);
+
+				$.ajax({
+				url: 'api.createProfile',
+				data : form.serialize(),
+				type: 'POST',
+				success: function(response) {
+				console.log(response);
+				},
+				error : function(error) {
+				console.log(error);
+				}
+				});
 			});
+
+			// $('#sign-modal').on('shown.bs.modal', initialize());
 
 
 			$(function() {
@@ -25,6 +54,22 @@
 			    $('.icon-bar').css('background-color', '');
 			  });
 			});
+		});
+
+		$("#log-in-form").submit(function(){
+		var form = $(this);
+		$.ajax({
+		url: 'api.login',
+		data : form.serialize(),
+		type: 'POST',
+		success: function(response) {
+		console.log(response);
+		},
+		error : function(error) {
+		console.log(error);
+		}
+
+		});
 		});
 	</script>
 </head>
@@ -40,16 +85,16 @@
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>
 		        </button>
-      			<a class="navbar-brand" href="home.html">Cinder</a>
+      			<a class="navbar-brand" href="/">Cinder</a>
     		</div>
 
     		<!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
     		<div class="collapse navbar-collapse" id="navbar-options">
     			<ul class="nav navbar-nav">
-    				<li><a href="home.html">Profile</a></li>
-    				<li><a href="./meet.html">Meet People</a></li>
-    				<li><a href="home.html">Matches</a></li>
-    				<li><a href="./yourFeedback.html">Feedback</a></li>
+    				<li><a href="/profile">Profile</a></li>
+    				<li><a href="/meet">Meet People</a></li>
+    				<li><a href="/matches">Matches</a></li>
+    				<li><a href="/your_feedback">Feedback</a></li>
     			</ul>
     		</div>
 		</div>
@@ -63,22 +108,32 @@
 			<div class="col-xs-12 col-sm-6">
 				<div class="jumbotron" id="sign-up-jumbotron">
 					<h3 class="sign-up-header">Start Dating Smarter</h3>
-					<form>
-						<div class="form-group">
+					<form id="log-in-form" method="post" action="{{ url_for('api.login') }}">
+						<!-- <div class="form-group">
 							 <input type="text" class="form-control sign-up-form" name="first" placeholder="First Name">
 						</div>
 						<div class="form-group">
 							 <input type="text" name="last" class="form-control sign-up-form"  placeholder="Last Name">
-						</div>
+						</div> -->
 						<div class="form-group">
 							 <input type="email" name="email" class="form-control sign-up-form"  aria-describedby="emailHelp" placeholder="Email" required>
 						</div>
 						<div class="form-group">
-							<input type="password" name="password" class="form-control sign-up-form" placeholder="Password">
+							<input type="password" name="password" class="form-control sign-up-form" placeholder="Password" required>
 						</div>
 						<div class="row" style="text-align: center;">
-							<div class="col-xs-4 col-xs-offset-2">
-								<button type="button" class="sign-btn btn btn-success" name="sign" data-toggle="modal" data-target="#sign-modal">Sign Up</button>
+							<div class="col-xs-12">
+								<button id="log" type="submit" class="sign-btn btn btn-warning">Log In</button>
+							</div>
+						<!-- *************** -->
+						<!-- 	<div class="col-xs-4">
+								<button type="submit" class="sign-btn btn btn-warning">Log In</button>
+							</div> -->
+						</div>
+					</form>
+					<h5 style="text-align: center;">OR</h5>
+					<div style="text-align: center;">
+								<button type="button" class="sign-btn btn btn-success" name="sign" data-toggle="modal" data-target="#sign-modal" onclick="initialize();">Sign Up</button>
 							</div>
 						<!-- Modal Sign in popup -->
 						<div id="sign-modal" class="modal fade" role="dialog">
@@ -88,14 +143,34 @@
 						    <div class="modal-content">
 						      <div class="modal-header">
 						        <button type="button" class="close" data-dismiss="modal">&times;</button>
-						        <h4 class="modal-title">A Few More Questions</h4>
+						        <h4 class="modal-title">Create Your Account</h4>
 						      </div>
-						      <form>
+						      <form method="post" action="{{ url_for('api.createProfile') }}">
 						      <div class="modal-body">
-
 						      	<div class="form-group">
-						      		<input type="number" name="age" class="form-control"  placeholder="Age">
+						      		<input type="text" name="first" class="form-control"  placeholder="First Name" required>
 						      	</div>
+						      	<div class="form-group">
+						      		<input type="text" name="last" class="form-control"  placeholder="Last Name" required>
+						      	</div>
+						      	<div class="form-group">
+						      		<input type="email" name="email-modal" class="form-control"  placeholder="Email" required>
+						      	</div>
+						      	<div class="form-group">
+						      		<input type="password" name="pswd" class="form-control"  placeholder="Password" required>
+						      	</div>
+						      	<div class="form-group">
+						      		<input type="number" name="age" class="form-control"  placeholder="Age" required>
+						      	</div>
+						      	<div class="form-group">
+								    <input id="autocomplete" class="form-control" placeholder="Location" type="text" required/>
+							    </div>
+							    <div class="form-group">
+								    <input id="cityLat" type="text" hidden/>
+							    </div>
+							    <div class="form-group">
+								    <input id="cityLng" type="text" hidden/>
+							    </div>
 						      	<label for="gender-select">Select your Gender</label>
 							    <select class="form-control" name="gender" id="gender-select">
 							      <option>Male</option>
@@ -112,28 +187,21 @@
 								    <label for="bio">Please Write a Short Bio:</label>
 								    <textarea name="bio" class="form-control" id="bio" rows="5"></textarea>
 								</div>
-								<button class="sign-btn btn btn-warning">
+								<button class="modal-btn btn btn-warning" style="text-align: center;">
 									Upload a Photo
 								</button>
 						      </div>
 						      <div class="modal-footer">
-						        <button id="modal-submit" name="sub"type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+						        <button id="modal-submit" name="sub" type="submit" class="btn btn-success">Create Account</button>
 						      </div>
 						      </form>
 						    </div>
 
 						  </div>
 						</div>
-						<!-- *************** -->
-							<div class="col-xs-4">
-								<button type="submit" class="sign-btn btn btn-warning">Log In</button>
-							</div>
-						</div>
-					</form>
-					<h5 style="text-align: center;">OR</h5>
-					<div style="text-align: center;">
+					<!-- <div style="text-align: center;">
 						<button class="loginBtn loginBtn--facebook">Login with Facebook</button>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -146,8 +214,8 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-12 col-sm-6" style="text-align: center;">
-				<img id="mockup_img" src="../src/images/monitor.png">
+			<div class="col-xs-12 col-sm-6" style="text-align: center; ">
+				<img id="mockup_img" src="../src/images/monitor.jpg">
 			</div>
 			<div class="col-xs-12 col-sm-6">
 				<ol class="landing-list">
@@ -158,5 +226,19 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		function initialize() {
+			var input = document.getElementById('autocomplete');
+			var autocomplete = new google.maps.places.Autocomplete((input), {types: ['(cities)']});
+			google.maps.event.addListener(autocomplete, 'place_changed', function() {
+         	var place = autocomplete.getPlace();
+            document.getElementById('cityLat').value = place.geometry.location.lat();
+            document.getElementById('cityLng').value = place.geometry.location.lng();
+   		 });
+		}
+
+		google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
 </body>
 </html>
