@@ -122,7 +122,7 @@
 						        <button type="button" class="close" data-dismiss="modal">&times;</button>
 						        <h4 class="modal-title">Create Your Account</h4>
 						      </div>
-		<!-- Modal Form starts here -->
+									<!-- Modal Form starts here -->
 						      <form id="modal-form"  method="post" action="{{ url_for('api.createProfile') }}">
 						      <div class="modal-body">
 						      	<!-- First Name -->
@@ -175,13 +175,13 @@
 							    <label class="sign-label" for="one">Do you like outdoor activities?</label>
 							    <div class="form-check" name="one">
 								  <label class="form-check-label">
-								    <input class="form-check-input" type="radio" name="q1" id="q1yes" value="yes">
+								    <input class="form-check-input" type="radio" name="q1" id="q1yes" value="0">
 								    Yes
 								  </label>
 								</div>
 								<div class="form-check">
 								  <label class="form-check-label">
-								    <input class="form-check-input" type="radio" name="q1" id="q1no" value="no">
+								    <input class="form-check-input" type="radio" name="q1" id="q1no" value="1">
 								    No
 								  </label>
 								</div>
@@ -189,13 +189,13 @@
 							 	 <label class="sign-label" for="two">Do you consider yourself an introvert or extrovert?</label>
 							    <div class="form-check" name="two">
 								  <label class="form-check-label">
-								    <input class="form-check-input" type="radio" name="q2" id="q2intro" value="Introvert">
+								    <input class="form-check-input" type="radio" name="q2" id="q2intro" value="0">
 								    Introvert
 								  </label>
 								</div>
 								<div class="form-check">
 								  <label class="form-check-label">
-								    <input class="form-check-input" type="radio" name="q2" id="q2extro" value="Extrovert">
+								    <input class="form-check-input" type="radio" name="q2" id="q2extro" value="1">
 								    Extrovert
 								  </label>
 								</div>
@@ -203,13 +203,13 @@
 								<label class="sign-label" for="three">Do you want to have children one day?</label>
 							    <div class="form-check" name="three">
 								  <label class="form-check-label">
-								    <input class="form-check-input" type="radio" name="q3" id="q3yes" value="Yes">
+								    <input class="form-check-input" type="radio" name="q3" id="q3yes" value="0">
 								    Yes
 								  </label>
 								</div>
 								<div class="form-check">
 								  <label class="form-check-label">
-								    <input class="form-check-input" type="radio" name="q3" id="q3no" value="No">
+								    <input class="form-check-input" type="radio" name="q3" id="q3no" value="1">
 								    No
 								  </label>
 								</div>
@@ -217,13 +217,13 @@
 								<label class="sign-label" for="four">Do you like the warm or the cold?</label>
 							    <div class="form-check" name="four">
 								  <label class="form-check-label">
-								    <input class="form-check-input" type="radio" name="q4" id="q4warm" value="Warm">
+								    <input class="form-check-input" type="radio" name="q4" id="q4warm" value="0">
 								    Warm
 								  </label>
 								</div>
 								<div class="form-check">
 								  <label class="form-check-label">
-								    <input class="form-check-input" type="radio" name="q4" id="q4cold" value="Cold">
+								    <input class="form-check-input" type="radio" name="q4" id="q4cold" value="1">
 								    Cold
 								  </label>
 								</div>
@@ -231,13 +231,13 @@
 								<label class="sign-label" for="five">Are you looking for something serious?</label>
 							    <div class="form-check" name="five">
 								  <label class="form-check-label">
-								    <input class="form-check-input" type="radio" name="q5" id="q5yes" value="Yes">
+								    <input class="form-check-input" type="radio" name="q5" id="q5yes" value="0">
 								    Yes
 								  </label>
 								</div>
 								<div class="form-check">
 								  <label class="form-check-label">
-								    <input class="form-check-input" type="radio" name="q5" id="q5no" value="No">
+								    <input class="form-check-input" type="radio" name="q5" id="q5no" value="1">
 								    No
 								  </label>
 								</div>

@@ -65,8 +65,9 @@ def createProfile():
     print form
     profile = Profile(first=form['first'], last=form['last'], gender=form['gender'][0], age=form['age'], bio=form['bio']) #need photo
     connection = Connection().save()
+    answers = [form['q1'], form['q2'], form['q3'], form['q4'], form['q5']]
     user = User(cid=connection, email=form['email'], new_matches=False, profile=profile,
-        interested_in=form['interest'][0]).save() #need location
+        interested_in=form['interest'][0], answers=answers, location=form['location']) #need location
     user.password_hash = generate_password_hash(form['pswd'])
     user.save()
     login_user(user, True)
