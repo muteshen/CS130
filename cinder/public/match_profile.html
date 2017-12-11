@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../src/css/style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<title>Cinder</title>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- This is for the mobile navbar display, hamburger icon displayed -->
+			<div class="navbar-header">
+		        <button id="hamburger" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-options" aria-expanded="false">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+		        </button>
+      			<a class="navbar-brand" href="/">Cinder</a>
+    		</div>
+
+    		<!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
+    		<div class="collapse navbar-collapse" id="navbar-options">
+					<ul class="nav navbar-nav">
+    				<li><a href="profile.html">Profile</a></li>
+    				<li><a href="meet.html">Meet People</a></li>
+    				<li><a href="matches.html">Matches</a></li>
+    				<li><a href="yourFeedback.html">Feedback</a></li>
+    			</ul>
+    		</div>
+		</div>
+	</nav>
+
+	 <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="match_profile_sidebar">
+                <ul class="list-unstyled components">
+                	 <li>
+                    <!-- name field added by generateData function below -->
+                    	<h2 class="match_profile_sidebar_element" id="match_profile_name"></h2>
+                    </li>
+                    <li>
+                        <img src="sarah.jpeg" alt="profile picture" class="match_profile_sidebar_element">
+                    </li>
+                    <li>
+                    	<h3 class="match_profile_sidebar_element" id="match_interestedIn">Interested-in: </h3>
+                    </li>
+                    <li>
+                    	<button type="button" class="btn btn-primary btn-lg match_profile_sidebar_element" id="date_button" onclick="displayDateModal()">It's a Date!</button>
+                    </li>
+                    <li class="matches_button">
+                    	<button type="button" class="btn btn-primary active" onclick="displayUnmatchModal()">unmatch</button>
+						<button type="button" class="btn btn-primary active">report</button>
+                    </li>
+                </ul>
+            </nav>
+    </div>
+    <div id="content">
+    	<!-- we populate the following elements by the generateData function below -->
+    	<div class="matchProfileItem">
+    		<h2 id="match_email">email: </h2>
+    		<h2 id="match_location">location: </h2>
+    	</div>
+    	<div class="matchProfileItem">
+	    	<p id="match_profile_bio"></p>
+	    </div>
+	    
+    </div>
+
+    <div id="myUnmatchModal" class="modal myModal">
+            <!-- Modal content -->
+          <div class="modal-content modalContent">
+            <div id="modalHeader" class="modal-header">
+              <span class="close">&times;</span>
+              <h2>Are you sure you want to unmatch?</h2>
+              <div id="unmatchModalButtons">
+              	<button type="button" class="btn btn-primary active">Yes</button>
+			  	<button type="button" class="btn btn-primary active">No</button>
+			  </div>
+            </div>
+          </div>
+    </div>
+
+    <div id="myDateModal" class="modal myModal">
+            <!-- Modal content -->
+          <div class="modal-content modalContent">
+            <div id="modalHeader" class="modal-header">
+              <span class="close">&times;</span>
+              <h2>Pick a date for your 'date'!</h2>
+            </div>
+            <div id="dateModalBody" class="modal-body">
+            <!-- calendar interface -->
+            	<div class="month"> 
+				  <ul>
+				    <li class="prev">&#10094;</li>
+				    <li class="next">&#10095;</li>
+				    <li>
+				      August<br>
+				      <span style="font-size:18px">2017</span>
+				    </li>
+				  </ul>
+				</div>
+
+				<ul class="weekdays">
+				  <li>Mo</li>
+				  <li>Tu</li>
+				  <li>We</li>
+				  <li>Th</li>
+				  <li>Fr</li>
+				  <li>Sa</li>
+				  <li>Su</li>
+				</ul>
+
+				<ul class="days"> 
+				  <li>1</li>
+				  <li>2</li>
+				  <li>3</li>
+				  <li>4</li>
+				  <li>5</li>
+				  <li>6</li>
+				  <li>7</li>
+				  <li>8</li>
+				  <li>9</li>
+				  <li><span class="active">10</span></li>
+				  <li>11</li>
+				</ul>
+            </div>
+          </div>
+    </div>
+
+<script type="text/javascript">
+	function generateData()
+	{
+		//need to handle extremely long text, sidebar doesnt properly handle these cases
+
+		// add some code to get the matches bio from the backend
+		var bio_node = document.createTextNode("Hey my name is Sarah Im from blahblah OMG i love blah blah blah yeah I also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blah I also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blahI also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blahI also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blah");
+		var bio_container = document.getElementById("match_profile_bio");
+		bio_container.appendChild(bio_node);
+
+		//add some code to get the matches name from the backend
+		var name_node = document.createTextNode("Sarah");
+		var name_container = document.getElementById("match_profile_name");
+		name_container.appendChild(name_node);
+
+		//add some code to get the matches age from the backend
+		//add a coma and space + the age
+		var match_age = 23;
+		var age_string = ", " + match_age;
+		var age_node = document.createTextNode(age_string);
+		name_container.appendChild(age_node);
+
+		//add some code to get the matches email from the backend
+		var email_node = document.createTextNode("helloWorld@gmail.com");
+		var email_container = document.getElementById("match_email");
+		email_container.appendChild(email_node);
+
+		var location_node = document.createTextNode("santa monica");
+		var location_container = document.getElementById("match_location");
+		location_container.appendChild(location_node);
+
+		var interested_node = document.createTextNode("male");
+		var interested_container = document.getElementById("match_interestedIn");
+		interested_container.appendChild(interested_node);
+		
+	}
+	window.onload = generateData;
+
+	 // Get the modal
+    var unmatchModal = document.getElementById('myUnmatchModal');
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    var dateModal = document.getElementById('myDateModal');
+
+    function displayUnmatchModal()
+    {
+    	unmatchModal.style.display = "block";
+    }
+
+    function displayDateModal()
+    {
+    	dateModal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+    	dateModal.style.display = "none";
+    	unmatchModal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    	if (event.target == modal) {
+            unmatchModal.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

@@ -330,7 +330,7 @@
 ----------------------------------------------------- */
 
  /* The Modal (background) */
-#myModal {
+.myModal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -345,7 +345,7 @@
 }
 
 /* Modal Content/Box */
-#modalContent {
+.modalContent {
     background-color: #fefefe;
     margin: 15% auto;  /*15% from the top and centered */
     padding: 20px;
@@ -411,7 +411,108 @@ textarea{
   cols: 100;
 }
 
+.pac-container {
+  z-index: 10000 !important;
+}
+
 /* Profile Page Styling */
 
+/* ---------------------------------------------------
+    MATCH PROFILE PAGE STYLING
+----------------------------------------------------- */
+/*#match_profile_content
+{
+  display: flex;
+  justify-content:flex-end;
+}*/
 
+#match_profile_sidebar
+{
+  width: 280px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  z-index: 999;
+  background: #f4a142;
+  color: #fff;
+  transition: all 0.3s;
+}
 
+#match_profile_sidebar ul.components {
+    margin-top:40px;
+    padding: 40px 0;
+    /*border-bottom: 1px solid #47748b;*/
+}
+
+.match_profile_sidebar_element 
+{
+  padding-left: 25px;
+}
+
+#match_profile_sidebar ul li a {
+    padding: 40px;
+    font-size: 1.1em;
+    display: block;
+    color: #fff;
+}
+#match_profile_sidebar ul li a:hover {
+    color: #f48f41;
+    background: #fff;
+
+}
+
+#match_profile_sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    background: #f48f41;
+}
+
+#match_profile_bio
+{
+
+  padding-top: 10px;
+  padding-left: 25px;
+}
+
+.matchProfileItem
+{
+  background:#FFB978;
+  padding: 15px;
+  border-color: #070707;
+  border-style: groove;
+  margin-top: 5px;
+
+}
+
+.matches_button
+{
+  margin-top: 160px;
+  margin-left: 60px;
+}
+
+#date_button
+{
+  width:180px;
+  text-align: center;
+  margin-left: 50px;
+  margin-top: 15px;
+}
+
+/* ---------------------------------------------------
+    Matches Profile Modals
+----------------------------------------------------- */
+
+/* Modal Header */
+#unmatchModalHeader {
+    padding: 2px 16px;
+    background-color: #f4a142;
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#unmatchModalButtons{
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 80%; 
+}

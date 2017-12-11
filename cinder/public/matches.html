@@ -2,18 +2,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Give Feedback</title>
+  <title>Matches</title>
   <meta charset="utf-8" />
 
 
   <!-- Scrollbar Custom CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+   <!-- To change color of hamburger icon when hovering over it -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
-  <!-- To change color of hamburger icon when hovering over it -->
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ 
    <!-- To change color of hamburger icon when hovering over it -->
+
      <link rel="stylesheet" type="text/css" href="../src/css/style.css">
     <script type="text/javascript">
         $(document).ready(function(){
@@ -27,36 +29,6 @@
             });
         });
 
-        function add_Feedback(image, name, date, prompt, feedbackGiven, feedBack)
-        {
-            var feedBackString;
-            if(feedbackGiven)
-                feedBackString = "<p>" + feedBack + "</p>";
-            else{
-                feedBackString = "<p> This match has not given you a feedback yet </p>";
-            }
-            var curr = "<li class='list-group-item'>"
-                +           "<div class='feedback_container'>"
-                +               "<img src='" + image + "' class='img-circle'>"
-                +               "<div class='feedback_meta_container'>"
-                +               "<h1>" + name + " - " + date + "</h1>"
-                +               "<h2> Prompt - " + prompt + "</h2>"
-                +               feedBackString
-                +    "</div></div></li>";
-            $('#feedbackList').append(curr); 
-        }
-        function setUpList()
-        {
-            var m_data = [  {name:"Sarah", date:"10-10-2017", prompt: "how do you", feedbackGiven: false, feedBack: "", image:"sarah.jpeg"},
-                        {name:"Becky", date:"11-11-2017", prompt: "some prompt", feedbackGiven: true, feedBack: "i thought you were nice", image:"sarah.jpeg"},
-                        {name:"Mandy", date:"12-12-2017", prompt: "what do you think?", feedbackGiven: false, feedBack:"", image: "sarah.jpeg"}];
-            var test;
-            for(i = 0; i < m_data.length; i++)
-            {
-                add_Feedback(m_data[i].image, m_data[i].name, m_data[i].date, m_data[i].prompt, m_data[i].feedbackGiven, m_data[i].feedBack);   
-            }
-        }
-        window.onload = setUpList;
     </script>
 
 </head>
@@ -78,10 +50,10 @@
             <!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
             <div class="collapse navbar-collapse" id="navbar-options">
                 <ul class="nav navbar-nav">
-                    <li><a href="./home.html">Profile</a></li>
+                    <li><a href="home.html">Profile</a></li>
                     <li><a href="./meet.html">Meet People</a></li>
                     <li><a href="matches.html">Matches</a></li>
-                    <li><a href="yourFeedback.html">Feedback</a></li>
+                    <li><a href="./yourFeedback.html">Feedback</a></li>
                     <li><a href="home.html">Logout</a></li>
                 </ul>
             </div>
@@ -91,25 +63,52 @@
             <!-- Sidebar Holder -->
             <nav id="sidebar">
                 <ul class="list-unstyled components">
-                    <li>
-                        <a href="yourFeedback.html">Give Feedback</a>
+                    <li class = "active">
+                        <a href="#" role="button" onclick="setUpList(true);">New Matches</a>
                     </li>
-                    <li class="active">
-                        <a href="giveFeedback.html">Your Feedback</a>
+                    
+                    <li>
+                        <a href="#" role="button" onclick="setUpList(false);">Past Matches</a>
                     </li>
                 </ul>
             </nav>
     </div>
     
-    <!-- Page Content Holder -->
-    <div id="content">
-        <h1>Here are what some of your dates said about your time together</h1>
-        <div class="list-group" id="feedbackList">
+     <!-- Page Content Holder -->
+            <div id="content">
+                <h1>Your Matches</h1>
+                <div class="list-group" id="feedbackList"></div>
         </div>
-        <p id="demo"></p>
-    </div>
-        
-        
+
+        <script>
+
+            function add_match(image, name, date)
+            {
+                var curr = "<li class='list-group-item'>"
+                    +           "<div class='feedback_container'>"
+                    +               "<img src='" + image + "' class='img-circle'>"
+                    +               "<div class='feedback_meta_container'>"
+                    +               "<h1>" + name + " - " + date + "</h1>"
+                    +               "<a href='match_profile.html'>View Profile</a>"
+                    +       "</div></div></li>";
+                $('#feedbackList').append(curr); 
+            }
+            function setUpList(isNew)
+            {
+                $('#feedbackList').empty();
+                //if isNew is true, then we want to display the new matches
+                var m_data = [  {name:"Sarah", date:"10-10-2017", image:"sarah.jpeg"},
+                                {name:"Becky", date:"11-11-2017", image:"sarah.jpeg"},
+                                {name:"Mandy", date:"12-12-2017", image: "sarah.jpeg"}];
+                //need to figure out how to distinguish which matches are new/old
+                for(i = 0; i < m_data.length; i++)
+                {
+                    add_match(m_data[i].image, m_data[i].name, m_data[i].date);   
+                }
+            }
+            window.onload = function () {setUpList(true);};
+        </script>
+  
 </body>
 
 </html>

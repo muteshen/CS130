@@ -1,16 +1,23 @@
 # cs130-cinder
 Team "Need One More" from Lab 1A
 
+First Time Setup
+-------------------
+In the outermost folder, make sure you have python 2.7 installed and pip
+Maybe, use a virtual environment
+
+`pip install -r requirements.txt`
+
 Running Server
 ------------------
 In the outmost folder run the command:
 
-python manage.py runserver -d
+`python manage.py runserver -d`
 
-The -r makes it restart the server on any file save so you don't have to
+The -d makes it restart the server on any file save so you don't have to
 
 To select port:
-  python manage.py runserver -d -p [PORT]
+  `python manage.py runserver -d -p [PORT]`
 
 Templating
 -------------------
