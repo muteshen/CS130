@@ -415,7 +415,18 @@ textarea{
   z-index: 10000 !important;
 }
 
+.sign-label{
+  margin-top: 5px !important;
+  margin-bottom: 5px;
+}
+
+.form-check-label{
+  font-weight: 300 !important;
+}
+
 /* Profile Page Styling */
+
+
 
 
 
