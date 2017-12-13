@@ -1,5 +1,5 @@
-from flask import render_template, session, redirect, url_for, jsonify, request
-from flask_login import login_user
+from flask import render_template, session, redirect, url_for, jsonify, request, flash
+from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import api
 from ..models import User, Profile, Connection, Match, Response, Feedback
@@ -51,8 +51,11 @@ def login():
     #return True
 
 @api.route('/logout', methods=["POST"])
+@login_required
 def logout():
-    return True
+    logout_user()
+    flash('You have been logged out.')
+    return redirect(url_for('main.index'))
 
 @api.route('/updateProfile', methods=["POST"])
 def updateProfile():
@@ -67,8 +70,8 @@ def createProfile():
     connection = Connection().save()
     answers = [form['q1'], form['q2'], form['q3'], form['q4'], form['q5']]
     user = User(cid=connection, email=form['email'], new_matches=False, profile=profile,
-        interested_in=form['interest'][0], answers=answers, location=form['location']) #need location
+        interested_in=form['interest'][0], answers=answers, location=form['location'])
     user.password_hash = generate_password_hash(form['pswd'])
-    user.save()
+    user.save() #need to catch failed authenication
     login_user(user, True)
-    return "<h4> header help </h4>"
+    return redirect(url_for('main.profile'))

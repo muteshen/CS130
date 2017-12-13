@@ -15,7 +15,7 @@
 	<!-- To change color of hamburger icon when hovering over it -->
 	<script type="text/javascript">
 		$(document).ready(function(){
-	
+
 
 			$(document).on('change', ':file', function() {
 			    var input = $(this),
@@ -85,6 +85,13 @@
     				<li><a href="/meet">Meet People</a></li>
     				<li><a href="/matches">Matches</a></li>
     				<li><a href="/your_feedback">Feedback</a></li>
+						{% if current_user.is_authenticated %}
+						<li>
+							<form method="post" action="{{ url_for('api.logout') }}">
+								<button type="submit">Logout</button>
+							</form>
+						</li>
+						{% endif %}!
     			</ul>
     		</div>
 		</div>
@@ -93,7 +100,15 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-6">
 				<h1 class="main-header header-top">We focus on the hard conversations.</h1>
-				<h1 class="main-header header-bottom">You focus on having fun.</h1>
+				<h1 class="main-header header-bottom">
+					<!-- You focus on having fun. -->
+					Login Test: You are a
+					{% if current_user.is_authenticated %}
+					    {{ current_user.profile.first }}
+					{% else %}
+					    Stranger
+					{% endif %}!
+				</h1>
 			</div>
 			<div class="col-xs-12 col-sm-6">
 				<div class="jumbotron" id="sign-up-jumbotron">
@@ -261,11 +276,11 @@
 								</div>
 								<!-- Photo Upload -->
 								<h3 class="photo-upload-header">Upload a Profile Photo:</h3>
-								
+
 								 <div class="form-group">
 								    <input type="file" accept="image/*" class="form-control-file" name="profile_image" required>
 								 </div>
-<!-- 
+<!--
 								<div class="form-group bottom-group">
 									<label class="btn btn-warning modal-btn">
 									    Browse <input type="file" accept="image/*" style="display: none;" name="profile_image">
