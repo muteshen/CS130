@@ -17,6 +17,17 @@ defaultGender = 'M'
 @api.route('/getUsers/', methods=["GET"])
 @login_required
 def getUsers():
+    """This functions asks the backend for 5 unseen users with respect to the current user.
+
+    Args: N/A
+
+    Returns:
+        JSON.  Represents an array of users each with::
+        
+            1. id -- String: user's unique id
+            2. profile -- JSON: user's public information
+    """
+
     print current_user
     #TODO: use current_user to get preferred Gender
     #TODOV2: filter using connections.swiped to only get people you haven't swiped yet
@@ -31,8 +42,23 @@ def getUsers():
 @api.route('/swipe', methods=["POST"])
 @login_required
 def swipe():
-    """Parameters: {id: [other id], like: [bool]} //also unique
+    """This functions handles user swiping other users. A right swipe implies an
+    intended match. A left swipe implies that the user is not interested.
+
+    Args:
+        1. id -- String: user id for the user being swiped
+        2. like -- Bool: indication of whether current user is interested in
+                         the user with corresponding user id
+
+    Returns:
+        JSON.  A JSON that contains the swiped user's id and profile if the swipe
+        action resulted in a match (bi-directional approval). An empty value
+        otherwise::
+
+          1. id -- String: user's unique id
+          2. profile -- JSON: user's public information
     """
+
     args = request.args #cuz he passed a string
     # REST {u'id': u'5a31cb3c151a4b11ad8befbd', u'like': False}
 
@@ -78,14 +104,34 @@ def swipe():
 
 @api.route('/giveFeedback', methods=["POST"])
 def giveFeedback():
-    #Parameters
-# Matchid: int //the id references to match database
-# Feedback: string
+    """This function allows users to submit feedback for one another.
+
+    Args:
+        1. matchId -- Int: user id for the user receiving feedback
+        2. feedback -- String: feedback message to be delivered to the recipient
+                               with the corresponding matchId
+
+    Returns:
+        1. feedback -- String: Feedback that was delivered
+    """
 
     return feedback1
 
 @api.route('/login', methods=["POST"])
 def login():
+    """This functions attempts to log the user in.
+
+    Args:
+        1. email -- String: email of user attempting to login
+        2. password -- String: encrypted password of user attempting to login
+
+    Returns:
+        1. template -- HTML: an html file that tells the browser what page to
+                             display. If login was successful, this will be the
+                             meet page. If login was unsuccessful, this will be
+                             the home page.
+    """
+
     email = request.form['email']
     password = request.form['password']
     user = User.objects(email=email)
@@ -101,12 +147,38 @@ def login():
 @api.route('/logout', methods=["POST"])
 @login_required
 def logout():
+    """This functions attempts to log the user out.
+
+    Args: N/A
+
+    Returns:
+        1. redirect_url -- String: url to main page where user is redirected
+    """
+
     logout_user()
     flash('You have been logged out.')
     return redirect(url_for('main.index'))
 
 @api.route('/updateProfile', methods=["POST"])
 def updateProfile():
+    """This functions attempts to update the current user's profile
+
+    Args:
+        1. form -- dictionary: contains new information to update user with the
+                   following properties:
+            a. first    -- String: first name
+            b. last     -- String: last name
+            c. gender   -- String: single char indicating gender ('M', 'F', 'O')
+            d. age      -- Int: age
+            e. bio      -- String: biography
+            f. location -- String: city, state zip-code
+        2. files -- dictionary: contains new information about profile image
+            a. profile_image -- File: profile picture
+
+    Returns:
+        1. redirect_url -- String: url to profile page where user is redirected
+    """
+
     form = request.form
     print form
 
@@ -140,6 +212,24 @@ def updateProfile():
 
 @api.route('/createProfile', methods=["POST"])
 def createProfile():
+    """This functions attempts to create a new user profile
+
+    Args:
+        1. form -- dictionary: contains information to create a new user with
+                   the following properties:
+            a. first    -- String: first name
+            b. last     -- String: last name
+            c. gender   -- String: single char indicating gender ('M', 'F', 'O')
+            d. age      -- Int: age
+            e. bio      -- String: biography
+            f. location -- String: city, state zip-code
+        2. files -- dictionary: contains new information about profile image
+            a. profile_image -- File: profile picture
+
+    Returns:
+        1. redirect_url -- String: url to profile page where user is redirected
+    """
+
     form = request.form
     print form
     profile = Profile(first=form['first'], last=form['last'], gender=form['gender'][0], age=form['age'],
@@ -168,7 +258,14 @@ def createProfile():
 
 @api.route('/getPicture', methods=["GET"])
 def getPicture():
+    """This functions attempts get a users profile picture
 
+    Args:
+        1. uid -- Int: id of the user that client wants to retrive a photo of
+
+    Returns:
+        1. photo -- String: url that client can use to access image
+    """
 
     uid = request.args['uid']
     print uid
@@ -179,11 +276,3 @@ def getPicture():
     else:
         photo = User.objects(id=uid).only('profile')[0].profile.photo.read()
     return photo
-
-
-
-
-
-
-
-
