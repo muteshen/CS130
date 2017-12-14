@@ -6,6 +6,7 @@ from ..models import User, Profile, Connection, Match, Response, Feedback
 from ..sampleDB import *
 from .. import db
 from random import random
+from magic import from_file
 
 #note all these routes must be prefixed with /api to be accessed
 #ie localhost:5000/api/createProfile
@@ -71,6 +72,9 @@ def createProfile():
     print form
     profile = Profile(first=form['first'], last=form['last'], gender=form['gender'][0], age=form['age'],
                         bio=form['bio'], location=form['location']) #need photo
+    profile_photo = open(form['profile_image'], 'rb')
+    profile.photo.put(profile_photo, content_type = magic.from_file(profile_photo))
+    profile.save()    
     connection = Connection().save()
     answers = [form['q1'], form['q2'], form['q3'], form['q4'], form['q5']]
     user = User(cid=connection, email=form['email'], new_matches=False, profile=profile,
