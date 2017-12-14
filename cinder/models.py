@@ -63,6 +63,7 @@ class Connection(Document):
 
 class Feedback(EmbeddedDocument):
     date = DateTimeField(required=True)
+    prompt = StringField()
     from_uid1 = StringField()
     from_uid2 = StringField()
 

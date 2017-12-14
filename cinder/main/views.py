@@ -103,7 +103,6 @@ def match_profile():
     #use login_required
 
     #matchObjs = Match.objects(uid1=current_user.id).extend(Match.objects(uid2=current_user.id))
-
     matchObjs = Match.objects[:2]
     print matchObjs
     matches = []
