@@ -279,6 +279,11 @@
   text-align: center;
 }
 
+.feedback-box-header{
+  font-family: "Avenir";
+  text-align: center;
+  color: #606060;
+}
 
 .feedback_container {
   width: 900px;
@@ -288,20 +293,28 @@
 
 }
 
+.feedback-text{
+  font-family: "Avenir";
+  font-weight: 300;
+  font-size: 18px;
+  color: #606060;
+}
+
 .feedback_meta_container{
   display: flex;
   justify-content: flex-start; 
   flex-direction: column;
   padding: 20px;
+  background-color: #F8F8F8;
 }
 .feedback_meta_container button {
-  background-color:#FFB978;
-  color: #fff;
+/*  background-color:#FFB978;
+  color: #606060;*/
 }
 
 .list-group-item{
-  background-color: #FFB978;
-  border-color: #070707;
+  background-color: #F8F8F8;
+  border-color: grey;
 }
 .list-group-item-action a:hover{
   background-color: #FFB978;
@@ -324,6 +337,7 @@
     background: #F8F8F8;
     color: #fff;
     transition: all 0.3s;
+    border-right: 2px solid grey;
 
 }
 

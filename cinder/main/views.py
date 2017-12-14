@@ -6,6 +6,27 @@ from ..models import *
 from ..sampleDB import *
 from datetime import *
 
+def getMatches():
+    """Returns all the matches of the user """
+    #matchObjs = Match.objects(uid1=current_user.id).extend(Match.objects(uid2=current_user.id))
+    #only call for login_required
+
+    matchObjs = Match.objects[:2]
+    matches = []
+    for match in matchObjs:
+        curProfile = None
+        curFeedback = []
+        if current_user.is_authenticated and match.uid1 == current_user.id:
+            curProfile = match.uid2.profile
+            for feedback in match.feedbacks:
+                curFeedback.append(feedback.from_uid2)
+        else: #assumes you are definitely part of this match
+            curProfile = match.uid1.profile
+            for feedback in match.feedbacks:
+                curFeedback.append(feedback.from_uid1)
+        matches.append({"match": match, "profile": curProfile, "feedbacks": curFeedback})
+    return matches
+
 @main.route('/', methods=["GET", "POST"])
 def index():
 
@@ -32,11 +53,13 @@ def index():
 
 @main.route('/give_feedback')
 def give_feedback():
-    return render_template('giveFeedback.html')
+    matches = getMatches()
+    return render_template('giveFeedback.html', matches=matches)
 
 @main.route('/your_feedback')
 def your_feedback():
-    return render_template('yourFeedback.html')
+    matches = getMatches()
+    return render_template('yourFeedback.html', matches=matches)
 
 @main.route('/profile')# @login_required
 def profile():
@@ -45,6 +68,7 @@ def profile():
 @main.route('/match_profile')
 def match_profile():
     #use login_required
+
     #matchObjs = Match.objects(uid1=current_user.id).extend(Match.objects(uid2=current_user.id))
 
     matchObjs = Match.objects[:2]
@@ -57,7 +81,8 @@ def match_profile():
         else: #assumes you are definitely part of this match
             curProfile = match.uid1.profile
         matches.append({"match": match, "profile": curProfile})
-    return render_template('test.html', matches=matches)
+    return render_template('match_profile.html', matches=matches)
+
 
 
 @main.route('/meet')
@@ -68,4 +93,5 @@ def meet():
 @main.route('/matches')
 @login_required
 def matches():
-    return render_template("matches.html")
+    matches = getMatches()
+    return render_template("matches.html", matches=matches)

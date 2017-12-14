@@ -112,7 +112,7 @@
             {
                 var feedBackString;
                 if(feedBackGiven)
-                    feedBackString = "<p>" + feedBack + "</p>";
+                    feedBackString = "<p class='feedback-text'>" + feedBack + "</p>";
                 else{
                     feedBackString = "<button type='button' id='giveFeedBackBtn' onclick='displayModal()' class='btn btn-primary btn-sm btn btn-outline-light'>Click here to give Feedback</button>";
                 }
@@ -120,8 +120,8 @@
                     +           "<div class='feedback_container'>"
                     +               "<img src='" + image + "' class='img-circle'>"
                     +               "<div class='feedback_meta_container'>"
-                    +               "<h1>" + name + " - " + date + "</h1>"
-                    +               "<h2> Prompt - " + prompt + "</h2>"
+                    +               "<h1 class='feedback-box-header'>" + name + " - " + date + "</h1>"
+                    +               "<h2 class='prompt-header'> Prompt - " + prompt + "</h2>"
                     +               feedBackString
                     +    "</div></div></li>";
                 $('#feedbackList').append(curr);
