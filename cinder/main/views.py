@@ -53,17 +53,17 @@ def index():
 
 @main.route('/give_feedback')
 def give_feedback():
-    return render_template('giveFeedback.html')
+    matches = getMatches()
+    return render_template('giveFeedback.html', matches=matches)
 
 @main.route('/your_feedback')
 def your_feedback():
-    return render_template('yourFeedback.html')
+    matches = getMatches()
+    return render_template('yourFeedback.html', matches=matches)
 
 @main.route('/profile')# @login_required
 def profile():
     return render_template('profile.html')
-
-
 
 @main.route('/match_profile')
 def match_profile():
@@ -80,4 +80,5 @@ def meet():
 @main.route('/matches')
 @login_required
 def matches():
-    return render_template("matches.html")
+    matches = getMatches()
+    return render_template("matches.html", matches=matches)

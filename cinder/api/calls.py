@@ -23,9 +23,8 @@ def getUsers():
 @api.route('/swipe', methods=["POST"])
 # @login_required
 def swipe():
-    print response.id
-    print response.like
-    #login_requireed
+    # print request.data
+    # print request.like
     #in is the other user's id and a bool of liked
     if random() < 0.5: #TODO: Check user connections to see if he was swiped back
         return ('', 204) #empty response
