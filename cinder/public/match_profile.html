@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../src/css/style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<title>Cinder</title>
+</head>
+<body>
+	<!-- Navigation Bar -->
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- This is for the mobile navbar display, hamburger icon displayed -->
+			<div class="navbar-header">
+		        <button id="hamburger" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-options" aria-expanded="false">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+		        </button>
+      			<a class="navbar-brand" href="/">Cinder</a>
+    		</div>
+
+    		<!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
+    		<div class="collapse navbar-collapse" id="navbar-options">
+					<ul class="nav navbar-nav">
+    				<li><a href="profile.html">Profile</a></li>
+    				<li><a href="meet.html">Meet People</a></li>
+    				<li><a href="matches.html">Matches</a></li>
+    				<li><a href="yourFeedback.html">Feedback</a></li>
+    			</ul>
+    		</div>
+		</div>
+	</nav>
+
+	<!-- The sidebar -->
+	 <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="match_profile_sidebar">
+                <ul class="list-unstyled components">
+                	 <li>
+                    <!-- name field added by generateData function below -->
+                    	<h2 class="match_profile_sidebar_element" id="match_profile_name"></h2>
+                    </li>
+                    <li>
+                        <img src="sarah.jpeg" alt="profile picture" class="match_profile_sidebar_element">
+                    </li>
+                    <li>
+                    	<h3 class="match_profile_sidebar_element" id="match_interestedIn">Interested-in: </h3>
+                    </li>
+                    <li>
+                    	<button type="button" class="btn btn-primary btn-lg match_profile_sidebar_element" id="date_button" onclick="displayDateModal()">It's a Date!</button>
+                    </li>
+                    <li class="matches_button">
+                    	<button type="button" class="btn btn-primary active" onclick="displayDecisionModal('unmatch')">unmatch</button>
+						<button type="button" class="btn btn-primary active" onclick="displayReportModal()">report</button>
+                    </li>
+                </ul>
+            </nav>
+    </div>
+
+    <!-- The content, that is the region to the right of sidebar and below navigation bar -->
+    <div id="content">
+    	<!-- we populate the following elements by the generateData function below -->
+    	<div class="matchProfileItem">
+    		<h2 id="match_email">email: </h2>
+    		<h2 id="match_location">location: </h2>
+    	</div>
+    	<div class="matchProfileItem">
+	    	<p id="match_profile_bio"></p>
+	    </div>
+    </div>
+
+    <div id="decisionModal" class="modal myModal">
+            <!-- Modal content -->
+          <div class="modal-content modalContent">
+            <div id="modalHeader" class="modal-header matchModalHeader">
+              <span class="close" id="closeDecision">&times;</span>
+              <h2 id="decisionText"></h2>
+              <div id="decisionButtons" class="decisionModalButtons">
+              	<!-- added by the generate buttons function below -->
+			  </div>
+            </div>
+          </div>
+    </div>
+
+    <!-- The date modal, appears when It's a Date button is pressed -->
+    <div id="myDateModal" class="modal myModal">
+            <!-- Modal content -->
+          <div class="modal-content modalContent">
+            <div id="dateModalHeader" class="modal-header matchModalHeader">
+              <span class="close" id="closeDate">&times;</span>
+              <h2>Pick a date for your 'date'!</h2>
+            </div>
+            <div id="dateModalBody" class="modal-body">
+            <!-- calendar interface -->
+            	<div class="month"> 
+				  <ul>
+				    <li class="prev"><a href="#" onclick="setMonth(-1)">&#10094;</a>></li>
+				    <li class="next"><a href="#" onclick="setMonth(1)">&#10095;</a></li>
+				    <li id="monthText">
+				     
+				    </li>
+				  </ul>
+				</div>
+
+				<ul class="weekdays">
+				  <li>Mo</li>
+				  <li>Tu</li>
+				  <li>We</li>
+				  <li>Th</li>
+				  <li>Fr</li>
+				  <li>Sa</li>
+				  <li>Su</li>
+				</ul>
+
+				<ul class="days" id="dayList"> 
+				</ul>
+            </div>
+            <div id="modalFooter" class="modal-footer">
+              <button type="button" onclick="submitDate()" class="btn btn-outline-dark btn-sm">Submit</button>
+            </div>
+          </div>
+    </div>
+
+    <!-- Report modal, appears when report button is clicked -->
+    <div id="myReportModal" class="modal myModal">
+            <!-- Modal content -->
+          <div class="modal-content modalContent">
+            <div id="reportModalHeader" class="modal-header matchModalHeader">
+              <span class="close" id="closeReport">&times;</span>
+              <h2>Report User</h2>
+              <h3>Is this person bothering you? Tell us what they did.</h3>
+              <ul style="list-style-type:disc">
+            		<li>
+            			<a href="#">Inappropriate Messages</a>
+            		</li>
+            		<li>
+            			<a href="#">Inappropriate Photos</a>
+            		</li>
+            		<li>
+            			<a href="#">Bad offline Behavior</a>
+            		</li>
+            		<li>
+            			<a href="#">Feels Like Spam</a>
+            		</li>
+            		<li>
+            			<a href="#">Other</a>
+            		</li>
+            	</ul>
+            </div>
+          </div>
+    </div>
+
+     
+
+<script type="text/javascript">
+
+	// populates corresponding elements with values
+	function generateData()
+	{
+		//need to handle extremely long text, sidebar doesnt properly handle these cases
+
+		//handles bio
+		// add some code to get the matches bio from the backend
+		var bio_node = document.createTextNode("Hey my name is Sarah Im from blahblah OMG i love blah blah blah yeah I also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blah I also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blahI also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blahI also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blah");
+		var bio_container = document.getElementById("match_profile_bio");
+		bio_container.appendChild(bio_node);
+
+		//handles name
+		//add some code to get the matches name from the backend
+		var name_node = document.createTextNode("Sarah");
+		var name_container = document.getElementById("match_profile_name");
+		name_container.appendChild(name_node);
+
+		//handles age
+		//add some code to get the matches age from the backend
+		//add a coma and space + the age
+		var match_age = 23;
+		var age_string = ", " + match_age;
+		var age_node = document.createTextNode(age_string);
+		name_container.appendChild(age_node);
+
+		//handles email
+		//add some code to get the matches email from the backend
+		var email_node = document.createTextNode("helloWorld@gmail.com");
+		var email_container = document.getElementById("match_email");
+		email_container.appendChild(email_node);
+
+		//handles location
+		//add some code to get the matches location from backend
+		var location_node = document.createTextNode("santa monica");
+		var location_container = document.getElementById("match_location");
+		location_container.appendChild(location_node);
+
+		//handles interest
+		//add some code to get interested field from backend, consider omitting
+		var interested_node = document.createTextNode("male");
+		var interested_container = document.getElementById("match_interestedIn");
+		interested_container.appendChild(interested_node);
+		
+	}
+	window.onload = generateData;
+
+	 // Get the modal reference
+    var unmatchModal = document.getElementById('myUnmatchModal');
+	var dateModal = document.getElementById('myDateModal');
+    var reportModal = document.getElementById('myReportModal');
+    var congratsModal = document.getElementById('myCongratsModal');
+
+    //get the span reference, this is just to close the modals
+    var spanDate = document.getElementById("closeDate");
+    var spanReport = document.getElementById("closeReport");
+    var spanDecision = document.getElementById("closeDecision");
+
+    //variable that will be initialized to the current date
+    var curr_date;
+    //variable that will contain the date of the date
+    var date_date;
+
+    //this function populates the calendar in dateModal with the correct values based on the month and year
+    function generateCalendar(month, year)
+    {
+    	var num_days = 0;
+    	var leap_year = 0;
+    	if(year%4 == 0)
+    	{
+    		if(year%100 == 0){
+    			if(year%400 == 0)
+    				leap_year = 1;
+    		}else
+    			leap_year = 1;
+    	}
+
+    	if(	month == 1 ||
+    		month == 3 ||
+    		month == 5 ||
+    		month == 7 ||
+    		month == 8 ||
+    		month == 10 ||
+    		month == 12)
+    		num_days = 31;
+    	else if(month == 2)
+    		num_days = 28 + leap_year;
+    	else if(month == 4 || month == 6 || month == 9 || month == 11)
+    		num_days = 30;
+    	else
+ 			num_days = -1;
+ 		if(num_days == -1)
+ 			console.log("date error, month is invalid");
+    	var month_text = document.getElementById("monthText");
+ 		var month_string;
+		switch(month)
+		{
+			case 1:
+				month_string = "January";
+				break;
+			case 2:
+				month_string = "February";
+				break;
+			case 3:
+				month_string = "March";
+				break;
+			case 4:
+				month_string = "April";
+				break;
+			case 5:
+				month_string = "May";
+				break;
+			case 6:
+				month_string = "June";
+				break;
+			case 7:
+				month_string = "July";
+				break;
+			case 8:
+				month_string = "August";
+				break;
+			case 9:
+				month_string = "September";
+				break;
+			case 10:
+				month_string = "October";
+				break;
+			case 11:
+				month_string = "November";
+				break;
+			case 12:
+				month_string = "December";
+				break;
+			default:
+				month_string = "";
+				console.log("month error");
+		}
+    	while(monthText.firstChild){
+    		monthText.removeChild(monthText.firstChild);
+    	}
+    	var month_node = document.createTextNode(month_string);
+    	month_text.appendChild(month_node);
+		$('#monthText').append("<br>");
+		$('#monthText').append("<span style='font-size:18px'>" + year + "</span>");
+
+    	var day_list = document.getElementById("dayList");
+    	while(day_list.firstChild){
+    		day_list.removeChild(day_list.firstChild);
+    	}
+    	for(var i = 1; i <= num_days;i++)
+    	{
+    		var m_string;
+    		if(i == curr_date.date)
+    		{
+    			m_string = "<li><span class='active'><a href='#' onclick='setDate(" + i + "," + date_date.month + ", curr_date.year)'>" + i + "</a></span></li>";
+    		}else
+    		{
+    			m_string = "<li><a href='#' onclick='setDate(" + i + ", curr_date.month, curr_date.year)'>" + i + "</a></li>"
+    		}
+    		$('#dayList').append(m_string);
+    	}
+    }
+    
+    //displays the dateModal(), called by the Its a date button
+    function displayDateModal()
+    {
+    	var m_date = new Date();
+    	curr_date = {date: m_date.getDate(), day: m_date.getDay(), month: m_date.getMonth() + 1, year: m_date.getFullYear()};
+    	date_date = curr_date;
+ 		generateCalendar(curr_date.month, curr_date.year);
+    	dateModal.style.display = "block";
+    }
+
+    //manipulates the calendar based on user input from the prev and next button
+    function setMonth(inc)
+    {
+    	var m_month = date_date.month + inc;
+    	if(m_month > 12)
+    	{
+    		m_month = 1;
+    		date_date.year = date_date.year + 1;
+    	}
+    	else if(m_month < 1){
+    		m_month = 12;
+    		date_date.year = date_date.year - 1;
+    	}
+    	date_date.month = m_month;
+    	generateCalendar(m_month, date_date.year);
+    }
+
+    //called when a date is pressed in the calendar
+    function setDate(day, month, year)
+    {
+    	date_date.date = day;
+    }
+
+    //this function hides the dateModal and brings up the congratsModal
+    function submitDate()
+    {
+    	dateModal.style.display = "none";
+    	displayDecisionModal("date");
+    }
+
+    //displays the reportModal, called when report button is clicked
+    function displayReportModal()
+    {
+    	reportModal.style.display = "block";
+    }
+
+    //displays the decisionModal and populates its childs accordingly, called when either unmatch or submit (in dateModal) button is clicked
+    function displayDecisionModal(decisionType){
+    	var decision_string;
+    	var yesButton;
+    	let noButton = "<button type='button' class='btn btn-primary active decButton' onclick='closeDecisionModal()'>No</button>";
+
+    	if(decisionType == "unmatch")
+    	{
+    		decision_string = "Are you sure you want to unmatch?"
+    		yesButton = "<button type='button' class='btn btn-primary active' onclick='doUnmatch()'>Yes</button>";
+    	}else if(decisionType == "date")
+    	{
+    		decision_string = "Are you sure you want your date to be on "
+    		yesButton = "<button type='button' class='btn btn-primary active' onclick='submitDateFinal()'>Yes</button>";
+    	}else
+    		console.log("error, passed invalid argument to displayDecisionModal()");
+    	var decision_text = document.getElementById("decisionText");
+    	var string_node = document.createTextNode(decision_string);
+    	while(decisionText.firstChild){
+    		decisionText.removeChild(decisionText.firstChild);
+    	}
+    	decision_text.appendChild(string_node);
+
+    	if(decisionType == "date")
+    	{
+    		var m_string = date_date.month + "/" + date_date.date + "/" + date_date.year;
+    		var string_node = document.createTextNode(m_string + "?");
+    		decision_text.appendChild(string_node);
+    	}
+    	
+    	$('#decisionButtons').empty();
+    	$('#decisionButtons').append(yesButton);
+    	$('#decisionButtons').append(noButton);
+
+    	decisionModal.style.display = "block";
+    }
+
+    //closes the decisionModal when the no button is clicked
+    function closeDecisionModal()
+    {
+    	decisionModal.style.display = "none";
+    }
+
+    //this function is called when user selects yes in decisionModal (unmatch mode)
+    function doUnmatch()
+    {
+    	// call this function when we answer yes upon unmatch
+    }
+
+    //this function is called when user selects yes in decisionModal (date mode)
+    function submitDateFinal(){
+    	//call this function when we answer yes upon date confirmation
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    spanDate.onclick = function() {
+    	dateModal.style.display = "none";
+    }
+    spanReport.onclick = function() {
+    	reportModal.style.display = "none";
+    }
+    spanDecision.onclick = function(){
+    	decisionModal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    	if (event.target == unmatchModal) {
+            unmatchModal.style.display = "none";
+        }
+        if (event.target == dateModal) {
+            dateModal.style.display = "none";
+        }
+        if (event.target == reportModal) {
+            reportModal.style.display = "none";
+        }
+        if (event.target == congratsModal) {
+            congratsModal.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

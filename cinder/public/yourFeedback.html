@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Your Feedback</title>
+  <title>Give Feedback</title>
   <meta charset="utf-8" />
 
 
   <!-- Scrollbar Custom CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
    <!-- To change color of hamburger icon when hovering over it -->
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
@@ -28,7 +28,6 @@
               });
             });
         });
-
 
     </script>
 
@@ -53,7 +52,7 @@
               <ul class="nav navbar-nav">
                 <li><a href="/profile">Profile</a></li>
                 <li><a href="/meet">Meet People</a></li>
-                <li><a href="/matches">Matches</a></li>
+                <li><a href="matches.html">Matches</a></li>
                 <li><a href="/your_feedback">Feedback</a></li>
               </ul>
             </div>
@@ -64,10 +63,10 @@
             <nav id="sidebar">
                 <ul class="list-unstyled components">
                     <li class = "active">
-                        <a href="yourFeedback.html">Your Feedback</a>
+                        <a href="yourFeedback.html">Give Feedback</a>
                     </li>
                     <li>
-                        <a href="giveFeedback.html">Give Feedback</a>
+                        <a href="giveFeedback.html">Your Feedback</a>
                     </li>
                 </ul>
             </nav>
@@ -77,12 +76,12 @@
             <div id="content">
                 <h1>Help your Dates by giving them feedback for further dates</h1>
                 <div class="list-group" id="feedbackList"></div>
-        </div>
+            </div>
 
         <!-- The Modal -->
-        <div id="myModal" class="modal">
+        <div id="feedbackModal" class="modal myModal">
             <!-- Modal content -->
-          <div id="modalContent" class="modal-content">
+          <div class="modal-content modalContent">
             <div id="modalHeader" class="modal-header">
               <span class="close">&times;</span>
               <h2>Feedback for Sarah</h2>
@@ -141,7 +140,7 @@
             }
 
             // Get the modal
-            var modal = document.getElementById('myModal');
+            var modal = document.getElementById('feedbackModal');
 
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close")[0];

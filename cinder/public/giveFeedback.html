@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Give Feedback</title>
+  <title>Your Feedback</title>
   <meta charset="utf-8" />
 
 
@@ -33,7 +33,7 @@
             if(feedbackGiven)
                 feedBackString = "<p>" + feedBack + "</p>";
             else{
-                feedBackString = "<button type='button' class='btn btn-primary btn-sm btn btn-outline-light'>Click here to give Feedback</button>";
+                feedBackString = "<p> This match has not given you a feedback yet </p>";
             }
             var curr = "<li class='list-group-item'>"
                 +           "<div class='feedback_container'>"
@@ -41,12 +41,24 @@
                 +               "<div class='feedback_meta_container'>"
                 +               "<h1>" + name + " - " + date + "</h1>"
                 +               "<h2> Prompt - " + prompt + "</h2>"
-                +               + feedBackString
+                +               feedBackString
                 +    "</div></div></li>";
             $('#feedbackList').append(curr); 
         }
         function setUpList()
         {
+            //add database access here
+            $.ajax({
+                url: "api.myFeedback",
+                type: 'GET',
+                success: function(res) {
+                    console.log(res);
+                    alert(res);
+                }
+            });
+
+
+
             var m_data = [  {name:"Sarah", date:"10-10-2017", prompt: "how do you", feedbackGiven: false, feedBack: "", image:"sarah.jpeg"},
                         {name:"Becky", date:"11-11-2017", prompt: "some prompt", feedbackGiven: true, feedBack: "i thought you were nice", image:"sarah.jpeg"},
                         {name:"Mandy", date:"12-12-2017", prompt: "what do you think?", feedbackGiven: false, feedBack:"", image: "sarah.jpeg"}];
@@ -80,8 +92,8 @@
                 <ul class="nav navbar-nav">
                     <li><a href="./home.html">Profile</a></li>
                     <li><a href="./meet.html">Meet People</a></li>
-                    <li><a href="home.html">Matches</a></li>
-                    <li><a href="./yourFeedback">Feedback</a></li>
+                    <li><a href="matches.html">Matches</a></li>
+                    <li><a href="yourFeedback.html">Feedback</a></li>
                     <li><a href="home.html">Logout</a></li>
                 </ul>
             </div>
@@ -92,10 +104,10 @@
             <nav id="sidebar">
                 <ul class="list-unstyled components">
                     <li>
-                        <a href="yourFeedback.html">Your Feedback</a>
+                        <a href="yourFeedback.html">Give Feedback</a>
                     </li>
                     <li class="active">
-                        <a href="giveFeedback.html">Give Feedback</a>
+                        <a href="giveFeedback.html">Your Feedback</a>
                     </li>
                 </ul>
             </nav>
