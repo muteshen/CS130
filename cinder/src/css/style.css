@@ -273,6 +273,13 @@
 /* ---------------------------------------------------
     Feedbacks
 ----------------------------------------------------- */
+.feedback-header{
+  font-family: "Avenir";
+  color:  #606060;
+  text-align: center;
+}
+
+
 .feedback_container {
   width: 900px;
   display: flex;
@@ -288,16 +295,16 @@
   padding: 20px;
 }
 .feedback_meta_container button {
-  background-color: #f4a142;
+  background-color:#FFB978;
   color: #fff;
 }
 
 .list-group-item{
-  background-color: #f4a142;
+  background-color: #FFB978;
   border-color: #070707;
 }
 .list-group-item-action a:hover{
-  background-color: #f4a142;
+  background-color: #FFB978;
 }
 
 /* ---------------------------------------------------
@@ -314,7 +321,7 @@
     left: 0;
     min-height: 100vh;
     z-index: 999;
-    background: #f4a142;
+    background: #F8F8F8;
     color: #fff;
     transition: all 0.3s;
 
@@ -332,19 +339,25 @@
 
 #sidebar ul li a {
     padding: 40px;
-    font-size: 1.1em;
+    font-size: 1.7em;
     display: block;
-    color: #fff;
+    color: #FFB978;
+    font-family: "Avenir";
+    text-align: center;
+    font-weight: 600;
+/*    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+*/
 }
 #sidebar ul li a:hover {
     color: #f48f41;
     background: #fff;
+    text-decoration: none;
 
 }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
-    background: #f48f41;
+    background: #FFB978;
 }
 
 /* ---------------------------------------------------
@@ -368,7 +381,7 @@
 
 /* Modal Content/Box */
 .modalContent {
-    background-color: #fefefe;
+    background-color: #FFB978;
     margin: 15% auto;  /*15% from the top and centered */
     padding: 20px;
     width: 80%; /* Could be more or less, depending on screen size */
@@ -407,20 +420,20 @@
 /* Modal Header */
 #modalHeader {
     padding: 2px 16px;
-    background-color: #f4a142;
+    background-color: #FFB978;
     color: white;
 }
 
 /* Modal Body */
 #modalBody {
     padding: 2px 16px;
-    background-color: #f4a142;
+    background-color: #FFB978;
   }
 
 /* Modal Footer */
 #modalFooter {
     padding: 10px 16px;
-    background-color: #f4a142;
+    background-color: #FFB978;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -463,6 +476,11 @@ textarea{
 
 /* Profile Page Styling */
 
+.pro_img{
+  width: 30% !important;
+  height: 30% !important;
+}
+
 /* ---------------------------------------------------
     MATCH PROFILE PAGE STYLING
 ----------------------------------------------------- */
@@ -480,7 +498,7 @@ textarea{
   left: 0;
   min-height: 100vh;
   z-index: 999;
-  background: #f4a142;
+  background: #FFB978;
   color: #fff;
   transition: all 0.3s;
 }
@@ -503,14 +521,14 @@ textarea{
     color: #fff;
 }
 #match_profile_sidebar ul li a:hover {
-    color: #f48f41;
+    color: #FFB978;
     background: #fff;
 
 }
 
 #match_profile_sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
-    background: #f48f41;
+    background: #FFB978;
 }
 
 #match_profile_bio
@@ -551,7 +569,7 @@ textarea{
 /* Modal Header */
 #unmatchModalHeader {
     padding: 2px 16px;
-    background-color: #f4a142;
+    background-color: #FFB978;
     color: white;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -569,7 +587,7 @@ textarea{
 
 .matchModalHeader{
   padding: 2px 16px;
-  background-color: #f4a142;
+  background-color: #FFB978;
   color: white;
 }
 
