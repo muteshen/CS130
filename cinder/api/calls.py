@@ -11,6 +11,7 @@ from random import random
 #ie localhost:5000/api/createProfile
 defaultGender = 'M'
 @api.route('/getUsers/', methods=["GET"])
+# @login_required
 def getUsers():
     print current_user
     #TODO: use current_user to get preferred Gender
@@ -20,7 +21,11 @@ def getUsers():
     return resp
 
 @api.route('/swipe', methods=["POST"])
+# @login_required
 def swipe():
+    print response.id
+    print response.like
+    #login_requireed
     #in is the other user's id and a bool of liked
     if random() < 0.5: #TODO: Check user connections to see if he was swiped back
         return ('', 204) #empty response
@@ -28,13 +33,12 @@ def swipe():
         users = User.objects(profile__gender=defaultGender).only('profile','id')[0]
         return jsonify(users.to_json())
 
-@api.route('/myFeedback', methods=["GET"])
-def myFeedback():
-    #allFeedback = Feedback.objects(uid1=current_user.id).extend(Feedback.objects(uid2=current_user.id))
-    return feedback1
-
 @api.route('/giveFeedback', methods=["POST"])
 def giveFeedback():
+    #Parameters
+# Matchid: int //the id references to match database
+# Feedback: string
+
     return feedback1
 
 @api.route('/login', methods=["POST"])
@@ -45,7 +49,7 @@ def login():
     if user is None or len(user) == 0:
         return render_template('home.html')
     user = user[0]
-    if user.password_hash == password:#user.verify_password(password):
+    if user.verify_password(password):
         login_user(user, True)
         return redirect(url_for('main.meet'))
     return render_template('home.html')
