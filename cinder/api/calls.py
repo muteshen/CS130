@@ -8,6 +8,8 @@ from .. import db
 from random import random
 from magic import from_file
 
+
+
 #note all these routes must be prefixed with /api to be accessed
 #ie localhost:5000/api/createProfile
 defaultGender = 'M'
@@ -72,9 +74,15 @@ def createProfile():
     print form
     profile = Profile(first=form['first'], last=form['last'], gender=form['gender'][0], age=form['age'],
                         bio=form['bio'], location=form['location']) #need photo
-    profile_photo = open(form['profile_image'], 'rb')
-    profile.photo.put(profile_photo, content_type = magic.from_file(profile_photo))
-    profile.save()    
+    file = request.files['profile_image']
+    print file
+    profile.photo.new_file()
+    profile.photo.write(file)
+    profile.photo.close()
+
+    photo = profile.photo.read()
+    print photo
+
     connection = Connection().save()
     answers = [form['q1'], form['q2'], form['q3'], form['q4'], form['q5']]
     user = User(cid=connection, email=form['email'], new_matches=False, profile=profile,
