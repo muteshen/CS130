@@ -29,7 +29,7 @@
     				<li><a href="/profile">Profile</a></li>
     				<li><a href="/meet">Meet People</a></li>
     				<li><a href="/matches">Matches</a></li>
-    				<li><a href="/yourFeedback">Feedback</a></li>
+    				<li><a href="/your_feedback">Feedback</a></li>
                     {% if current_user.is_authenticated %}
                     <li>
                     <form class="form-inline" method="post" action="{{ url_for('api.logout') }}">
@@ -46,7 +46,7 @@
 	 <div class="wrapper">
             <!-- Sidebar Holder -->
             <nav id="match_profile_sidebar">
-                <ul class="list-unstyled components">
+                <ul class="list-unstyled components grey_list">
                 	 <li>
                     <!-- name field added by generateData function below -->
                     	<h2 class="match_profile_sidebar_element" id="match_profile_name"></h2>
@@ -55,14 +55,14 @@
                         <img src="sarah.jpeg" alt="profile picture" class="match_profile_sidebar_element">
                     </li>
                     <li>
-                    	<h3 class="match_profile_sidebar_element" id="match_interestedIn">Interested-in: </h3>
+                    	<h3 class="match_profile_sidebar_element" id="match_interestedIn">Interested In: </h3>
                     </li>
                     <li>
                     	<button type="button" class="btn btn-primary btn-lg match_profile_sidebar_element" id="date_button" onclick="displayDateModal()">It's a Date!</button>
                     </li>
                     <li class="matches_button">
-                    	<button type="button" class="btn btn-primary active" onclick="displayDecisionModal('unmatch')">unmatch</button>
-						<button type="button" class="btn btn-primary active" onclick="displayReportModal()">report</button>
+                    	<button type="button" class="btn btn-primary active" onclick="displayDecisionModal('unmatch')">Unmatch</button>
+						<button type="button" class="btn btn-primary active" onclick="displayReportModal()">Report</button>
                     </li>
                 </ul>
             </nav>
@@ -172,7 +172,7 @@
 
 		//handles bio
 		// add some code to get the matches bio from the backend
-		var bio_node = document.createTextNode("Hey my name is Sarah Im from blahblah OMG i love blah blah blah yeah I also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blah I also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blahI also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blahI also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blah");
+		var bio_node = document.createTextNode("{{target.user.profile.bio}}");
 		var bio_container = document.getElementById("match_profile_bio");
 		bio_container.appendChild(bio_node);
 
@@ -192,7 +192,7 @@
 
 		//handles email
 		//add some code to get the matches email from the backend
-		var email_node = document.createTextNode("helloWorld@gmail.com");
+		var email_node = document.createTextNode("{{target.user.email}}");
 		var email_container = document.getElementById("match_email");
 		email_container.appendChild(email_node);
 
@@ -204,7 +204,7 @@
 
 		//handles interest
 		//add some code to get interested field from backend, consider omitting
-		var interested_node = document.createTextNode("male");
+		var interested_node = document.createTextNode("Male");
 		var interested_container = document.getElementById("match_interestedIn");
 		interested_container.appendChild(interested_node);
 		
