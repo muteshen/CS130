@@ -35,7 +35,7 @@ def swipe():
     if not args['like']:
         return ('', 204) #empty response
 
-    match = User.objects(id=args['id']
+    match = User.objects(id=args['id'])
     print "Match profile: match.profile"
     if matchId in current_user.cid.liked_you:
         matchProfile = match.only('profile','id').first()
