@@ -80,7 +80,7 @@ def index():
     # User.objects(email="sw@gmail.com").delete()
 
     if current_user.is_authenticated:
-        return render_template("meet.html")
+        return redirect(url_for("main.meet"))
     else:
         return render_template("home.html")
 
