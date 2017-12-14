@@ -14,27 +14,17 @@ $ wget geckodriver-v0.19.1-linux64.tar.gz (using linux 64 in my case)
 untar it and move geckodriver into venv/bin
 
 
-use your favorite text editor to modify seleniumExample.py
+use your favorite text editor to modify testC.py
 
 
-cp seleniumExample.py into venv
-
-MAKE SURE your current Directory is venv so the seleniumExample.py
-because in the seleniumExample.py script the script assumes the script
-is in ~/CS130-cinder/testing/venv and you are currently in venv
+cp testC.py into venv
 
 cd into venv
 
-run seleniumExample.py
+run testC.py
 
-type deactivate to exit out of venv
+type deactivate
 
-PART C UPDATE:
---------------------------------
-
-the testing script is testC.py
-
-setup the virtual environment like before but instead of running seleniumExample,py we are
-running testC.py
+to exit out of venv
 
 IN ADDITION, use must be running the server so the website would work
