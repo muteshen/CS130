@@ -57,7 +57,7 @@ def match_profile():
         else: #assumes you are definitely part of this match
             curProfile = match.uid1.profile
         matches.append({"match": match, "profile": curProfile})
-    return render_template('test.html', matches=matches)
+    return render_template('match_profile.html', matches=matches)
 
 
 @main.route('/meet')

@@ -19,6 +19,12 @@
      <link rel="stylesheet" type="text/css" href="../src/css/style.css">
     <script type="text/javascript">
         $(document).ready(function(){
+            console.log("{{matches[0].match.profile}}");
+
+
+
+
+
             $(function() {
               $('#hamburger').hover(function() {
                 $('.icon-bar').css('background-color', '#FFB978');
@@ -95,7 +101,7 @@
                     +               "<img src='" + image + "' class='img-circle'>"
                     +               "<div class='feedback_meta_container'>"
                     +               "<h1>" + name + " - " + date + "</h1>"
-                    +               "<a href='match_profile.html'>View Profile</a>"
+                    +               "<a href='/match_profile'>View Profile</a>"
                     +       "</div></div></li>";
                 $('#feedbackList').append(curr);
             }

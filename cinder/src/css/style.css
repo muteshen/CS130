@@ -282,7 +282,7 @@
 .feedback-box-header{
   font-family: "Avenir";
   text-align: center;
-  color: #F8F8F8;
+  color: #606060;
 }
 
 .feedback_container {
@@ -293,6 +293,13 @@
 
 }
 
+.feedback-text{
+  font-family: "Avenir";
+  font-weight: 300;
+  font-size: 18px;
+  color: #606060;
+}
+
 .feedback_meta_container{
   display: flex;
   justify-content: flex-start; 
@@ -301,8 +308,8 @@
   background-color: #F8F8F8;
 }
 .feedback_meta_container button {
-  background-color:#FFB978;
-  color: #fff;
+/*  background-color:#FFB978;
+  color: #606060;*/
 }
 
 .list-group-item{
