@@ -97,13 +97,11 @@
                                     <img src="{{url_for('api.getPicture', uid=i.mate_id)}}" class='match-img'>
                                 </div>    
                                 <div class='feedback_meta_container'>
-                                    <h1>{{i.profile.first}} {{i.profile.last}} - {{i.match.match_date}}</h1>
-                                    <p class="feedback-text">{{i.profile.bio}}</p>
-                                    <form action="/match_profile">
-                                    <input type="text" value="test" hidden>
+
+                                    <h1>{{i.profile.first}} {{i.profile.last}} - {{i.match.match_date.date()}}</h1>
+
                                     <script>console.log("{{i.mate_id}}")</script>
-                                    <button class="btn btn-primary" type="submit">View Profile</button>
-                                    </form>
+                                    <a href="{{url_for('main.match_profile', uid=i.mate_id)}}" class="btn btn-primary" >View Profile</a>
                                 </div></div></li>
                     {% endfor %}
                 </div>
