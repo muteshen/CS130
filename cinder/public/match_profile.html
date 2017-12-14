@@ -6,6 +6,20 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <script>
+    $(document).ready(function(){
+
+
+        function interest(){
+        var interest;
+        if("{{target.user.interested_in}}" == "M" ){ interest = "Male"}
+            else if("{{target.user.interested_in}}" == 'F'){interest = "Female"}
+            else if("{{target.user.interested_in}}" == 'O'){interest = "Other"}
+            return interest;
+        };
+    });
+    </script>
+
 	<title>Cinder</title>
 </head>
 <body>
@@ -51,8 +65,9 @@
                     <!-- name field added by generateData function below -->
                     	<h2 class="match_profile_sidebar_element" id="match_profile_name"></h2>
                     </li>
-                    <li>
-                        <img src="sarah.jpeg" alt="profile picture" class="match_profile_sidebar_element">
+                    <li><p style="text-align: center;">
+                        <img class="match-img" src="{{url_for('api.getPicture', uid=target.user.id)}}" alt="profile picture" class="match_profile_sidebar_element">
+                        </p>
                     </li>
                     <li>
                     	<h3 class="match_profile_sidebar_element" id="match_interestedIn">Interested In: </h3>
@@ -72,8 +87,8 @@
     <div id="content">
     	<!-- we populate the following elements by the generateData function below -->
     	<div class="matchProfileItem">
-    		<h2 id="match_email">email: </h2>
-    		<h2 id="match_location">location: </h2>
+    		<h2 id="match_email">Email: </h2>
+    		<h2 id="match_location">Location: </h2>
     	</div>
     	<div class="matchProfileItem">
 	    	<p id="match_profile_bio"></p>
@@ -105,7 +120,7 @@
             <!-- calendar interface -->
             	<div class="month"> 
 				  <ul>
-				    <li class="prev"><a href="#" onclick="setMonth(-1)">&#10094;</a>></li>
+				    <li class="prev"><a href="#" onclick="setMonth(-1)">&#10094;</a></li>
 				    <li class="next"><a href="#" onclick="setMonth(1)">&#10095;</a></li>
 				    <li id="monthText">
 				     
@@ -178,16 +193,14 @@
 
 		//handles name
 		//add some code to get the matches name from the backend
-		var name_node = document.createTextNode("Sarah");
+		var name_node = document.createTextNode("{{target.user.profile.first}} {{target.user.profile.last}}");
 		var name_container = document.getElementById("match_profile_name");
 		name_container.appendChild(name_node);
 
 		//handles age
 		//add some code to get the matches age from the backend
 		//add a coma and space + the age
-		var match_age = 23;
-		var age_string = ", " + match_age;
-		var age_node = document.createTextNode(age_string);
+		var age_node = document.createTextNode(", {{target.user.profile.age}}");
 		name_container.appendChild(age_node);
 
 		//handles email
@@ -198,13 +211,13 @@
 
 		//handles location
 		//add some code to get the matches location from backend
-		var location_node = document.createTextNode("santa monica");
+		var location_node = document.createTextNode("{{target.user.profile.location}}");
 		var location_container = document.getElementById("match_location");
 		location_container.appendChild(location_node);
 
 		//handles interest
 		//add some code to get interested field from backend, consider omitting
-		var interested_node = document.createTextNode("Male");
+		var interested_node = document.createTextNode("{{target.user.interested_in}}");
 		var interested_container = document.getElementById("match_interestedIn");
 		interested_container.appendChild(interested_node);
 		
