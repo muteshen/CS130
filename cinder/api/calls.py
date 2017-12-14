@@ -6,14 +6,14 @@ from ..models import User, Profile, Connection, Match, Response, Feedback
 from ..sampleDB import *
 from .. import db
 from random import random
-from .forms import RegistrationForm
-
 
 #note all these routes must be prefixed with /api to be accessed
 #ie localhost:5000/api/createProfile
 defaultGender = 'M'
 @api.route('/getUsers/', methods=["GET"])
 def getUsers():
+    #TODO: use current_user to get preferred Gender
+    #TODOV2: filter using connections.swiped to only get people you haven't swiped yet
     users = User.objects(profile__gender=defaultGender).only('profile','id')[:5]
     resp = jsonify(result = users.to_json())
     return resp
@@ -31,10 +31,12 @@ def swipe():
 def myFeedback():
     return feedback1
 
-@api.route('/myProfile', methods=["POST"])
-def myProfile():
-    resp = jsonify(user1)
-    return resp
+#uneeded b/c current_user
+# @api.route('/myProfile', methods=["POST"])
+# def myProfile():
+#     resp = jsonify(user1)
+#     return resp
+
 
 @api.route('/login', methods=["POST"])
 def login():
