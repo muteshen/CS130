@@ -90,7 +90,7 @@ def updateProfile():
     password = form['pswd']
     print password
     if password != "":
-        user.password_hash = generate_password_hash(form['pswd'])
+        current_user.password_hash = generate_password_hash(form['pswd'])
 
     current_user.save() #need to catch failed authenication
 
