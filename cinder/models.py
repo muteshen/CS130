@@ -55,25 +55,18 @@ class User(UserMixin, Document):
         return User.objects(id=uid).first()
 
 class Connection(Document):
-    #_id = StringField()
     #uid = ReferenceField(required=True, unique=True)
     liked_you = SortedListField(ReferenceField(User))
     swiped = SortedListField(ReferenceField(User))
+    # matches = SortedListField(ReferenceField(Match))
 
-class Match(Document):
-    #_id = StringField()
-    uid1 = ReferenceField(User, required=True)
-    uid2 = ReferenceField(User, required=True)
-    match_date = DateTimeField(required=True)
-    feedback_id = ReferenceField('Feedback')
-
-class Response(EmbeddedDocument):
+class Feedback(EmbeddedDocument):
     date = DateTimeField(required=True)
     from_uid1 = StringField()
     from_uid2 = StringField()
 
-class Feedback(Document):
-    #_id = StringField()
+class Match(Document):
     uid1 = ReferenceField(User, required=True)
     uid2 = ReferenceField(User, required=True)
-    response = ListField(EmbeddedDocumentField(Response))
+    match_date = DateTimeField(required=True)
+    feedbacks = ListField(EmbeddedDocumentField(Feedback))

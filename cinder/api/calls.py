@@ -2,7 +2,7 @@ from flask import render_template, session, redirect, url_for, jsonify, request,
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import api
-from ..models import User, Profile, Connection, Match, Response, Feedback
+from ..models import User, Profile, Connection, Match, Feedback
 from ..sampleDB import *
 from .. import db
 from random import random
@@ -29,14 +29,12 @@ def swipe():
         return ('', 204) #empty response
     else:
         users = User.objects(profile__gender=defaultGender).only('profile','id')[0]
-        print users.id
         return jsonify(users.to_json())
 
-
-@api.route('/myFeedback', methods=["POST"])
+@api.route('/myFeedback', methods=["GET"])
 def myFeedback():
+    #allFeedback = Feedback.objects(uid1=current_user.id).extend(Feedback.objects(uid2=current_user.id))
     return feedback1
-
 
 @api.route('/giveFeedback', methods=["POST"])
 def giveFeedback():
@@ -73,6 +71,7 @@ def createProfile():
     form = request.form
     print form
     profile = Profile(first=form['first'], last=form['last'], gender=form['gender'][0], age=form['age'],
+
                         bio=form['bio'], location=form['location']) #need photo
     file = request.files['profile_image']
     print file
@@ -82,6 +81,7 @@ def createProfile():
 
     photo = profile.photo.read()
     print photo
+
 
     connection = Connection().save()
     answers = [form['q1'], form['q2'], form['q3'], form['q4'], form['q5']]

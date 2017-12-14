@@ -274,12 +274,21 @@ window.onload = () => {
     const nextUser = upcomingUsers.splice(0,1)
     if (nextUser.length === 1) {
       currentPotentialMatch = nextUser[0]
+      rightChevron.classList.remove('glyphicon-chevron-invalid')
+      leftChevron.classList.remove('glyphicon-chevron-invalid')
+      rightChevron.classList.add('glyphicon-chevron-valid')
+      leftChevron.classList.add('glyphicon-chevron-valid')
 
-      // profilePic.innerHTML = currentPotentialMatch.profilePic
+      profilePic.src = currentPotentialMatch.profile.photo
       name.innerHTML = currentPotentialMatch.profile.first + ' ' + currentPotentialMatch.profile.last
       age.innerHTML = currentPotentialMatch.profile.age
       bio.innerHTML = currentPotentialMatch.profile.bio
       location.innerHTML = currentPotentialMatch.profile.location
+    } else {
+      rightChevron.classList.remove('glyphicon-chevron-valid')
+      leftChevron.classList.remove('glyphicon-chevron-valid')
+      rightChevron.classList.add('glyphicon-chevron-invalid')
+      leftChevron.classList.add('glyphicon-chevron-invalid')
     }
   }
 
@@ -289,8 +298,8 @@ window.onload = () => {
    * Notes: Displays the modal after inserting new match's user data
    */
   const showModal = (matchedUser) => {
-    // matchPic = matchedUser.pic
-    matchName.innerHTML = matchedUser["profile"]["first"] + ' ' + matchedUser.profile.last
+    matchPic.src = matchedUser.profile.photo
+    matchName.innerHTML = matchedUser.profile.first + ' ' + matchedUser.profile.last
     console.log('Showing match modal')
     $("#myModal").modal("show")
   }

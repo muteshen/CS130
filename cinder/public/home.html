@@ -81,17 +81,17 @@
     		<!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
     		<div class="collapse navbar-collapse" id="navbar-options">
     			<ul class="nav navbar-nav">
-    				<li><a href="/profile">Profile</a></li>
+    		<!-- 		<li><a href="/profile">Profile</a></li>
     				<li><a href="/meet">Meet People</a></li>
     				<li><a href="/matches">Matches</a></li>
-    				<li><a href="/your_feedback">Feedback</a></li>
+    				<li><a href="/your_feedback">Feedback</a></li> -->
 						{% if current_user.is_authenticated %}
-						<li>
-							<form method="post" action="{{ url_for('api.logout') }}">
-								<button type="submit">Logout</button>
-							</form>
-						</li>
-						{% endif %}!
+    				<li>
+    				<form class="form-inline" method="post" action="{{ url_for('api.logout') }}">
+    					<button class="nav-btn" type="submit">Logout</button>
+    				</form>
+    				</li>
+    				{% endif %}
     			</ul>
     		</div>
 		</div>
@@ -188,16 +188,16 @@
 							    <!-- Gender dropdown -->
 						      	<label class="sign-label" for="gender-select">Select your Gender</label>
 							    <select class="form-control" name="gender" id="gender-select">
-							      <option>Male</option>
-							      <option>Female</option>
-							      <option>Other</option>
+							      <option value="Male">Male</option>
+							      <option value="Female">Female</option>
+							      <option value="Other">Other</option>
 							    </select>
 							    <!-- Interested in dropdown -->
 							    <label class="sign-label" for="interest-select">Interested In:</label>
 							    <select name="interest" class="form-control" id="interest-select">
-							      <option>Male</option>
-							      <option>Female</option>
-							      <option>Other</option>
+							      <option value="Male">Male</option>
+							      <option value="Female">Female</option>
+							      <option value="Other">Other</option>
 							    </select>
 							    <!-- Question 1 -->
 							    <label class="sign-label" for="one">Do you like outdoor activities?</label>

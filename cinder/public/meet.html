@@ -56,6 +56,13 @@
     				<li><a href="/meet">Meet People</a></li>
     				<li><a href="/matches">Matches</a></li>
     				<li><a href="/your_feedback">Feedback</a></li>
+    				{% if current_user.is_authenticated %}
+    				<li>
+    				<form class="form-inline" method="post" action="{{ url_for('api.logout') }}">
+    					<button class="nav-btn" type="submit">Logout</button>
+    				</form>
+    				</li>
+    				{% endif %}
     			</ul>
     		</div>
 		</div>
@@ -64,7 +71,7 @@
 	<!-- Main content that shows current user people in the area -->
   <div class="page-container">
 		<span
-			class="glyphicon glyphicon-chevron-left"
+			class="glyphicon glyphicon-chevron-left glyphicon-chevron-valid"
 			aria-hidden="true"
 			id="chevron-left">
 		</span>
@@ -89,7 +96,7 @@
       </div>
     </div>
 		<span
-			class="glyphicon glyphicon-chevron-right"
+			class="glyphicon glyphicon-chevron-right glyphicon-chevron-valid"
 			aria-hidden="true"
 			id="chevron-right">
 		</span>
