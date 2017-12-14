@@ -121,7 +121,7 @@ def match_profile():
     matches = {"user": target, "profile":profile}
 
 
-    return render_template('match_profile.html', matches=matches)
+    return render_template('match_profile.html', target=matches)
 
 
 @main.route('/meet')
