@@ -69,4 +69,6 @@ class Match(Document):
     uid1 = ReferenceField(User, required=True)
     uid2 = ReferenceField(User, required=True)
     match_date = DateTimeField(required=True)
+    confirmed1 = BooleanField(default=False)
+    confirmed2 = BooleanField(defautl=False)
     feedbacks = ListField(EmbeddedDocumentField(Feedback))
