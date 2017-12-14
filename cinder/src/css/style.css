@@ -269,6 +269,25 @@
     width: 100%;
 }
 
+#content_1 {
+    width: calc(100% - 250px);
+    padding: 0px 40px 40px 40px
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: relative;
+    top: 50px;
+    right: 0;
+    font-family: "Avenir";
+    padding-left: 60px;
+    margin: auto;
+}
+
+#content_1 h1{
+  font-size: 25px;
+}
+#content_1.active {
+    width: 100%;
+}
 
 /* ---------------------------------------------------
     Feedbacks
@@ -377,7 +396,7 @@
 }
 
 #sidebar ul li a:focus {
-  text-decoration: none;
+  text-decoration: 
 }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
@@ -523,7 +542,7 @@ textarea{
   left: 0;
   min-height: 100vh;
   z-index: 999;
-  background: #FFB978;
+  background:  #F8F8F8;
   color: #fff;
   transition: all 0.3s;
 }
@@ -536,6 +555,7 @@ textarea{
 
 .match_profile_sidebar_element 
 {
+  color: #606060;
   padding-left: 25px;
 }
 
@@ -581,6 +601,7 @@ textarea{
 
 #date_button
 {
+  color: #fff;
   width:180px;
   text-align: center;
   margin-left: 50px;
@@ -693,3 +714,5 @@ textarea{
     background: #1abc9c;
     color: white !important
 }
+
+
