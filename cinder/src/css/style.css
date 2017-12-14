@@ -612,6 +612,9 @@ textarea{
   color: white;
 }
 
+.match-img{
+  width: 200px !important;
+}
 
 /* ---------------------------------------------------
     Calendar styling
