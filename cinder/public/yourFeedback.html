@@ -48,30 +48,30 @@
                 +    "</div></div></li>";
             $('#feedbackList').append(curr); 
         }
-        function setUpList()
-        {
-            //add database access here
-            $.ajax({
-                url: "api.myFeedback",
-                type: 'GET',
-                success: function(res) {
-                    console.log(res);
-                    alert(res);
-                }
-            });
+        // function setUpList()
+        // {
+        //     //add database access here
+        //     $.ajax({
+        //         url: "api.myFeedback",
+        //         type: 'GET',
+        //         success: function(res) {
+        //             console.log(res);
+        //             alert(res);
+        //         }
+        //     });
 
 
 
-            var m_data = [  {name:"Sarah", date:"10-10-2017", prompt: "how do you", feedbackGiven: false, feedBack: "", image:"sarah.jpeg"},
-                        {name:"Becky", date:"11-11-2017", prompt: "some prompt", feedbackGiven: true, feedBack: "i thought you were nice", image:"sarah.jpeg"},
-                        {name:"Mandy", date:"12-12-2017", prompt: "what do you think?", feedbackGiven: false, feedBack:"", image: "sarah.jpeg"}];
-            var test;
-            for(i = 0; i < m_data.length; i++)
-            {
-                add_Feedback(m_data[i].image, m_data[i].name, m_data[i].date, m_data[i].prompt, m_data[i].feedbackGiven, m_data[i].feedBack);   
-            }
-        }
-        window.onload = setUpList;
+        //     var m_data = [  {name:"Sarah", date:"10-10-2017", prompt: "how do you", feedbackGiven: false, feedBack: "", image:"sarah.jpeg"},
+        //                 {name:"Becky", date:"11-11-2017", prompt: "some prompt", feedbackGiven: true, feedBack: "i thought you were nice", image:"sarah.jpeg"},
+        //                 {name:"Mandy", date:"12-12-2017", prompt: "what do you think?", feedbackGiven: false, feedBack:"", image: "sarah.jpeg"}];
+        //     var test;
+        //     for(i = 0; i < m_data.length; i++)
+        //     {
+        //         add_Feedback(m_data[i].image, m_data[i].name, m_data[i].date, m_data[i].prompt, m_data[i].feedbackGiven, m_data[i].feedBack);   
+        //     }
+        // }
+        // window.onload = setUpList;
     </script>
 
 </head>
@@ -125,6 +125,16 @@
     <div id="content">
         <h1>Here are what some of your dates said about your time together</h1>
         <div class="list-group" id="feedbackList">
+            {% for i in matches %}
+                <li class='list-group-item'>
+                         <div class='feedback_container'>
+                               <img src="{{url_for('api.getPicture', uid=i.mate_id)}}" class='match-img'>
+                               <div class='feedback_meta_container'>
+                               <h1 class='feedback-box-header'>{{i.profile.first}} {{i.profile.last}} - {{i.match.match_date}}</h1>
+                               <h2 class='prompt-header'>'What do you think your date could have done better?'</h2>
+                               <p class="feedback-text"></p>
+                    "</div></div></li>"           
+            {% endfor %}
         </div>
         <p id="demo"></p>
     </div>
