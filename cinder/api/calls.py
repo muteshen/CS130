@@ -80,7 +80,7 @@ def swipe():
 
         if str(current_user.id) in target.cid.liked:
             print "MATCHED YEAH!!!!"
-            match = Match(uid1=current_user.id, uid2=target_id, match_date=datetime.date.today(),
+            match = Match(uid1=current_user.id, uid2=target_id, match_date=datetime.today(),
                           confirmed1=False, confirmed2=False, feedbacks=[]).save()
 
     my_swiped = current_user.cid.swiped
