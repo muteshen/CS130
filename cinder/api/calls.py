@@ -23,7 +23,7 @@ def getUsers():
 
     Returns:
         JSON.  Represents an array of users each with::
-        
+
             1. id -- String: user's unique id
             2. profile -- JSON: user's public information
     """
@@ -102,6 +102,28 @@ def swipe():
     #     #connection
 
 
+@api.route('/giveDate', methods=["POST"])
+@login_required
+def giveDate():
+    """Allows user to set a date/time for a date with their match
+    Args:
+        1. matchId - Id of the match to set a date for
+        2. date - the time to set the date for
+    """
+    #TODO: actually get matchId and date from request
+    matchId = Match.objects(uid1=current_user.id)[0].id
+    year, month, day, hour, minute = (2017, 12, 25, 2, 30)
+    date = datetime(year, month, day, hour, minute)
+
+    match = Match.objects(id=matchId)
+    #V2: check user is part of it
+    if current_user.is_authenticated:
+        if match.uid1 == current_user.id:
+            if match.confirmed2:
+                pass
+    return jsonify(date)
+
+
 @api.route('/giveFeedback', methods=["POST"])
 def giveFeedback():
     """This function allows users to submit feedback for one another.
@@ -114,8 +136,8 @@ def giveFeedback():
     Returns:
         1. feedback -- String: Feedback that was delivered
     """
-
-    return feedback1
+    #TODO: Implement this
+    return jsonify(feedback1)
 
 @api.route('/login', methods=["POST"])
 def login():
