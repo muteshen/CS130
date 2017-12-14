@@ -81,7 +81,7 @@
 
      <!-- Page Content Holder -->
             <div id="content">
-                <h1>Help your Dates by giving them feedback for further dates</h1>
+                <h1 class="feedback-header">Help Your Dates by Giving Them Feedback</h1>
                 <div class="list-group" id="feedbackList"></div>
             </div>
 
@@ -120,8 +120,8 @@
                     +           "<div class='feedback_container'>"
                     +               "<img src='" + image + "' class='img-circle'>"
                     +               "<div class='feedback_meta_container'>"
-                    +               "<h1>" + name + " - " + date + "</h1>"
-                    +               "<h2> Prompt - " + prompt + "</h2>"
+                    +               "<h1 class='feedback-box-header'>" + name + " - " + date + "</h1>"
+                    +               "<h2 class='prompt-header'> Prompt - " + prompt + "</h2>"
                     +               feedBackString
                     +    "</div></div></li>";
                 $('#feedbackList').append(curr);
