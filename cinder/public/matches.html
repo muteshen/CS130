@@ -13,7 +13,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
- 
+
    <!-- To change color of hamburger icon when hovering over it -->
 
      <link rel="stylesheet" type="text/css" href="../src/css/style.css">
@@ -50,11 +50,11 @@
             <!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
             <div class="collapse navbar-collapse" id="navbar-options">
                 <ul class="nav navbar-nav">
-                    <li><a href="home.html">Profile</a></li>
-                    <li><a href="./meet.html">Meet People</a></li>
-                    <li><a href="matches.html">Matches</a></li>
-                    <li><a href="./yourFeedback.html">Feedback</a></li>
-                    <li><a href="home.html">Logout</a></li>
+                    <li><a href="/home">Profile</a></li>
+                    <li><a href="/meet">Meet People</a></li>
+                    <li><a href="/matches">Matches</a></li>
+                    <li><a href="/your_feedback">Feedback</a></li>
+                    <li><a href="/home">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -66,14 +66,14 @@
                     <li class = "active">
                         <a href="#" role="button" onclick="setUpList(true);">New Matches</a>
                     </li>
-                    
+
                     <li>
                         <a href="#" role="button" onclick="setUpList(false);">Past Matches</a>
                     </li>
                 </ul>
             </nav>
     </div>
-    
+
      <!-- Page Content Holder -->
             <div id="content">
                 <h1>Your Matches</h1>
@@ -91,7 +91,7 @@
                     +               "<h1>" + name + " - " + date + "</h1>"
                     +               "<a href='match_profile.html'>View Profile</a>"
                     +       "</div></div></li>";
-                $('#feedbackList').append(curr); 
+                $('#feedbackList').append(curr);
             }
             function setUpList(isNew)
             {
@@ -103,12 +103,12 @@
                 //need to figure out how to distinguish which matches are new/old
                 for(i = 0; i < m_data.length; i++)
                 {
-                    add_match(m_data[i].image, m_data[i].name, m_data[i].date);   
+                    add_match(m_data[i].image, m_data[i].name, m_data[i].date);
                 }
             }
             window.onload = function () {setUpList(true);};
         </script>
-  
+
 </body>
 
 </html>
