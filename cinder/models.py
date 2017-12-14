@@ -50,14 +50,15 @@ class User(UserMixin, Document):
     def get_id(self):
         return str(self.id)
 
+
     @login_manager.user_loader
     def load_user(uid):
         return User.objects(id=uid).first()
 
 class Connection(Document):
     #uid = ReferenceField(required=True, unique=True)
-    liked_you = SortedListField(ReferenceField(User))
-    swiped = SortedListField(ReferenceField(User))
+    liked = SortedListField(StringField())#ReferenceField('User'))
+    swiped = SortedListField(StringField())#ReferenceField('User'))
     # matches = SortedListField(ReferenceField(Match))
 
 class Feedback(EmbeddedDocument):

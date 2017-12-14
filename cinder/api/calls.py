@@ -8,6 +8,8 @@ from ..models import User, Profile, Connection, Match, Feedback
 from ..sampleDB import *
 from .. import db
 from random import random
+from datetime import *
+
 
 #note all these routes must be prefixed with /api to be accessed
 #ie localhost:5000/api/createProfile
@@ -19,31 +21,59 @@ def getUsers():
     #TODO: use current_user to get preferred Gender
     #TODOV2: filter using connections.swiped to only get people you haven't swiped yet
     users = User.objects(profile__gender=defaultGender).only('profile','id')[:5]
+    print users[0].first
     resp = jsonify(result = users.to_json())
     return resp
+
+
+
 
 @api.route('/swipe', methods=["POST"])
 @login_required
 def swipe():
     """Parameters: {id: [other id], like: [bool]} //also unique
     """
-    args = json.loads(request.data) #cuz he passed a string
+    args = request.args #cuz he passed a string
     # REST {u'id': u'5a31cb3c151a4b11ad8befbd', u'like': False}
 
-    print args['like']
-    current_user.cid.swiped.append(args['id'])
-    if not args['like']:
-        return ('', 204) #empty response
 
-    match = User.objects(id=args['id'])
-    print "Match profile: match.profile"
-    if matchId in current_user.cid.liked_you:
-        matchProfile = match.only('profile','id').first()
-        return jsonify(matchProfile.to_json())
-    else:
-        match.cid.liked_you.append(current_user.id)
-        return ('', 204) #empty response
-        #connection
+    like = args['like']
+    target_id = args['id']
+
+
+
+    if not like or target_id == 'None':
+        return redirect(url_for('main.meet'))
+
+    target = User.objects(id=target_id)[0]
+
+    if like == 'True':
+        my_liked = current_user.cid.liked
+        my_liked.append(str(target_id))
+        current_user.cid.liked = my_liked
+
+        if str(current_user.id) in target.cid.liked:
+            print "MATCHED YEAH!!!!"
+            match = Match(uid1=current_user.id, uid2=target_id, match_date=datetime.today(),
+                          confirmed1=False, confirmed2=False, feedbacks=[]).save()
+
+    my_swiped = current_user.cid.swiped
+    my_swiped.append(str(target_id))
+    current_user.cid.swiped = my_swiped
+
+    current_user.cid.save()
+
+    return redirect(url_for('main.meet'))
+
+    # match = User.objects(id=args['id'])
+    # print "Match profile: match.profile"
+    # if matchId in current_user.cid.liked_you:
+    #     matchProfile = match.only('profile','id').first()
+    #     return jsonify(matchProfile.to_json())
+    # else:
+    #     match.cid.liked_you.append(current_user.id)
+    #     return ('', 204) #empty response
+    #     #connection
 
 
 @api.route('/giveFeedback', methods=["POST"])
@@ -80,19 +110,17 @@ def updateProfile():
     form = request.form
     print form
 
-
     profile = Profile(first=form['first'], last=form['last'], gender=form['gender'][0], age=form['age'],
                         bio=form['bio'], location=form['location']) #need photo
 
     file = request.files['profile_image']
 
-    print file
-    profile.photo.new_file()
-    profile.photo.write(file)
-    profile.photo.close()
+    if file.filename!="" and file.filename!="null":
+        profile.photo.new_file()
+        profile.photo.write(file)
+        profile.photo.close()
 
     answers = [form['q1'], form['q2'], form['q3'], form['q4'], form['q5']]
-
 
     current_user.profile = profile
     current_user.interested_in = form['interest'][0]
@@ -140,5 +168,22 @@ def createProfile():
 
 @api.route('/getPicture', methods=["GET"])
 def getPicture():
-    photo = current_user.profile.photo.read()
+
+
+    uid = request.args['uid']
+    print uid
+    if uid == 'None':
+        return '/fakepath'
+    if uid == 'curr':
+        return current_user.profile.photo.read()
+    else:
+        photo = User.objects(id=uid).only('profile')[0].profile.photo.read()
     return photo
+
+
+
+
+
+
+
+

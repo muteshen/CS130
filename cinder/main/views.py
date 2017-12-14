@@ -7,26 +7,58 @@ from ..sampleDB import *
 from datetime import *
 
 
+
 def getMatches():
     """Returns all the matches of the user """
     #matchObjs = Match.objects(uid1=current_user.id).extend(Match.objects(uid2=current_user.id))
     #only call for login_required
-
-    matchObjs = Match.objects[:2]
+    matchObjs = Match.objects(uid2=current_user.id)
     matches = []
     for match in matchObjs:
         curProfile = None
         curFeedback = []
-        if current_user.is_authenticated and match.uid1 == current_user.id:
-            curProfile = match.uid2.profile
-            for feedback in match.feedbacks:
-                curFeedback.append(feedback.from_uid2)
-        else: #assumes you are definitely part of this match
+        if current_user.is_authenticated:       
+            _id = match.uid1.id
             curProfile = match.uid1.profile
             for feedback in match.feedbacks:
                 curFeedback.append(feedback.from_uid1)
-        matches.append({"match": match, "profile": curProfile, "feedbacks": curFeedback})
+        matches.append({"match": match, "profile": curProfile, "feedbacks": curFeedback, "mate_id": _id})
+
+
+    matchObjs = Match.objects(uid1=current_user.id)
+    for match in matchObjs:
+        curProfile = None
+        curFeedback = []
+        if current_user.is_authenticated:
+            _id = match.uid2.id
+            curProfile = match.uid2.profile
+            for feedback in match.feedbacks:
+                curFeedback.append(feedback.from_uid2)
+        matches.append({"match": match, "profile": curProfile, "feedbacks": curFeedback, "mate_id": _id})
+
     return matches
+
+def getTargets():
+    users = User.objects(profile__gender=current_user.interested_in, id__ne=current_user.id, 
+                     id__nin=current_user.cid.swiped).only('profile','id')
+
+    if len(users) == 0:
+        name = "No more candidate"
+        age = 999
+        bio = "Check back Later !!"
+        location = "The place in your heart"
+        _id = 'None'
+    else:
+        u = users[0]
+        name = u.profile.first + " " + u.profile.last
+        age = u.profile.age
+        bio = u.profile.bio
+        location = u.profile.location
+        _id = str(u.id)
+    targets = {"name": name, "age": age, "bio":bio, "locaion": location, "id":_id}
+    return targets
+
+
 
 @main.route('/', methods=["GET", "POST"])
 def index():
@@ -85,11 +117,11 @@ def match_profile():
     return render_template('match_profile.html', matches=matches)
 
 
-
 @main.route('/meet')
 @login_required
 def meet():
-    return render_template("meet.html")
+    target = getTargets()
+    return render_template("meet.html", target=target)
 
 @main.route('/matches')
 @login_required
