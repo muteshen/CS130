@@ -127,6 +127,10 @@
 				</ul>
             </div>
             <div id="modalFooter" class="modal-footer">
+                <div id="time_container">
+                    <label>Time</label>
+                    <input id="time" type="time" value="12:00">
+                </div>
               <button type="button" onclick="submitDate()" class="btn btn-outline-dark btn-sm">Submit</button>
             </div>
           </div>
@@ -142,19 +146,19 @@
               <h3>Is this person bothering you? Tell us what they did.</h3>
               <ul style="list-style-type:disc">
             		<li>
-            			<a href="#">Inappropriate Messages</a>
+            			<a href="#" onclick="reportAction()">Inappropriate Messages</a>
             		</li>
             		<li>
-            			<a href="#">Inappropriate Photos</a>
+            			<a href="#" onclick="reportAction()">Inappropriate Photos</a>
             		</li>
             		<li>
-            			<a href="#">Bad offline Behavior</a>
+            			<a href="#" onclick="reportAction()">Bad offline Behavior</a>
             		</li>
             		<li>
-            			<a href="#">Feels Like Spam</a>
+            			<a href="#" onclick="reportAction()">Feels Like Spam</a>
             		</li>
             		<li>
-            			<a href="#">Other</a>
+            			<a href="#" onclick="reportAction()">Other</a>
             		</li>
             	</ul>
             </div>
@@ -222,10 +226,14 @@
     var spanReport = document.getElementById("closeReport");
     var spanDecision = document.getElementById("closeDecision");
 
+    //get the reference for time input
+    var timeField = document.getElementById("time");
+
     //variable that will be initialized to the current date
     var curr_date;
     //variable that will contain the date of the date
     var date_date;
+    var date_time;
 
     //this function populates the calendar in dateModal with the correct values based on the month and year
     function generateCalendar(month, year)
@@ -363,6 +371,9 @@
     //this function hides the dateModal and brings up the congratsModal
     function submitDate()
     {
+        var temp_time = timeField.value;
+        date_time = {hour: temp_time[0] + temp_time[1], minute: temp_time[3] + temp_time[4]};
+        
     	dateModal.style.display = "none";
     	displayDecisionModal("date");
     }
@@ -406,7 +417,7 @@
     	$('#decisionButtons').empty();
     	$('#decisionButtons').append(yesButton);
     	$('#decisionButtons').append(noButton);
-
+        console.log(date_time);
     	decisionModal.style.display = "block";
     }
 
@@ -425,6 +436,13 @@
     //this function is called when user selects yes in decisionModal (date mode)
     function submitDateFinal(){
     	//call this function when we answer yes upon date confirmation
+
+
+    }
+
+    function reportAction()
+    {
+        reportModal.style.display = "none";
     }
 
     // When the user clicks on <span> (x), close the modal
