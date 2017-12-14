@@ -17,7 +17,7 @@ def getMatches():
     for match in matchObjs:
         curProfile = None
         curFeedback = []
-        if current_user.is_authenticated:       
+        if current_user.is_authenticated:
             _id = match.uid1.id
             curProfile = match.uid1.profile
             for feedback in match.feedbacks:
@@ -39,13 +39,13 @@ def getMatches():
     return matches
 
 def getTargets():
-    users = User.objects(profile__gender=current_user.interested_in, id__ne=current_user.id, 
+    users = User.objects(profile__gender=current_user.interested_in, id__ne=current_user.id,
                      id__nin=current_user.cid.swiped).only('profile','id')
 
     if len(users) == 0:
-        name = "No more candidate"
-        age = 999
-        bio = "Check back Later !!"
+        name = "No more candidates"
+        age = ''
+        bio = "Check back later!"
         location = "The place in your heart"
         _id = 'None'
     else:
@@ -55,7 +55,7 @@ def getTargets():
         bio = u.profile.bio
         location = u.profile.location
         _id = str(u.id)
-    targets = {"name": name, "age": age, "bio":bio, "locaion": location, "id":_id}
+    targets = {"name": name, "age": age, "bio":bio, "location": location, "id":_id}
     return targets
 
 
