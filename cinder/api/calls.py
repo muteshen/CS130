@@ -26,18 +26,23 @@ def swipe():
         return ('', 204) #empty response
     else:
         users = User.objects(profile__gender=defaultGender).only('profile','id')[0]
-        print users.id
         return jsonify(users.to_json())
 
-
-@api.route('/myFeedback', methods=["POST"])
+@api.route('/myFeedback', methods=["GET"])
 def myFeedback():
+    #allFeedback = Feedback.objects(uid1=current_user.id).extend(Feedback.objects(uid2=current_user.id))
     return feedback1
-
 
 @api.route('/giveFeedback', methods=["POST"])
 def giveFeedback():
     return feedback1
+
+@api.route('/myMatches', methods=["POST"])
+def myMatches():
+    #get list of matches from
+    # Match.objects[0].only('match_date')
+    # x.update(y)
+    return jsonify(Match.objects[0])
 
 @api.route('/login', methods=["POST"])
 def login():
