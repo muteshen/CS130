@@ -151,7 +151,7 @@
 						        <h4 class="modal-title">Create Your Account</h4>
 						      </div>
 									<!-- Modal Form starts here -->
-						      <form id="modal-form"  method="post" action="{{ url_for('api.createProfile') }}">
+						      <form id="modal-form"  method="post" action="{{ url_for('api.createProfile') }}" enctype="multipart/form-data">
 						      <div class="modal-body">
 						      	<!-- First Name -->
 						      	<div class="form-group">

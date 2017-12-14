@@ -68,8 +68,21 @@ def profile():
 @main.route('/match_profile')
 def match_profile():
     #use login_required
-    matches = getMatches()
-    return render_template('test.html', matches=matches)
+
+    #matchObjs = Match.objects(uid1=current_user.id).extend(Match.objects(uid2=current_user.id))
+
+    matchObjs = Match.objects[:2]
+    print matchObjs
+    matches = []
+    for match in matchObjs:
+        curProfile = None
+        if current_user.is_authenticated and match.uid1 == current_user.id:
+            curProfile = match.uid2.profile
+        else: #assumes you are definitely part of this match
+            curProfile = match.uid1.profile
+        matches.append({"match": match, "profile": curProfile})
+    return render_template('match_profile.html', matches=matches)
+
 
 
 @main.route('/meet')

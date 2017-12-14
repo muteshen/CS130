@@ -19,7 +19,9 @@
      <link rel="stylesheet" type="text/css" href="../src/css/style.css">
     <script type="text/javascript">
         $(document).ready(function(){
-            $(function() {
+
+          
+          $(function() {
               $('#hamburger').hover(function() {
                 $('.icon-bar').css('background-color', '#FFB978');
               }, function() {
@@ -83,7 +85,17 @@
      <!-- Page Content Holder -->
             <div id="content">
                 <h1>Your Matches</h1>
-                <div class="list-group" id="feedbackList"></div>
+                <div class="list-group" id="feedbackList">
+                    {% for i in matches %}
+                        <li class='list-group-item'>
+                            <div class='feedback_container'>
+                                <img src='' class='img-circle'>
+                                <div class='feedback_meta_container'>
+                                <h1>{{i.profile.first}} {{i.profile.last}} - {{i.match.match_date}}</h1>
+                                <a href='/match_profile'>View Profile</a>
+                                </div></div></li>
+                    {% endfor %}
+                </div>
         </div>
 
         <script>
@@ -95,23 +107,23 @@
                     +               "<img src='" + image + "' class='img-circle'>"
                     +               "<div class='feedback_meta_container'>"
                     +               "<h1>" + name + " - " + date + "</h1>"
-                    +               "<a href='match_profile.html'>View Profile</a>"
+                    +               "<a href='/match_profile'>View Profile</a>"
                     +       "</div></div></li>";
                 $('#feedbackList').append(curr);
             }
-            function setUpList(isNew)
-            {
-                $('#feedbackList').empty();
-                //if isNew is true, then we want to display the new matches
-                var m_data = [  {name:"Sarah", date:"10-10-2017", image:"sarah.jpeg"},
-                                {name:"Becky", date:"11-11-2017", image:"sarah.jpeg"},
-                                {name:"Mandy", date:"12-12-2017", image: "sarah.jpeg"}];
-                //need to figure out how to distinguish which matches are new/old
-                for(i = 0; i < m_data.length; i++)
-                {
-                    add_match(m_data[i].image, m_data[i].name, m_data[i].date);
-                }
-            }
+            // function setUpList(isNew)
+            // {
+            //     $('#feedbackList').empty();
+            //     //if isNew is true, then we want to display the new matches
+            //     var m_data = [  {name:"Sarah", date:"10-10-2017", image:"sarah.jpeg"},
+            //                     {name:"Becky", date:"11-11-2017", image:"sarah.jpeg"},
+            //                     {name:"Mandy", date:"12-12-2017", image: "sarah.jpeg"}];
+            //     //need to figure out how to distinguish which matches are new/old
+            //     for(i = 0; i < m_data.length; i++)
+            //     {
+            //         add_match(m_data[i].image, m_data[i].name, m_data[i].date);
+            //     }
+            // }
             window.onload = function () {setUpList(true);};
         </script>
 
