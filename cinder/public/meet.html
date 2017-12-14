@@ -57,12 +57,12 @@
     				<li><a href="/matches">Matches</a></li>
     				<li><a href="/your_feedback">Feedback</a></li>
     				{% if current_user.is_authenticated %}
-						<li>
-							<form method="post" action="{{ url_for('api.logout') }}">
-								<button type="submit">Logout</button>
-							</form>
-						</li>
-						{% endif %}
+    				<li>
+    				<form class="form-inline" method="post" action="{{ url_for('api.logout') }}">
+    					<button class="nav-btn" type="submit">Logout</button>
+    				</form>
+    				</li>
+    				{% endif %}
     			</ul>
     		</div>
 		</div>
