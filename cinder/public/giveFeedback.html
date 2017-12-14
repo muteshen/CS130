@@ -40,7 +40,7 @@
                 +               "<img src='" + image + "' class='img-circle'>"
                 +               "<div class='feedback_meta_container'>"
                 +               "<h1>" + name + " - " + date + "</h1>"
-                +               "<h2> Prompt - " + prompt + "</h2>"
+                +               "<h2 class='prompt-header'> Prompt - " + prompt + "</h2>"
                 +               feedBackString
                 +    "</div></div></li>";
             $('#feedbackList').append(curr); 
@@ -109,10 +109,10 @@
             <nav id="sidebar">
                 <ul class="list-unstyled components">
                     <li>
-                        <a href="yourFeedback.html">Give Feedback</a>
+                        <a href="/give_feedback">Give Feedback</a>
                     </li>
                     <li class="active">
-                        <a href="giveFeedback.html">Your Feedback</a>
+                        <a href="/your_feedback">Your Feedback</a>
                     </li>
                 </ul>
             </nav>

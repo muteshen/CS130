@@ -6,6 +6,7 @@ from ..models import *
 from ..sampleDB import *
 from datetime import *
 
+
 def getMatches():
     """Returns all the matches of the user """
     #matchObjs = Match.objects(uid1=current_user.id).extend(Match.objects(uid2=current_user.id))
@@ -51,12 +52,12 @@ def index():
     else:
         return render_template("home.html")
 
-@main.route('/give_feedback')
+@main.route('/your_feedback')
 def give_feedback():
     matches = getMatches()
     return render_template('giveFeedback.html', matches=matches)
 
-@main.route('/your_feedback')
+@main.route('/give_feedback')
 def your_feedback():
     matches = getMatches()
     return render_template('yourFeedback.html', matches=matches)
