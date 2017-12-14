@@ -6,7 +6,7 @@ from ..models import User, Profile, Connection, Match, Feedback
 from ..sampleDB import *
 from .. import db
 from random import random
-from magic import from_file
+
 
 
 
