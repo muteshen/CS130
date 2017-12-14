@@ -96,7 +96,7 @@
                     <li><a href="/profile">Profile</a></li>
                     <li><a href="/meet">Meet People</a></li>
                     <li><a href="/matches">Matches</a></li>
-                    <li><a href="/yourFeedback">Feedback</a></li>
+                    <li><a href="/your_feedback">Feedback</a></li>
                     {% if current_user.is_authenticated %}
                     <li>
                     <form class="form-inline" method="post" action="{{ url_for('api.logout') }}">
@@ -123,7 +123,7 @@
     
     <!-- Page Content Holder -->
     <div id="content">
-        <h1>Here are what some of your dates said about your time together</h1>
+        <h1 class="feedback-header">Here are what some of your dates said about your time together</h1>
         <div class="list-group" id="feedbackList">
             {% for i in matches %}
                 <li class='list-group-item'>

@@ -80,17 +80,17 @@ def index():
     # User.objects(email="sw@gmail.com").delete()
 
     if current_user.is_authenticated:
-        return render_template("meet.html")
+        return redirect(url_for("main.meet"))
     else:
         return render_template("home.html")
 
 @main.route('/your_feedback')
-def give_feedback():
+def your_feedback():
     matches = getMatches()
     return render_template('yourFeedback.html', matches=matches)
 
 @main.route('/give_feedback')
-def your_feedback():
+def give_feedback():
     matches = getMatches()
     return render_template('giveFeedback.html', matches=matches)
 
