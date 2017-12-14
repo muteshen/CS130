@@ -87,12 +87,12 @@ def index():
 @main.route('/your_feedback')
 def give_feedback():
     matches = getMatches()
-    return render_template('giveFeedback.html', matches=matches)
+    return render_template('yourFeedback.html', matches=matches)
 
 @main.route('/give_feedback')
 def your_feedback():
     matches = getMatches()
-    return render_template('yourFeedback.html', matches=matches)
+    return render_template('giveFeedback.html', matches=matches)
 
 @main.route('/profile')# @login_required
 def profile():

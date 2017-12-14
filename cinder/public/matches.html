@@ -85,7 +85,10 @@
 
      <!-- Page Content Holder -->
             <div id="content">
-                <h1>Your Matches</h1>
+                <h1 class="feedback-header">You can view your matches here</h1>
+                <hr>
+                <h5 style="text-align: center; color: #606060;">Click "View Profile" to learn more about them and arrange a date!</h5>
+                <hr>
                 <div class="list-group" id="feedbackList">
                     {% for i in matches %}
                         <li class='list-group-item'>
@@ -95,6 +98,7 @@
                                 </div>    
                                 <div class='feedback_meta_container'>
                                     <h1>{{i.profile.first}} {{i.profile.last}} - {{i.match.match_date}}</h1>
+                                    <p class="feedback-text">{{i.profile.bio}}</p>
                                     <form action="/match_profile">
                                     <input type="text" value="test" hidden>
                                     <script>console.log("{{i.mate_id}}")</script>

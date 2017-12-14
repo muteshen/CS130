@@ -80,7 +80,7 @@ def swipe():
 
         if str(current_user.id) in target.cid.liked:
             print "MATCHED YEAH!!!!"
-            match = Match(uid1=current_user.id, uid2=target_id, match_date=datetime.today(),
+            match = Match(uid1=current_user.id, uid2=target_id, match_date=datetime.date.today(),
                           confirmed1=False, confirmed2=False, feedbacks=[]).save()
 
     my_swiped = current_user.cid.swiped
@@ -266,7 +266,6 @@ def getPicture():
     Returns:
         1. photo -- String: url that client can use to access image
     """
-
     uid = request.args['uid']
     print uid
     if uid == 'None':
