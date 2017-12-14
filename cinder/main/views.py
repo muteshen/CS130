@@ -1,5 +1,5 @@
 from flask import render_template, session, redirect, url_for, jsonify
-from flask_login import login_required
+from flask_login import login_required, current_user
 from . import main
 from .. import db
 from ..models import *
@@ -27,8 +27,10 @@ def index():
 
     # User.objects(email="sw@gmail.com").delete()
 
-    print("Testing Here")
-    return render_template("home.html")
+    if current_user.is_authenticated:
+        return render_template("meet.html")
+    else:
+        return render_template("home.html")
 
 @main.route('/give_feedback')
 def give_feedback():

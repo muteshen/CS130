@@ -158,7 +158,7 @@ hr {
 .location {
   color: #4d4d4d;
   font-family: Avenir;
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .location:before {
@@ -170,8 +170,4 @@ hr {
 .glyphicon {
   font-size: 150px;
   color: #FFB978;
-}
-
-.glyphicon:active .glyphicon:hover {
-  color: red;
 }
