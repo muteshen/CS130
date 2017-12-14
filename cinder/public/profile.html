@@ -4,9 +4,43 @@
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="../src/css/style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDioh5mGQkod645juHXUlcPQsx-e8uhZDg&libraries=places"></script>
+
 
 	<title>Cinder</title>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			$(document).on('change', ':file', function() {
+			    var input = $(this),
+			        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+			        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+			    input.trigger('fileselect', [numFiles, label]);
+			});
+
+
+			$(':file').on('fileselect', function(event, numFiles, label) {
+		        $("#file_name").val(label);
+			});
+
+			$(function() {
+			  $('#hamburger').hover(function() {
+			    $('.icon-bar').css('background-color', '#FFB978');
+			  }, function() {
+			    // on mouseout, reset the background colour
+			    $('.icon-bar').css('background-color', '');
+			  });
+			});
+
+
+
+		});
+	</script>
+
+
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -37,15 +71,159 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12">
-				<h1>Profile</h1>
+				<h1 style="margin-bottom: 15px;">Profile</h1>
+				<h5>Edit your profile and hit "Save Changes" when you're finished!</h5>
+				<hr></hr>
+				
 				<form>
 					<div class="form-group">
-						<input type="email" name="email" class="form-control sign-up-form"  aria-describedby="emailHelp" placeholder="Email" required>
+			      		<input type="text" name="first" class="form-control"  placeholder="First Name" value="{{current_user.first}}" required>
+			      	</div>
+			      	<!-- Last Name -->
+			      	<div class="form-group">
+			      		<input type="text" name="last" class="form-control"  placeholder="Last Name" required>
+			      	</div>
+			      	<!-- Email -->
+			      	<div class="form-group">
+			      		<input type="email" name="email-modal" class="form-control"  placeholder="Email" required>
+			      	</div>
+			      	<!-- Password -->
+			      	<div class="form-group">
+			      		<input type="password" name="pswd" class="form-control"  placeholder="Password" required>
+			      	</div>
+			      	<!-- Age -->
+			      	<div class="form-group">
+			      		<input type="number" name="age" class="form-control"  placeholder="Age" required>
+			      	</div>
+			      	<!-- Location -->
+			      	<div class="form-group">
+					    <input id="autocomplete" class="form-control" placeholder="Location" type="text" name="location" required/>
+				    </div>
+				    <!-- Latitude, hidden field -->
+				    <div class="form-group">
+					    <input id="cityLat" name="latitude"type="text" hidden/>
+				    </div>
+				    <!-- Longitude, hidden field -->
+				    <div class="form-group">
+					    <input id="cityLng" name="longitude"type="text" hidden/>
+				    </div>
+				    <!-- Gender dropdown -->
+			      	<label class="sign-label" for="gender-select">Select your Gender</label>
+				    <select class="form-control" name="gender" id="gender-select">
+				      <option>Male</option>
+				      <option>Female</option>
+				      <option>Other</option>
+				    </select>
+				    <!-- Interested in dropdown -->
+				    <label class="sign-label" for="interest-select">Interested In:</label>
+				    <select name="interest" class="form-control" id="interest-select">
+				      <option>Male</option>
+				      <option>Female</option>
+				      <option>Other</option>
+				    </select>
+				    <!-- Question 1 -->
+				    <label class="sign-label" for="one">Do you like outdoor activities?</label>
+				    <div class="form-check" name="one">
+					  <label class="form-check-label">
+					    <input class="form-check-input" type="radio" name="q1" id="q1yes" value="yes">
+					    Yes
+					  </label>
 					</div>
+					<div class="form-check">
+					  <label class="form-check-label">
+					    <input class="form-check-input" type="radio" name="q1" id="q1no" value="no">
+					    No
+					  </label>
+					</div>
+				 	<!-- Question 2 -->
+				 	 <label class="sign-label" for="two">Do you consider yourself an introvert or extrovert?</label>
+				    <div class="form-check" name="two">
+					  <label class="form-check-label">
+					    <input class="form-check-input" type="radio" name="q2" id="q2intro" value="Introvert">
+					    Introvert
+					  </label>
+					</div>
+					<div class="form-check">
+					  <label class="form-check-label">
+					    <input class="form-check-input" type="radio" name="q2" id="q2extro" value="Extrovert">
+					    Extrovert
+					  </label>
+					</div>
+					<!-- Question 3 -->
+					<label class="sign-label" for="three">Do you want to have children one day?</label>
+				    <div class="form-check" name="three">
+					  <label class="form-check-label">
+					    <input class="form-check-input" type="radio" name="q3" id="q3yes" value="Yes">
+					    Yes
+					  </label>
+					</div>
+					<div class="form-check">
+					  <label class="form-check-label">
+					    <input class="form-check-input" type="radio" name="q3" id="q3no" value="No">
+					    No
+					  </label>
+					</div>
+					<!-- Question 4 -->
+					<label class="sign-label" for="four">Do you like the warm or the cold?</label>
+				    <div class="form-check" name="four">
+					  <label class="form-check-label">
+					    <input class="form-check-input" type="radio" name="q4" id="q4warm" value="Warm">
+					    Warm
+					  </label>
+					</div>
+					<div class="form-check">
+					  <label class="form-check-label">
+					    <input class="form-check-input" type="radio" name="q4" id="q4cold" value="Cold">
+					    Cold
+					  </label>
+					</div>
+					<!-- Question 5 -->
+					<label class="sign-label" for="five">Are you looking for something serious?</label>
+				    <div class="form-check" name="five">
+					  <label class="form-check-label">
+					    <input class="form-check-input" type="radio" name="q5" id="q5yes" value="Yes">
+					    Yes
+					  </label>
+					</div>
+					<div class="form-check">
+					  <label class="form-check-label">
+					    <input class="form-check-input" type="radio" name="q5" id="q5no" value="No">
+					    No
+					  </label>
+					</div>
+					<!-- Bio -->
+				    <div class="form-group">
+					    <label for="bio">Please Write a Short Bio:</label>
+					    <textarea name="bio" class="form-control" id="bio" rows="5"></textarea>
+					</div>
+					<!-- Photo Upload -->
+					<h3 class="photo-upload-header">Upload a Profile Photo:</h3>
+					
+					<div class="form-group">
+					    <input type="file" accept="image/*" class="form-control-file" name="profile_image" required>
+					</div>
+					<div >
+				        <button type="submit" class="btn btn-success" style="margin-bottom: 50px; margin-top: 5px;">Save Changes</button>
+					</div>
+
 				</form>
 			</div>
 		</div>
 	</div>
+
+	<script>
+		function initialize() {
+			var input = document.getElementById('autocomplete');
+			var autocomplete = new google.maps.places.Autocomplete((input), {types: ['(cities)']});
+			google.maps.event.addListener(autocomplete, 'place_changed', function() {
+         	var place = autocomplete.getPlace();
+            document.getElementById('cityLat').value = place.geometry.location.lat();
+            document.getElementById('cityLng').value = place.geometry.location.lng();
+   		 });
+		}
+
+		google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
 
 </body>
 </html>

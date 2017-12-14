@@ -1,33 +1,43 @@
-from flask import render_template, session, redirect, url_for, jsonify, request
-from flask_login import login_user
+from flask import render_template, session, redirect, url_for, jsonify, request, flash
+from flask_login import login_user, logout_user, login_required, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
 from . import api
-from ..models import *
+from ..models import User, Profile, Connection, Match, Response, Feedback
 from ..sampleDB import *
 from .. import db
-
+from random import random
 
 #note all these routes must be prefixed with /api to be accessed
 #ie localhost:5000/api/createProfile
-
+defaultGender = 'M'
 @api.route('/getUsers/', methods=["GET"])
 def getUsers():
-    defaultGender = 'M'
+    print current_user
+    #TODO: use current_user to get preferred Gender
+    #TODOV2: filter using connections.swiped to only get people you haven't swiped yet
     users = User.objects(profile__gender=defaultGender).only('profile','id')[:5]
-    return jsonify(result = users.to_json())
-
+    resp = jsonify(result = users.to_json())
+    return resp
 
 @api.route('/swipe', methods=["POST"])
 def swipe():
-    return isMatch
+    #in is the other user's id and a bool of liked
+    if random() < 0.5: #TODO: Check user connections to see if he was swiped back
+        return ('', 204) #empty response
+    else:
+        users = User.objects(profile__gender=defaultGender).only('profile','id')[0]
+        print users.id
+        return jsonify(users.to_json())
+
 
 @api.route('/myFeedback', methods=["POST"])
 def myFeedback():
     return feedback1
 
-@api.route('/myProfile', methods=["POST"])
-def myProfile():
-    resp = jsonify(user1)
-    return resp
+
+@api.route('/giveFeedback', methods=["POST"])
+def giveFeedback():
+    return feedback1
 
 @api.route('/login', methods=["POST"])
 def login():
@@ -44,8 +54,11 @@ def login():
     #return True
 
 @api.route('/logout', methods=["POST"])
+@login_required
 def logout():
-    return True
+    logout_user()
+    flash('You have been logged out.')
+    return redirect(url_for('main.index'))
 
 @api.route('/updateProfile', methods=["POST"])
 def updateProfile():
@@ -54,5 +67,15 @@ def updateProfile():
 
 @api.route('/createProfile', methods=["POST"])
 def createProfile():
-    resp = jsonify(user1)
-    return resp
+    form = request.form
+    print form
+    profile = Profile(first=form['first'], last=form['last'], gender=form['gender'][0], age=form['age'],
+                        bio=form['bio'], location=form['location']) #need photo
+    connection = Connection().save()
+    answers = [form['q1'], form['q2'], form['q3'], form['q4'], form['q5']]
+    user = User(cid=connection, email=form['email'], new_matches=False, profile=profile,
+        interested_in=form['interest'][0], answers=answers)
+    user.password_hash = generate_password_hash(form['pswd'])
+    user.save() #need to catch failed authenication
+    login_user(user, True)
+    return redirect(url_for('main.profile'))

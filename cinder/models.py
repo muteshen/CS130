@@ -3,7 +3,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from . import login_manager
 
-GENDERS = ('M', 'F', 'N')
+#o=other
+GENDERS = ('M', 'F', 'O')
 class Profile(EmbeddedDocument):
     first = StringField(max_length=50)
     last = StringField(max_length=50)
@@ -11,6 +12,7 @@ class Profile(EmbeddedDocument):
     age = IntField()
     photo = FileField() #GridGS
     bio = StringField()
+    location = StringField()
 
 class User(UserMixin, Document):
     cid = ReferenceField('Connection')
@@ -21,7 +23,6 @@ class User(UserMixin, Document):
     profile = EmbeddedDocumentField(Profile, required=True)
     interested_in = StringField(max_length=1, choices=GENDERS, required=True)
     answers = ListField(StringField())
-    location = StringField() #coordinates seperated by a comma
     # login = StringField(max_length=80, unique=True)
 
     @property

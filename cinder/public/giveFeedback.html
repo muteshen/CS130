@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Give Feedback</title>
+  <title>Your Feedback</title>
   <meta charset="utf-8" />
 
 
@@ -47,6 +47,18 @@
         }
         function setUpList()
         {
+            //add database access here
+            $.ajax({
+                url: "api.myFeedback",
+                type: 'GET',
+                success: function(res) {
+                    console.log(res);
+                    alert(res);
+                }
+            });
+
+
+
             var m_data = [  {name:"Sarah", date:"10-10-2017", prompt: "how do you", feedbackGiven: false, feedBack: "", image:"sarah.jpeg"},
                         {name:"Becky", date:"11-11-2017", prompt: "some prompt", feedbackGiven: true, feedBack: "i thought you were nice", image:"sarah.jpeg"},
                         {name:"Mandy", date:"12-12-2017", prompt: "what do you think?", feedbackGiven: false, feedBack:"", image: "sarah.jpeg"}];

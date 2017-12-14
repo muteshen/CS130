@@ -16,34 +16,24 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 
-			$("#modal-submit").submit(function(){
 
-				var first = $("input[name=first]").val();
-				var last = $("input[name=last]").val();
-				var email = $("input[name=email-modal]").val();
-				var password = $("input[name=pswd]").val();
-				var age = $("input[name=age]").val();
-				var gender = $("input[name=gender]").val();
-				var interest = $("input[name=interest]").val();
-				var bio = $("input[name=bio]").val();
-				var location = $("input[name=locaiton]").val();
-
-				var form = $(this);
-
-				$.ajax({
-				url: 'api.createProfile',
-				data : form.serialize(),
-				type: 'POST',
-				success: function(response) {
-				console.log(response);
-				},
-				error : function(error) {
-				console.log(error);
-				}
-				});
+			$(document).on('change', ':file', function() {
+			    var input = $(this),
+			        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+			        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+			    input.trigger('fileselect', [numFiles, label]);
 			});
 
-			// $('#sign-modal').on('shown.bs.modal', initialize());
+
+			$(':file').on('fileselect', function(event, numFiles, label) {
+		        $("#file_name").val(label);
+			});
+
+			$("#upload-btn").click(function(e){
+				e.preventDefault();
+				var data = $("#modal-form").serialize();
+				console.log(data);
+			});
 
 
 			$(function() {
@@ -56,21 +46,21 @@
 			});
 		});
 
-		$("#log-in-form").submit(function(){
-		var form = $(this);
-		$.ajax({
-		url: 'api.login',
-		data : form.serialize(),
-		type: 'POST',
-		success: function(response) {
-		console.log(response);
-		},
-		error : function(error) {
-		console.log(error);
-		}
+		// $("#log-in-form").submit(function(){
+		// var form = $(this);
+		// $.ajax({
+		// url: 'api.login',
+		// data : form.serialize(),
+		// type: 'POST',
+		// success: function(response) {
+		// console.log(response);
+		// },
+		// error : function(error) {
+		// console.log(error);
+		// }
 
-		});
-		});
+		// });
+		// });
 	</script>
 </head>
 <body>
@@ -95,6 +85,13 @@
     				<li><a href="/meet">Meet People</a></li>
     				<li><a href="/matches">Matches</a></li>
     				<li><a href="/your_feedback">Feedback</a></li>
+						{% if current_user.is_authenticated %}
+						<li>
+							<form method="post" action="{{ url_for('api.logout') }}">
+								<button type="submit">Logout</button>
+							</form>
+						</li>
+						{% endif %}!
     			</ul>
     		</div>
 		</div>
@@ -103,7 +100,15 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-6">
 				<h1 class="main-header header-top">We focus on the hard conversations.</h1>
-				<h1 class="main-header header-bottom">You focus on having fun.</h1>
+				<h1 class="main-header header-bottom">
+					<!-- You focus on having fun. -->
+					Login Test: You are a
+					{% if current_user.is_authenticated %}
+					    {{ current_user.profile.first }}
+					{% else %}
+					    Stranger
+					{% endif %}!
+				</h1>
 			</div>
 			<div class="col-xs-12 col-sm-6">
 				<div class="jumbotron" id="sign-up-jumbotron">
@@ -145,56 +150,152 @@
 						        <button type="button" class="close" data-dismiss="modal">&times;</button>
 						        <h4 class="modal-title">Create Your Account</h4>
 						      </div>
-						      <form method="post" action="{{ url_for('api.createProfile') }}">
+									<!-- Modal Form starts here -->
+						      <form id="modal-form"  method="post" action="{{ url_for('api.createProfile') }}">
 						      <div class="modal-body">
+						      	<!-- First Name -->
 						      	<div class="form-group">
 						      		<input type="text" name="first" class="form-control"  placeholder="First Name" required>
 						      	</div>
+						      	<!-- Last Name -->
 						      	<div class="form-group">
 						      		<input type="text" name="last" class="form-control"  placeholder="Last Name" required>
 						      	</div>
+						      	<!-- Email -->
 						      	<div class="form-group">
-						      		<input type="email" name="email-modal" class="form-control"  placeholder="Email" required>
+						      		<input type="email" name="email" class="form-control"  placeholder="Email" required>
 						      	</div>
+						      	<!-- Password -->
 						      	<div class="form-group">
 						      		<input type="password" name="pswd" class="form-control"  placeholder="Password" required>
 						      	</div>
+						      	<!-- Age -->
 						      	<div class="form-group">
 						      		<input type="number" name="age" class="form-control"  placeholder="Age" required>
 						      	</div>
+						      	<!-- Location -->
 						      	<div class="form-group">
-								    <input id="autocomplete" class="form-control" placeholder="Location" type="text" required/>
+								    <input id="autocomplete" class="form-control" placeholder="Location" type="text" name="location" required/>
 							    </div>
+							    <!-- Latitude, hidden field -->
 							    <div class="form-group">
-								    <input id="cityLat" type="text" hidden/>
+								    <input id="cityLat" name="latitude"type="text" hidden/>
 							    </div>
+							    <!-- Longitude, hidden field -->
 							    <div class="form-group">
-								    <input id="cityLng" type="text" hidden/>
+								    <input id="cityLng" name="longitude"type="text" hidden/>
 							    </div>
-						      	<label for="gender-select">Select your Gender</label>
+							    <!-- Gender dropdown -->
+						      	<label class="sign-label" for="gender-select">Select your Gender</label>
 							    <select class="form-control" name="gender" id="gender-select">
 							      <option>Male</option>
 							      <option>Female</option>
 							      <option>Other</option>
 							    </select>
-							    <label for="interest-select">Interested In:</label>
+							    <!-- Interested in dropdown -->
+							    <label class="sign-label" for="interest-select">Interested In:</label>
 							    <select name="interest" class="form-control" id="interest-select">
 							      <option>Male</option>
 							      <option>Female</option>
 							      <option>Other</option>
 							    </select>
+							    <!-- Question 1 -->
+							    <label class="sign-label" for="one">Do you like outdoor activities?</label>
+							    <div class="form-check" name="one">
+								  <label class="form-check-label">
+								    <input class="form-check-input" type="radio" name="q1" id="q1yes" value="0">
+								    Yes
+								  </label>
+								</div>
+								<div class="form-check">
+								  <label class="form-check-label">
+								    <input class="form-check-input" type="radio" name="q1" id="q1no" value="1">
+								    No
+								  </label>
+								</div>
+							 	<!-- Question 2 -->
+							 	 <label class="sign-label" for="two">Do you consider yourself an introvert or extrovert?</label>
+							    <div class="form-check" name="two">
+								  <label class="form-check-label">
+								    <input class="form-check-input" type="radio" name="q2" id="q2intro" value="0">
+								    Introvert
+								  </label>
+								</div>
+								<div class="form-check">
+								  <label class="form-check-label">
+								    <input class="form-check-input" type="radio" name="q2" id="q2extro" value="1">
+								    Extrovert
+								  </label>
+								</div>
+								<!-- Question 3 -->
+								<label class="sign-label" for="three">Do you want to have children one day?</label>
+							    <div class="form-check" name="three">
+								  <label class="form-check-label">
+								    <input class="form-check-input" type="radio" name="q3" id="q3yes" value="0">
+								    Yes
+								  </label>
+								</div>
+								<div class="form-check">
+								  <label class="form-check-label">
+								    <input class="form-check-input" type="radio" name="q3" id="q3no" value="1">
+								    No
+								  </label>
+								</div>
+								<!-- Question 4 -->
+								<label class="sign-label" for="four">Do you like the warm or the cold?</label>
+							    <div class="form-check" name="four">
+								  <label class="form-check-label">
+								    <input class="form-check-input" type="radio" name="q4" id="q4warm" value="0">
+								    Warm
+								  </label>
+								</div>
+								<div class="form-check">
+								  <label class="form-check-label">
+								    <input class="form-check-input" type="radio" name="q4" id="q4cold" value="1">
+								    Cold
+								  </label>
+								</div>
+								<!-- Question 5 -->
+								<label class="sign-label" for="five">Are you looking for something serious?</label>
+							    <div class="form-check" name="five">
+								  <label class="form-check-label">
+								    <input class="form-check-input" type="radio" name="q5" id="q5yes" value="0">
+								    Yes
+								  </label>
+								</div>
+								<div class="form-check">
+								  <label class="form-check-label">
+								    <input class="form-check-input" type="radio" name="q5" id="q5no" value="1">
+								    No
+								  </label>
+								</div>
+								<!-- Bio -->
 							    <div class="form-group">
 								    <label for="bio">Please Write a Short Bio:</label>
 								    <textarea name="bio" class="form-control" id="bio" rows="5"></textarea>
 								</div>
-								<button class="modal-btn btn btn-warning" style="text-align: center;">
-									Upload a Photo
-								</button>
+								<!-- Photo Upload -->
+								<h3 class="photo-upload-header">Upload a Profile Photo:</h3>
+
+								 <div class="form-group">
+								    <input type="file" accept="image/*" class="form-control-file" name="profile_image" required>
+								 </div>
+<!--
+								<div class="form-group bottom-group">
+									<label class="btn btn-warning modal-btn">
+									    Browse <input type="file" accept="image/*" style="display: none;" name="profile_image">
+									</label>
+									<input type="text" id="file_name" value="No file selected" name="file-name" required readonly>
+								</div>
+								<small id="file-error" class="form-text">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small> -->
+
 						      </div>
+						      <!-- Submit button -->
 						      <div class="modal-footer">
-						        <button id="modal-submit" name="sub" type="submit" class="btn btn-success">Create Account</button>
+						        <button id="modal-submit" type="submit" class="btn btn-success">Create Account</button>
 						      </div>
 						      </form>
+						      <!-- End of Modal Sign Up form -->
 						    </div>
 
 						  </div>
