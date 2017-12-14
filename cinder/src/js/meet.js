@@ -253,7 +253,8 @@ window.onload = () => {
       like: dir === 'right' ? true : false,
     })
     xhttp.open("POST", url)
-    xhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
+    // application/json
+    xhttp.setRequestHeader('content-type', 'application/json')
     xhttp.send(jsonStr)
 
     // Temporary placeholder

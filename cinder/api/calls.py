@@ -1,3 +1,5 @@
+import json
+
 from flask import render_template, session, redirect, url_for, jsonify, request, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -6,15 +8,14 @@ from ..models import User, Profile, Connection, Match, Feedback
 from ..sampleDB import *
 from .. import db
 from random import random
-from magic import from_file
-
+# from magic import from_file
 
 
 #note all these routes must be prefixed with /api to be accessed
 #ie localhost:5000/api/createProfile
 defaultGender = 'M'
 @api.route('/getUsers/', methods=["GET"])
-# @login_required
+@login_required
 def getUsers():
     print current_user
     #TODO: use current_user to get preferred Gender
@@ -24,16 +25,28 @@ def getUsers():
     return resp
 
 @api.route('/swipe', methods=["POST"])
-# @login_required
+@login_required
 def swipe():
-    # print request.data
-    # print request.like
-    #in is the other user's id and a bool of liked
-    if random() < 0.5: #TODO: Check user connections to see if he was swiped back
+    """Parameters: {id: [other id], like: [bool]} //also unique
+    """
+    args = json.loads(request.data) #cuz he passed a string
+    # REST {u'id': u'5a31cb3c151a4b11ad8befbd', u'like': False}
+
+    print args['like']
+    current_user.cid.swiped.append(args['id'])
+    if not args['like']:
         return ('', 204) #empty response
+
+    match = User.objects(id=args['id']
+    print "Match profile: match.profile"
+    if matchId in current_user.cid.liked_you:
+        matchProfile = match.only('profile','id').first()
+        return jsonify(matchProfile.to_json())
     else:
-        users = User.objects(profile__gender=defaultGender).only('profile','id')[0]
-        return jsonify(users.to_json())
+        match.cid.liked_you.append(current_user.id)
+        return ('', 204) #empty response
+        #connection
+
 
 @api.route('/giveFeedback', methods=["POST"])
 def giveFeedback():
