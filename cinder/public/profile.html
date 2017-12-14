@@ -142,7 +142,7 @@
 				<h5>Edit your profile and hit "Save Changes" when you're finished!</h5>
 				<hr></hr>
 <!-- profile form -->
-				<form method="post" action="{{ url_for('api.updateProfile') }}">
+				<form method="post" action="{{ url_for('api.updateProfile') }}" enctype="multipart/form-data">
 					<div class="form-group">
 			      		<input type="text" name="first" class="form-control"  placeholder="First Name" required>
 			      	</div>
@@ -264,7 +264,7 @@
 					    <textarea name="bio" class="form-control" id="bio" rows="5"></textarea>
 					</div>
 					<div>
-						<img class="pro_img" style="border: 1px solid black;" src="https://www.w3schools.com/w3css/img_fjords.jpg">
+						<img class="pro_img" style="border: 1px solid black;" src="{{url_for('api.getPicture')}}">
 					</div>
 					<!-- Photo Upload -->
 					<h3 class="photo-upload-header">Upload a Profile Photo:</h3>

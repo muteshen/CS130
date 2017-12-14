@@ -63,8 +63,38 @@ def logout():
 
 @api.route('/updateProfile', methods=["POST"])
 def updateProfile():
-    resp = jsonify(user1)
-    return resp
+    form = request.form
+    print form
+
+
+    profile = Profile(first=form['first'], last=form['last'], gender=form['gender'][0], age=form['age'],
+                        bio=form['bio'], location=form['location']) #need photo
+
+    file = request.files['profile_image']
+
+    print file
+    profile.photo.new_file()
+    profile.photo.write(file)
+    profile.photo.close()
+
+    answers = [form['q1'], form['q2'], form['q3'], form['q4'], form['q5']]
+
+
+    current_user.profile = profile
+    current_user.interested_in = form['interest'][0]
+    current_user.answers = answers
+
+    password = form['pswd']
+    print password
+    if password != "":
+        user.password_hash = generate_password_hash(form['pswd'])
+
+    current_user.save() #need to catch failed authenication
+
+    return redirect(url_for('main.profile'))
+
+
+
 
 @api.route('/createProfile', methods=["POST"])
 def createProfile():
@@ -74,13 +104,15 @@ def createProfile():
 
                         bio=form['bio'], location=form['location']) #need photo
     file = request.files['profile_image']
-    print file
+
+    print file == ""
+    print file.filename
     profile.photo.new_file()
     profile.photo.write(file)
     profile.photo.close()
 
-    photo = profile.photo.read()
-    print photo
+    # photo = profile.photo.read()
+    # print photo
 
 
     connection = Connection().save()
@@ -91,3 +123,8 @@ def createProfile():
     user.save() #need to catch failed authenication
     login_user(user, True)
     return redirect(url_for('main.profile'))
+
+@api.route('/getPicture', methods=["GET"])
+def getPicture():
+    photo = current_user.profile.photo.read()
+    return photo
