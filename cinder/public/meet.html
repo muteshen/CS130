@@ -70,7 +70,7 @@
 
 	<!-- Main content that shows current user people in the area -->
   <div class="page-container">
-      <form class="form-inline" method="post" 
+      <form class="form-inline" method="post"
             action="{{ url_for('api.swipe', id=target.id, like=False) }}">
         <button
             class="glyphicon glyphicon-chevron-left glyphicon-chevron-valid"
@@ -103,7 +103,7 @@
         <div class="location" id="location">{{ target.location }}</div>
       </div>
     </div>
-      <form class="form-inline" method="post" 
+      <form class="form-inline" method="post"
             action="{{ url_for('api.swipe', id=target.id, like=True) }}">
         <button
             class="glyphicon glyphicon-chevron-right glyphicon-chevron-valid"
