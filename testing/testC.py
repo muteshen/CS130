@@ -45,7 +45,7 @@ class testing(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
 
-    def test_runtest1(self):
+    def test_runtest2(self):
         driver = self.driver
         driver.get("http://127.0.0.1:5000/")
         driver.find_element_by_name("sign").click()
@@ -87,6 +87,28 @@ class testing(unittest.TestCase):
         time.sleep(3)
         elem = driver.find_element_by_id("modal-submit")
         time.sleep(1)
+        
+    def test_runtest1(self):
+        driver = self.driver
+        driver.get("http://127.0.0.1:5000/")
+        elem = driver.find_element_by_xpath("//input[@name='email']")
+        elem.send_keys("teammates@gmail.com")
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//input[@name='email']/following::input[1]")
+        elem.send_keys("pineapple")
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//button[@id='log']").click()
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//a[@href='/profile']").click()
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(0,document.body.scrollHeight/5);")
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(document.body.scrollHeight/5,document.body.scrollHeight/2);")
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(document.body.scrollHeight/2,document.body.scrollHeight);")                        
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//button[@class='nav-btn']").click()
+        time.sleep(3)
         
 
     """       
