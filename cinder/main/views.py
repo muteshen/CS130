@@ -20,10 +20,15 @@ def getMatches():
         if current_user.is_authenticated:
             _id = match.uid1.id
             curProfile = match.uid1.profile
+            print "FEEDBACK from 1"
+            print match.feedbacks
             for feedback in match.feedbacks:
-                curFeedback.append(feedback.from_uid1)
+                print "******"
+                print feedback.from_uid1
+                print "******"                
+                if feedback.from_uid1:
+                    curFeedback.append(feedback)
         matches.append({"match": match, "profile": curProfile, "feedbacks": curFeedback, "mate_id": _id})
-
 
     matchObjs = Match.objects(uid1=current_user.id)
     for match in matchObjs:
@@ -32,9 +37,18 @@ def getMatches():
         if current_user.is_authenticated:
             _id = match.uid2.id
             curProfile = match.uid2.profile
+            print "FEEDBACK from 2"
+            print match.feedbacks
+
             for feedback in match.feedbacks:
-                curFeedback.append(feedback.from_uid2)
+                print "******"
+                print feedback.from_uid2
+                print "******"
+                if feedback.from_uid2:
+                    curFeedback.append(feedback)                
         matches.append({"match": match, "profile": curProfile, "feedbacks": curFeedback, "mate_id": _id})
+
+    print matches
 
     return matches
 
@@ -86,8 +100,32 @@ def index():
 
 @main.route('/your_feedback')
 def your_feedback():
-    matches = getMatches()
-    return render_template('yourFeedback.html', matches=matches)
+
+    all_feedbacks = []
+
+    matches = Match.objects(uid1=current_user.id)
+    for match in matches:
+        target = match.uid2
+        for feedback in match.feedbacks:
+            if feedback.from_uid2:
+                all_feedbacks.append({"name": target.profile.first + " " + target.profile.last, 
+                                      "date": feedback.date, 
+                                      "prompt": feedback.prompt,
+                                      "feedback": feedback.from_uid2,
+                                      "mate_id": match.uid2.id})
+
+    matches = Match.objects(uid2=current_user.id)
+    for match in matches:
+        target = match.uid1
+        for feedback in match.feedbacks:
+            if feedback.from_uid1:
+                all_feedbacks.append({"name": target.profile.first + " " + target.profile.last, 
+                                      "date": feedback.date, 
+                                      "prompt": feedback.prompt,
+                                      "feedback": feedback.from_uid1,
+                                      "mate_id": match.uid1.id})
+
+    return render_template('yourFeedback.html', feedbacks=all_feedbacks)
 
 @main.route('/give_feedback')
 def give_feedback():

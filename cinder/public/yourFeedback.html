@@ -123,17 +123,17 @@
     
     <!-- Page Content Holder -->
     <div id="content">
-        <h1 class="feedback-header">Here are what some of your dates said about your time together</h1>
+        <h1>Here are what some of your dates said about your time together</h1>
         <div class="list-group" id="feedbackList">
-            {% for i in matches %}
+            {% for feedback in feedbacks %}
                 <li class='list-group-item'>
-                         <div class='feedback_container'>
-                               <img src="{{url_for('api.getPicture', uid=i.mate_id)}}" class='match-img'>
-                               <div class='feedback_meta_container'>
-                               <h1 class='feedback-box-header'>{{i.profile.first}} {{i.profile.last}} - {{i.match.match_date}}</h1>
-                               <h2 class='prompt-header'>'What do you think your date could have done better?'</h2>
-                               <p class="feedback-text"></p>
-                    "</div></div></li>"           
+                     <div class='feedback_container'>
+                           <img src="{{url_for('api.getPicture', uid=feedback.mate_id)}}" class='match-img'>
+                           <div class='feedback_meta_container'>
+                           <h1 class='feedback-box-header'>{{feedback.name}} - {{feedback.date.date()}}</h1>
+                           <h2 class='prompt-header'>{{feedback.prompt}}</h2>
+                           <h3 class="feedback-text">{{feedback.feedback}}</h3>
+                </div></div></li>"           
             {% endfor %}
         </div>
         <p id="demo"></p>
