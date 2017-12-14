@@ -239,6 +239,7 @@
     top: 50px;
     right: 0;
     font-family: "Avenir";
+    padding-left: 60px;
 }
 #content h1{
   font-size: 25px;
@@ -330,7 +331,7 @@
 ----------------------------------------------------- */
 
  /* The Modal (background) */
-#myModal {
+.myModal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -345,7 +346,7 @@
 }
 
 /* Modal Content/Box */
-#modalContent {
+.modalContent {
     background-color: #fefefe;
     margin: 15% auto;  /*15% from the top and centered */
     padding: 20px;
@@ -441,7 +442,187 @@ textarea{
 
 /* Profile Page Styling */
 
+/* ---------------------------------------------------
+    MATCH PROFILE PAGE STYLING
+----------------------------------------------------- */
+/*#match_profile_content
+{
+  display: flex;
+  justify-content:flex-end;
+}*/
+
+#match_profile_sidebar
+{
+  width: 280px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  z-index: 999;
+  background: #f4a142;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+#match_profile_sidebar ul.components {
+    margin-top:40px;
+    padding: 40px 0;
+    /*border-bottom: 1px solid #47748b;*/
+}
+
+.match_profile_sidebar_element 
+{
+  padding-left: 25px;
+}
+
+#match_profile_sidebar ul li a {
+    padding: 40px;
+    font-size: 1.1em;
+    display: block;
+    color: #fff;
+}
+#match_profile_sidebar ul li a:hover {
+    color: #f48f41;
+    background: #fff;
+
+}
+
+#match_profile_sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    background: #f48f41;
+}
+
+#match_profile_bio
+{
+
+  padding-top: 10px;
+  padding-left: 25px;
+}
+
+.matchProfileItem
+{
+  background:#FFB978;
+  padding: 15px;
+  border-color: #070707;
+  border-style: groove;
+  margin-top: 5px;
+
+}
+
+.matches_button
+{
+  margin-top: 160px;
+  margin-left: 60px;
+}
+
+#date_button
+{
+  width:180px;
+  text-align: center;
+  margin-left: 50px;
+  margin-top: 15px;
+}
+
+/* ---------------------------------------------------
+    Matches Profile Modals
+----------------------------------------------------- */
+
+/* Modal Header */
+#unmatchModalHeader {
+    padding: 2px 16px;
+    background-color: #f4a142;
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.decisionModalButtons{
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 80%; 
+}
+
+.decButton{
+  margin-left: 10px;
+}
+
+.matchModalHeader{
+  padding: 2px 16px;
+  background-color: #f4a142;
+  color: white;
+}
 
 
+/* ---------------------------------------------------
+    Calendar styling
+----------------------------------------------------- */
+/* Month header */
+.month {
+    padding: 70px 25px;
+    width: 100%;
+    background: #1abc9c;
+    text-align: center;
+}
 
+/* Month list */
+.month ul {
+    margin: 0;
+    padding: 0;
+}
 
+.month ul li {
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+/* Previous button inside month header */
+.month .prev {
+    float: left;
+    padding-top: 10px;
+}
+
+/* Next button */
+.month .next {
+    float: right;
+    padding-top: 10px;
+}
+
+/* Weekdays (Mon-Sun) */
+.weekdays {
+    margin: 0;
+    padding: 10px 0;
+    background-color:#ddd;
+}
+
+.weekdays li {
+    display: inline-block;
+    width: 13.6%;
+    color: #666;
+    text-align: center;
+}
+
+/* Days (1-31) */
+.days {
+    padding: 10px 0;
+    background: #eee;
+    margin: 0;
+}
+
+.days li {
+    list-style-type: none;
+    display: inline-block;
+    width: 13.6%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size:12px;
+    color:#777;
+}
+
+/* Highlight the "current" day */
+.days li .active {
+    padding: 5px;
+    background: #1abc9c;
+    color: white !important
+}

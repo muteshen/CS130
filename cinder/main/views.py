@@ -25,8 +25,10 @@ def index():
 
     # User.objects(email="sw@gmail.com").delete()
 
-    print("Testing Here")
-    return render_template("home.html")
+    if current_user.is_authenticated:
+        return render_template("meet.html")
+    else:
+        return render_template("home.html")
 
 @main.route('/give_feedback')
 def give_feedback():
@@ -62,3 +64,8 @@ def match_profile():
 @login_required
 def meet():
     return render_template("meet.html")
+
+@main.route('/matches')
+@login_required
+def matches():
+    return render_template("matches.html")
