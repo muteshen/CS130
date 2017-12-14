@@ -1,6 +1,6 @@
 user1 = {
     'id': 1,
-    'cid': 1, 
+    'cid': 1,
     'newMatches': True,
     'first': 'Selena',
     'last': 'Emerson',
@@ -69,5 +69,3 @@ feedback1 = {
 	'response1': [1, "George was a true gentleman, and it helps that he was the first president of the United States! Could use a shower before dinner next time though."],
 	'response2': [2, "Selena showed me how a toaster oven works. However, she did not put butter on my toast."]
 }
-
-
