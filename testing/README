@@ -28,3 +28,13 @@ cd into venv
 run seleniumExample.py
 
 type deactivate to exit out of venv
+
+PART C UPDATE:
+--------------------------------
+
+the testing script is testC.py
+
+setup the virtual environment like before but instead of running seleniumExample,py we are
+running testC.py
+
+IN ADDITION, use must be running the server so the website would work
