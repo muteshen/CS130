@@ -1,4 +1,4 @@
-from flask import render_template, session, redirect, url_for, jsonify
+from flask import render_template, session, redirect, url_for, jsonify, request
 from flask_login import login_required, current_user
 from . import main
 from .. import db
@@ -99,21 +99,29 @@ def profile():
     return render_template('profile.html')
 
 @main.route('/match_profile')
+@login_required
 def match_profile():
     #use login_required
 
-    #matchObjs = Match.objects(uid1=current_user.id).extend(Match.objects(uid2=current_user.id))
-    matchObjs = Match.objects[:2]
-    print matchObjs
-    matches = []
-    for match in matchObjs:
-        curProfile = None
-        if current_user.is_authenticated and match.uid1 == current_user.id:
-            curProfile = match.uid2.profile
-        else: #assumes you are definitely part of this match
-            curProfile = match.uid1.profile
-        matches.append({"match": match, "profile": curProfile})
-    return render_template('match_profile.html', matches=matches)
+    target_id = request.args['uid']
+    print target_id
+
+    # matchObjs = Match.objects(uid1=current_user.id, uid2=target_id).extend(Match.objects(uid2=current_user.id, uid1=target_id))
+    # matchObjs = matchObjs[0]
+
+    target_id = request.args['uid']
+    print target_id
+
+    if len(Match.objects(uid1=current_user.id, uid2=target_id)) >0:
+        target = Match.objects(uid1=current_user.id, uid2=target_id)[0].uid2
+    else:
+        target = Match.objects(uid2=current_user.id, uid1=target_id)[0].uid1
+
+    profile = target.profile
+    matches = {"user": target, "profile":profile}
+
+
+    return render_template('match_profile.html', target=matches)
 
 
 @main.route('/meet')
