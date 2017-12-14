@@ -47,3 +47,8 @@ def profile():
 @login_required
 def meet():
     return render_template("meet.html")
+
+@main.route('/matches')
+@login_required
+def matches():
+    return render_template("matches.html")
