@@ -70,38 +70,53 @@
 
 	<!-- Main content that shows current user people in the area -->
   <div class="page-container">
-		<span
+      <form class="form-inline" method="post"
+            action="{{ url_for('api.swipe', id=target.id, like=False) }}">
+        <button
+            class="glyphicon glyphicon-chevron-left glyphicon-chevron-valid"
+            aria-hidden="true" type="submit" id="chevron-left">
+        </button>
+      </form>
+
+<!-- 		<span
 			class="glyphicon glyphicon-chevron-left glyphicon-chevron-valid"
 			aria-hidden="true"
 			id="chevron-left">
-		</span>
+		</span> -->
     <div class="jumbotron user-container">
+
       <div class="thumbnail">
         <img
 					class="profile-pic"
-					src="../src/images/static-profile.png"
-					alt="User Profile Picture"
+					src="{{ url_for('api.getPicture', uid=target.id)}}"
 					id="profile-pic">
       </div>
       <div class="right-col">
         <div>
           <div class="user-header">
-            <div class="name" id="name"></div>
-            <div class="age" id="age"></div>
+            <div class="name" id="name">{{ target.name }}</div>
+            <div class="age" id="age">{{ target.age }}</div>
           </div>
           <hr></hr>
-          <div class="bio" id="bio"></div>
+          <div class="bio" id="bio">{{ target.bio }}</div>
         </div>
-        <div class="location" id="location"></div>
+        <div class="location" id="location">{{ target.location }}</div>
       </div>
     </div>
-		<span
+      <form class="form-inline" method="post"
+            action="{{ url_for('api.swipe', id=target.id, like=True) }}">
+        <button
+            class="glyphicon glyphicon-chevron-right glyphicon-chevron-valid"
+            aria-hidden="true" type="submit" id="chevron-right">
+        </button>
+      </form>
+<!-- 		<span
 			class="glyphicon glyphicon-chevron-right glyphicon-chevron-valid"
 			aria-hidden="true"
-			id="chevron-right">
-		</span>
+			id="chevron-right" action="{{ url_for('api.swipe', id=target.id, like=True)}}">
+		</span> -->
   </div>
-	<script src="../src/js/meet.js"></script>
+	<!-- <script src="../src/js/meet.js"></script> -->
 
 	<!-- Modal that indicates when a swipe right renders a match -->
 	<div class="modal fade" id="myModal" role="dialog">
