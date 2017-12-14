@@ -13,6 +13,59 @@
 
 	<script type="text/javascript">
 		$(document).ready(function(){
+			//fill in profile form with user's information
+
+			$("input[name = 'first']").val("{{current_user.profile.first}}");
+			$("input[name = 'last']").val("{{current_user.profile.last}}");
+			$("input[name = 'email']").val("{{current_user.email}}");
+			$("input[name = 'age']").val("{{current_user.profile.age}}");
+			$("input[name = 'location']").val("{{current_user.profile.location}}");
+
+			var gender;
+			if("{{current_user.profile.gender}}" == "M" ){ gender = "Male"}
+			else if("{{current_user.profile.gender}}" == 'F'){gender = "Female"}
+			else if("{{current_user.profile.gender}}" == 'O'){gender = "Other"}
+
+			var interest;
+			if("{{current_user.interested_in}}" == "M" ){ interest = "Male"}
+			else if("{{current_user.interested_in}}" == 'F'){interest = "Female"}
+			else if("{{current_user.interested_in}}" == 'O'){interest = "Other"}
+
+			$("select[name = 'gender']").val(gender);
+			$("select[name = 'interest']").val(interest);
+			
+			//question 1
+			if("{{current_user.answers[0]}}" == '0')
+				{ $("#q1_0").prop( "checked", true );}
+			else 
+				{$("#q1_1").prop( "checked", true );}
+		    //question 2
+			if("{{current_user.answers[1]}}" == '0')
+				{ $("#q2_0").prop( "checked", true );}
+			else 
+				{$("#q2_1").prop( "checked", true );}
+			//q3
+			if("{{current_user.answers[2]}}" == '0')
+				{ $("#q3_0").prop( "checked", true );}
+			else 
+				{$("#q3_1").prop( "checked", true );}
+			//q4
+			if("{{current_user.answers[3]}}" == '0')
+				{ $("#q4_0").prop( "checked", true );}
+			else 
+				{$("#q4_1").prop( "checked", true );}
+			//q5
+			if("{{current_user.answers[4]}}" == '0')
+				{ $("#q5_0").prop( "checked", true );}
+			else 
+				{$("#q5_1").prop( "checked", true );}
+
+			$("textarea[name = 'bio']").val("{{current_user.profile.bio}}");
+
+		
+
+
+
 
 			$(document).on('change', ':file', function() {
 			    var input = $(this),
@@ -74,10 +127,10 @@
 				<h1 style="margin-bottom: 15px;">Profile</h1>
 				<h5>Edit your profile and hit "Save Changes" when you're finished!</h5>
 				<hr></hr>
-				
-				<form>
+<!-- profile form -->
+				<form method="post" action="{{ url_for('api.updateProfile') }}">
 					<div class="form-group">
-			      		<input type="text" name="first" class="form-control"  placeholder="First Name" value="{{current_user.first}}" required>
+			      		<input type="text" name="first" class="form-control"  placeholder="First Name" required>
 			      	</div>
 			      	<!-- Last Name -->
 			      	<div class="form-group">
@@ -85,11 +138,11 @@
 			      	</div>
 			      	<!-- Email -->
 			      	<div class="form-group">
-			      		<input type="email" name="email-modal" class="form-control"  placeholder="Email" required>
+			      		<input type="email" name="email" class="form-control"  placeholder="Email" required>
 			      	</div>
 			      	<!-- Password -->
 			      	<div class="form-group">
-			      		<input type="password" name="pswd" class="form-control"  placeholder="Password" required>
+			      		<input type="password" name="pswd" class="form-control"  placeholder="New password, leave blank if you would like to keep your old password">
 			      	</div>
 			      	<!-- Age -->
 			      	<div class="form-group">
@@ -110,28 +163,28 @@
 				    <!-- Gender dropdown -->
 			      	<label class="sign-label" for="gender-select">Select your Gender</label>
 				    <select class="form-control" name="gender" id="gender-select">
-				      <option>Male</option>
-				      <option>Female</option>
-				      <option>Other</option>
+				      <option value="Male">Male</option>
+				      <option value="Female">Female</option>
+				      <option value="Other">Other</option>
 				    </select>
 				    <!-- Interested in dropdown -->
 				    <label class="sign-label" for="interest-select">Interested In:</label>
 				    <select name="interest" class="form-control" id="interest-select">
-				      <option>Male</option>
-				      <option>Female</option>
-				      <option>Other</option>
+				      <option value="Male">Male</option>
+				      <option value="Female">Female</option>
+				      <option value="Other">Other</option>
 				    </select>
 				    <!-- Question 1 -->
 				    <label class="sign-label" for="one">Do you like outdoor activities?</label>
 				    <div class="form-check" name="one">
 					  <label class="form-check-label">
-					    <input class="form-check-input" type="radio" name="q1" id="q1yes" value="yes">
+					    <input class="form-check-input" type="radio" name="q1" id="q1_0" value="0">
 					    Yes
 					  </label>
 					</div>
 					<div class="form-check">
 					  <label class="form-check-label">
-					    <input class="form-check-input" type="radio" name="q1" id="q1no" value="no">
+					    <input class="form-check-input" type="radio" name="q1" id="q1_1" value="1">
 					    No
 					  </label>
 					</div>
@@ -139,13 +192,13 @@
 				 	 <label class="sign-label" for="two">Do you consider yourself an introvert or extrovert?</label>
 				    <div class="form-check" name="two">
 					  <label class="form-check-label">
-					    <input class="form-check-input" type="radio" name="q2" id="q2intro" value="Introvert">
+					    <input class="form-check-input" type="radio" name="q2" id="q2_0" value="0">
 					    Introvert
 					  </label>
 					</div>
 					<div class="form-check">
 					  <label class="form-check-label">
-					    <input class="form-check-input" type="radio" name="q2" id="q2extro" value="Extrovert">
+					    <input class="form-check-input" type="radio" name="q2" id="q2_1" value="1">
 					    Extrovert
 					  </label>
 					</div>
@@ -153,13 +206,13 @@
 					<label class="sign-label" for="three">Do you want to have children one day?</label>
 				    <div class="form-check" name="three">
 					  <label class="form-check-label">
-					    <input class="form-check-input" type="radio" name="q3" id="q3yes" value="Yes">
+					    <input class="form-check-input" type="radio" name="q3" id="q3_0" value="0">
 					    Yes
 					  </label>
 					</div>
 					<div class="form-check">
 					  <label class="form-check-label">
-					    <input class="form-check-input" type="radio" name="q3" id="q3no" value="No">
+					    <input class="form-check-input" type="radio" name="q3" id="q3_1" value="1">
 					    No
 					  </label>
 					</div>
@@ -167,13 +220,13 @@
 					<label class="sign-label" for="four">Do you like the warm or the cold?</label>
 				    <div class="form-check" name="four">
 					  <label class="form-check-label">
-					    <input class="form-check-input" type="radio" name="q4" id="q4warm" value="Warm">
+					    <input class="form-check-input" type="radio" name="q4" id="q4_0" value="0">
 					    Warm
 					  </label>
 					</div>
 					<div class="form-check">
 					  <label class="form-check-label">
-					    <input class="form-check-input" type="radio" name="q4" id="q4cold" value="Cold">
+					    <input class="form-check-input" type="radio" name="q4" id="q4_1" value="1">
 					    Cold
 					  </label>
 					</div>
@@ -181,13 +234,13 @@
 					<label class="sign-label" for="five">Are you looking for something serious?</label>
 				    <div class="form-check" name="five">
 					  <label class="form-check-label">
-					    <input class="form-check-input" type="radio" name="q5" id="q5yes" value="Yes">
+					    <input class="form-check-input" type="radio" name="q5" id="q5_0" value="0">
 					    Yes
 					  </label>
 					</div>
 					<div class="form-check">
 					  <label class="form-check-label">
-					    <input class="form-check-input" type="radio" name="q5" id="q5no" value="No">
+					    <input class="form-check-input" type="radio" name="q5" id="q5_1" value="1">
 					    No
 					  </label>
 					</div>
