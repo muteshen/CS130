@@ -23,8 +23,29 @@
     font-family: "Avenir";
     font-size: 16px;
 }
+
+.nav-btn {
+    color: white;
+    font-family: "Avenir";
+    font-size: 16px;
+    outline-style: none;
+    outline-width: 0;
+    outline-color: transparent;
+    background-color: transparent;
+    border: none;
+    padding: 14px 15px 15px 15px;
+    line-height: 20px;
+}
+
+
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
+    color: white;
+    text-shadow: 2px 2px 1px #000000;
+}
+
+.nav-btn:hover,
+.nav-btn:focus{
     color: white;
     text-shadow: 2px 2px 1px #000000;
 }
