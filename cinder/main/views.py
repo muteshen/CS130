@@ -1,5 +1,5 @@
 from flask import render_template, session, redirect, url_for, jsonify
-from flask_login import login_required
+from flask_login import login_required, current_user
 from . import main
 from .. import db
 from ..models import *
@@ -8,17 +8,15 @@ from datetime import *
 
 @main.route('/', methods=["GET", "POST"])
 def index():
-    # c = Connection(liked_you = [], swiped = []).save()
+
     # p = Profile(first="Solomon", last="Wang", gender="M", age=23, photo="www.google.com", bio="haha")
     # u1 = User(cid=c, email="sw@gmail.com", profile=p, new_matches=False, interested_in="F",
     #         location="Los Angeles", answers=[])
     # u1.password = "password123" #needed to hash password
     # u1.save()
     # users = []
-    # for user in User.objects:
-    #     users += [user]
-    # f = Feedback(uid1=users[0], uid2=users[1], response=[]).save()
-    # m = Match(uid1=users[0], uid2=users[1], match_date=datetime.today(), feedback_id=f).save()
+    # f = Feedback(date=datetime.today(), from_uid1="I LOVE YOU", from_uid2="I HATE YOU")
+    # m = Match(uid1=User.objects[0], uid2=User.objects[1], match_date=datetime.today(), feedbacks=[f]).save()
 
     # for m in Match.objects:
     #     print(m.match_date)
@@ -41,6 +39,23 @@ def your_feedback():
 @main.route('/profile')# @login_required
 def profile():
     return render_template('profile.html')
+
+@main.route('/match_profile')
+def match_profile():
+    #use login_required
+    #matchObjs = Match.objects(uid1=current_user.id).extend(Match.objects(uid2=current_user.id))
+
+    matchObjs = Match.objects[:2]
+    print matchObjs
+    matches = []
+    for match in matchObjs:
+        curProfile = None
+        if current_user.is_authenticated and match.uid1 == current_user.id:
+            curProfile = match.uid2.profile
+        else: #assumes you are definitely part of this match
+            curProfile = match.uid1.profile
+        matches.append({"match": match, "profile": curProfile})
+    return render_template('test.html', matches=matches)
 
 
 @main.route('/meet')

@@ -2,7 +2,7 @@ from flask import render_template, session, redirect, url_for, jsonify, request,
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import api
-from ..models import User, Profile, Connection, Match, Response, Feedback
+from ..models import User, Profile, Connection, Match, Feedback
 from ..sampleDB import *
 from .. import db
 from random import random
@@ -37,13 +37,6 @@ def myFeedback():
 def giveFeedback():
     return feedback1
 
-@api.route('/myMatches', methods=["POST"])
-def myMatches():
-    #get list of matches from
-    # Match.objects[0].only('match_date')
-    # x.update(y)
-    return jsonify(Match.objects[0])
-
 @api.route('/login', methods=["POST"])
 def login():
     email = request.form['email']
@@ -75,7 +68,7 @@ def createProfile():
     form = request.form
     print form
     profile = Profile(first=form['first'], last=form['last'], gender=form['gender'][0], age=form['age'],
-                        bio=form['bio'], location=form['location']) #need photo
+                        bio=form['bio'], location=form['location']) #just add photo from the url
     connection = Connection().save()
     answers = [form['q1'], form['q2'], form['q3'], form['q4'], form['q5']]
     user = User(cid=connection, email=form['email'], new_matches=False, profile=profile,
