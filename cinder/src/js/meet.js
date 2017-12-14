@@ -105,6 +105,7 @@ window.onload = () => {
    *        then get info for first 30 users in the area
    */
   const initialize = () => {
+    /*********** Removed to substitute coordinates with city strings ***********
       console.log("Initializing...")
       console.log("Getting current location")
       if (navigator.geolocation) {
@@ -112,6 +113,30 @@ window.onload = () => {
       } else {
         console.error("Geolocation is not supported by this browser.")
       }
+    ***************************************************************************/
+
+    // Get initial users
+    var getUsersRequest = new XMLHttpRequest()
+    getUsersRequest.onreadystatechange = function() {
+      if (getUsersRequest.readyState == XMLHttpRequest.DONE && getUsersRequest.status == 200) {
+        console.log('Retrieved first set of users.')
+
+        // Parse response into JSON
+        const responseText = getUsersRequest.responseText
+        const responseJSON = JSON.parse(responseText)
+
+        // Parse response JSON to get users
+        const userArr = JSON.parse(responseJSON.result)
+        for (var i = 0; i < userArr.length; i++) {
+          const user = userArr[i]
+          upcomingUsers.push(user)
+        }
+        setNextUserAsCurrent()
+      }
+    }
+    const url = '/api/getUsers'
+    getUsersRequest.open("GET", url)
+    getUsersRequest.send()
   }
 
   /* Author: Ryan Stenberg
@@ -121,6 +146,7 @@ window.onload = () => {
    *        2. Sets local "coords" storage to contain user's coordinates
    *        3. Attempts to get first 30 potential matches
    */
+  /********* Removed to use city strings instead of coordinates ****************
   const setCoords = (position) => {
     const { latitude, longitude } = position.coords
     console.log(`Setting coordinates of current user to (${latitude},${longitude})`)
@@ -168,6 +194,7 @@ window.onload = () => {
     // Temporary placeholder
     // console.log(latitude, longitude)
   }
+  ****************************************************************************/
 
   /* Author: Ryan Stenberg
    * Parameters: num = Number of users to get
@@ -212,13 +239,10 @@ window.onload = () => {
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
         const response = xhttp.responseText
-        const json = JSON.parse(response)
-        console.log(json)
-        if (json.isMatch) {
-          match = {
-            id: json.id,
-            profile: json.profile,
-          }
+        if (response != null) {
+          match = JSON.parse(JSON.parse(response))
+          console.log('Match found!')
+          console.log(match)
           showModal(match)
         }
       }
@@ -266,8 +290,8 @@ window.onload = () => {
    */
   const showModal = (matchedUser) => {
     // matchPic = matchedUser.pic
-    console.log(matchedUser)
-    matchName.innerHTML = matchedUser.profile.name
+    matchName.innerHTML = matchedUser["profile"]["first"] + ' ' + matchedUser.profile.last
+    console.log('Showing match modal')
     $("#myModal").modal("show")
   }
 

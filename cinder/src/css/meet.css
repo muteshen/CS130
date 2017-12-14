@@ -171,3 +171,7 @@ hr {
   font-size: 150px;
   color: #FFB978;
 }
+
+.glyphicon:active .glyphicon:hover {
+  color: red;
+}
