@@ -112,12 +112,32 @@
           <div class="modal-content modalContent">
             <div id="modalHeader" class="modal-header matchModalHeader">
               <span class="close" id="closeRequest">&times;</span>
-              <h2 id="requestText"></h2>
-              <div id="decisionButtons" class="decisionModalButtons">
-                <button type='button' class='btn btn-primary active' onclick="handleRequest(true)">Yes</button>
-                <button type='button' class='btn btn-primary active' onclick="handleRequest(false)">No</button>
-              </div>
+              <h2>The following matches have requested a date!</h2>
             </div>
+            <ul>
+                <li>
+                    <div class="matchRequestContainer">
+                        <img src='" + image + "' class='img-circle'>
+                        <div class='feedback_meta_container'>
+                            <h1 id="nameField" class='feedback-box-header'>Sarah</h1>
+                             <h2 id="dateField" class='feedback-box-header'>10/10/2017 on 12:45</h2>
+                            <button type='button' class='btn btn-primary active' onclick="handleRequest(true)">Yes</button>
+                            <button type='button' class='btn btn-primary active' onclick="handleRequest(false)">No</button>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="matchRequestContainer">
+                        <img src='" + image + "' class='img-circle'>
+                        <div class='feedback_meta_container'>
+                            <h1 id="nameField" class='feedback-box-header'>Sarah</h1>
+                             <h2 id="dateField" class='feedback-box-header'>10/10/2017 on 12:45</h2>
+                            <button type='button' class='btn btn-primary active' onclick="handleRequest(true)">Yes</button>
+                            <button type='button' class='btn btn-primary active' onclick="handleRequest(false)">No</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
           </div>
     </div>
 
@@ -159,14 +179,6 @@
             {
                 if(true)
                 {
-                    //add the text in the modal
-                    var requestText = document.getElementById("requestText");
-                    var name = "sarah";
-                    var date = {month: 1, date: 1, year: 2017, hour: 12, minute: 30};
-                    var m_string = "Your match " + name + " has proposed a date on " + date.month + "/" + date.date + "/" + date.year + " at " + date.hour + ":" + date.minute + " What is your response?";
-                    var requestNode = document.createTextNode(m_string);
-                    requestText.appendChild(requestNode);
-
                     requestModal.style.display = "block";
                 }
             }

@@ -277,7 +277,6 @@
     top: 50px;
     right: 0;
     font-family: "Avenir";
-    padding-left: 60px;
     margin: auto;
 }
 
@@ -332,7 +331,6 @@
   flex-direction: column;
   padding: 20px;
   background-color: #F8F8F8;
-  width: 200px;
 }
 .feedback_meta_container button {
 /*  background-color:#FFB978;
@@ -729,4 +727,17 @@ textarea{
 }
 
 
+.matchRequestContainer {
+  width: 1000px;
+  color: red;
+  display: flex;
+  padding:5px;
+  justify-content: flex-start;
+}
+.matchRequestMetaContainer{
 
+}
+
+.hiddenData{
+  display: none;
+}

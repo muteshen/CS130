@@ -64,8 +64,40 @@ class testing(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
 
-
+        #login into an account and navigate feedbackpage
     def test_runtest1(self):
+        driver = self.driver
+        driver.get("http://127.0.0.1:5000/")
+        elem = driver.find_element_by_xpath("//input[@name='email']")
+        elem.send_keys("teammates@gmail.com")
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//input[@name='email']/following::input[1]")
+        elem.send_keys("pineapple")
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//button[@id='log']").click()
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//a[@href='/profile']").click()
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(0,document.body.scrollHeight/5);")
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(document.body.scrollHeight/5,document.body.scrollHeight/2);")
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(document.body.scrollHeight/2,document.body.scrollHeight);")                        
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//a[@href='/your_feedback']").click()
+        time.sleep(2)
+        elem = driver.find_element_by_xpath("//a[@href='/give_feedback']").click()
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//button[@class='btn btn-primary']").click()
+        time.sleep(3)
+        elem = driver.find_element_by_xpath("//textarea[@id='feedBackTextArea']")
+        elem.send_keys("his head is too big, he isn't as smart as he thinks")
+        time.sleep(3)
+        elem = driver.find_element_by_xpath("//button[@type='submit']").click()
+        time.sleep(3)    
+
+        #login into an account and navigate matches page
+    def test_runtest2(self):
         driver = self.driver
         driver.get("http://127.0.0.1:5000/")
         elem = driver.find_element_by_xpath("//input[@name='email']")
@@ -91,7 +123,8 @@ class testing(unittest.TestCase):
         elem = driver.find_element_by_xpath("//button[@class='nav-btn']").click()
         time.sleep(3)
         
-    def test_runtest2(self):
+        #create a new user acount
+    def test_runtest3(self):
         first = random_name()
         last = random_name()
 
@@ -149,8 +182,8 @@ class testing(unittest.TestCase):
         elem = driver.find_element_by_id("modal-submit").click()
         time.sleep(1)
 
-
-    def test_runtest3(self):
+        #sign in into the new account just newly made and swipe
+    def test_runtest4(self):
         driver = self.driver
         driver.get("http://127.0.0.1:5000/")
         elem = driver.find_element_by_xpath("//input[@name='email']")
@@ -169,10 +202,15 @@ class testing(unittest.TestCase):
         time.sleep(1)
         driver.execute_script("window.scrollTo(document.body.scrollHeight/2,document.body.scrollHeight);")                        
         time.sleep(1)
+        elem = driver.find_element_by_xpath("//a[@href='/meet']").click()
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//button[@id='chevron-right']").click()
+        time.sleep(1)
         elem = driver.find_element_by_xpath("//button[@class='nav-btn']").click()
         time.sleep(3)
 
-    def test_runtest4(self):
+        #fill in user for john and upload john.jpeg
+    def test_runtest5(self):
         driver = self.driver
         driver.get("http://127.0.0.1:5000/")
         driver.find_element_by_name("sign").click()
