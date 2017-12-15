@@ -70,7 +70,7 @@ def getPendingDates():
         if match.confirmed1:
             other = User.objects(id=match.uid1.id)[0]
             name = other.profile.first + " " + other.profile.last
-            date = match.feedback[-1].date
+            date = match.feedbacks[-1].date
             pendingDates.append({"name": name, "date": date, "match": match})
     return pendingDates
 
