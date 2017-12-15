@@ -355,7 +355,7 @@
     {
     	var m_date = new Date();
     	curr_date = {date: m_date.getDate(), day: m_date.getDay(), month: m_date.getMonth() + 1, year: m_date.getFullYear()};
-    	date_date = curr_date;
+    	date_date = {date: curr_date.date, day: curr_date.day, month: curr_date.month, year: curr_date.year};
  		generateCalendar(curr_date.month, curr_date.year);
     	dateModal.style.display = "block";
     }
@@ -383,14 +383,39 @@
     	date_date.date = day;
     }
 
-    //this function hides the dateModal and brings up the congratsModal
+    //this function hides the dateModal and brings up the decisionModal
     function submitDate()
     {
-        var temp_time = timeField.value;
-        date_time = {hour: temp_time[0] + temp_time[1], minute: temp_time[3] + temp_time[4]};
+        if(date_date.year >= curr_date.year)
+        {
+            if(date_date.month >= curr_date.month)
+            {
+                if(date_date.date >= curr_date.date)
+                {
+                    var temp_time = timeField.value;
+                    date_time = {hour: temp_time[0] + temp_time[1], minute: temp_time[3] + temp_time[4]};
         
-    	dateModal.style.display = "none";
-    	displayDecisionModal("date");
+                    dateModal.style.display = "none";
+                    displayDecisionModal("date");
+                    console.log(date_date.date);
+                    console.log(curr_date.date);
+                }else
+                {
+                    dateModal.style.display = "none";
+                    displayDecisionModal("dateError");
+                }
+            }else
+            {
+                dateModal.style.display = "none";
+                displayDecisionModal("dateError");
+            }
+        }else
+        {
+            dateModal.style.display = "none";
+            displayDecisionModal("dateError");
+        }
+
+        
     }
 
     //displays the reportModal, called when report button is clicked
@@ -413,8 +438,12 @@
     	{
     		decision_string = "Are you sure you want your date to be on "
     		yesButton = "<button type='button' class='btn btn-primary active' onclick='submitDateFinal()'>Yes</button>";
-    	}else
-    		console.log("error, passed invalid argument to displayDecisionModal()");
+    	}else if(decisionType == "dateError")
+        {
+            decision_string = "The date you picked has passed :( ";
+            yesButton = "<button type='button' class='btn btn-primary active' onclick='closeDecisionModal()'>Yes</button>";
+        }else
+            console.log("error, passed invalid argument to displayDecisionModal()");
     	var decision_text = document.getElementById("decisionText");
     	var string_node = document.createTextNode(decision_string);
     	while(decisionText.firstChild){
@@ -431,8 +460,9 @@
     	
     	$('#decisionButtons').empty();
     	$('#decisionButtons').append(yesButton);
-    	$('#decisionButtons').append(noButton);
-        console.log(date_time);
+        if(decisionType != "dateError")
+    	   $('#decisionButtons').append(noButton);
+        
     	decisionModal.style.display = "block";
     }
 
