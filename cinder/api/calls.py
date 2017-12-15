@@ -149,15 +149,11 @@ def acceptDate():
             * confirmed2 (bool): confirmation of user 2 ready to go on date
             * feedbacks (List(Feedback)): objects for bidirectional feedback
     """
-    #TODO: actually get matchId fro the request
-    print "acceptDated"
-    print request.args
-
-    matchId = Match.objects(uid1=current_user.id)[0].id
-    accept = False
+    args = json.loads(request.data) #convert string to json
+    matchId = args['uid']
+    accept = args['response']
 
     match = Match.objects(id=matchId)[0]
-    print len(match.feedbacks)
     feedback = match.feedbacks[-1]#assume last feedback is the most relevant one
     if accept:
         print "accepted"
