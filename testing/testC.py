@@ -65,7 +65,7 @@ class testing(unittest.TestCase):
         self.driver = webdriver.Firefox()
 
         #login into an account and navigate feedbackpage
-    def test_runtest1(self):
+    def test_runtest2(self):
         driver = self.driver
         driver.get("http://127.0.0.1:5000/")
         elem = driver.find_element_by_xpath("//input[@name='email']")
@@ -88,6 +88,7 @@ class testing(unittest.TestCase):
         time.sleep(2)
         elem = driver.find_element_by_xpath("//a[@href='/give_feedback']").click()
         time.sleep(1)
+        """
         elem = driver.find_element_by_xpath("//button[@class='btn btn-primary']").click()
         time.sleep(3)
         elem = driver.find_element_by_xpath("//textarea[@id='feedBackTextArea']")
@@ -95,9 +96,10 @@ class testing(unittest.TestCase):
         time.sleep(3)
         elem = driver.find_element_by_xpath("//button[@type='submit']").click()
         time.sleep(3)    
-
+        """
         #login into an account and navigate matches page
-    def test_runtest2(self):
+
+    def test_runtest1(self):
         driver = self.driver
         driver.get("http://127.0.0.1:5000/")
         elem = driver.find_element_by_xpath("//input[@name='email']")
@@ -117,6 +119,8 @@ class testing(unittest.TestCase):
         driver.execute_script("window.scrollTo(document.body.scrollHeight/2,document.body.scrollHeight);")                        
         time.sleep(1)
         elem = driver.find_element_by_xpath("//a[@href='/matches']").click()
+        time.sleep(2)
+        elem = driver.find_element_by_xpath("//button[@onclick='handleRequest(true)']").click()
         time.sleep(1)
         elem = driver.find_element_by_xpath("//a[@class='btn btn-primary']/following::a[1]").click()
         time.sleep(1)
@@ -170,7 +174,7 @@ class testing(unittest.TestCase):
         elem.send_keys(Keys.ENTER)
         time.sleep(1)
         elem = driver.find_element_by_name("bio")
-        elem.send_keys(random_generator(100))
+        elem.send_keys(random_generator(30))
         time.sleep(1)
         elem = driver.find_element_by_xpath("//input[@name='email']//following::input[" + str(random.randint(10,11)) + "]").click()
         elem = driver.find_element_by_xpath("//input[@name='email']//following::input[" + str(random.randint(12,13)) + "]").click()
@@ -203,9 +207,14 @@ class testing(unittest.TestCase):
         driver.execute_script("window.scrollTo(document.body.scrollHeight/2,document.body.scrollHeight);")                        
         time.sleep(1)
         elem = driver.find_element_by_xpath("//a[@href='/meet']").click()
-        time.sleep(1)
-        elem = driver.find_element_by_xpath("//button[@id='chevron-right']").click()
-        time.sleep(1)
+        driver.implicitly_wait(30)
+        time.sleep(2)
+        elem = driver.find_element_by_xpath("//span[@id='chevron-right']").click()
+        time.sleep(3)
+        elem = driver.find_element_by_xpath("//span[@id='chevron-right']").click()
+        time.sleep(3)
+        elem = driver.find_element_by_xpath("//span[@id='chevron-left']").click()
+        time.sleep(3)
         elem = driver.find_element_by_xpath("//button[@class='nav-btn']").click()
         time.sleep(3)
 
