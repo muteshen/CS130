@@ -121,28 +121,18 @@
               <h2>The following matches have requested a date!</h2>
             </div>
             <ul>
+                {% for m_match in pendingDate %}
                 <li>
                     <div class="matchRequestContainer">
-                        <img src='" + image + "' class='img-circle'>
                         <div class='feedback_meta_container'>
-                            <h1 id="nameField" class='feedback-box-header'>Sarah</h1>
-                             <h2 id="dateField" class='feedback-box-header'>10/10/2017 on 12:45</h2>
-                            <button type='button' class='btn btn-primary active' onclick="handleRequest(true)">Yes</button>
-                            <button type='button' class='btn btn-primary active' onclick="handleRequest(false)">No</button>
+                            <h1 id="nameField" class='feedback-box-header'>{{m_match.name}}</h1>
+                             <h2 id="dateField" class='feedback-box-header'>{{m_match.date}}</h2>
+                            <button type='button' class='btn btn-primary active' onclick='handleRequest("{{m_match.match.id}}", true)'>Yes</button>
+                            <button type='button' class='btn btn-primary active' onclick='refuseRequest("{{m_match.match.id}}", false)'>No</button>
                         </div>
                     </div>
                 </li>
-                <li>
-                    <div class="matchRequestContainer">
-                        <img src='" + image + "' class='img-circle'>
-                        <div class='feedback_meta_container'>
-                            <h1 id="nameField" class='feedback-box-header'>Sarah</h1>
-                             <h2 id="dateField" class='feedback-box-header'>10/10/2017 on 12:45</h2>
-                            <button type='button' class='btn btn-primary active' onclick="handleRequest(true)">Yes</button>
-                            <button type='button' class='btn btn-primary active' onclick="handleRequest(false)">No</button>
-                        </div>
-                    </div>
-                </li>
+               {% endfor %}
             </ul>
           </div>
     </div>
@@ -183,23 +173,30 @@
 
             function checkForRequest()
             {
-                if(true)
+                //check the matches list for potential requests from existing matches
+                if("{{shouldPop}}" == "True")
                 {
                     requestModal.style.display = "block";
                 }
+                //console.log("{{matches[0].match.id}}");
             }
             window.onload = checkForRequest;
 
-            function handleRequest(accept)
+            function handleRequest(uid, response)
             {
-                if(accept)
-                {
-                    //do stuff to handle two users agreeing to date
-                }else
-                {
-                    //notify request sender that his/her request has been declined
-                }
+                //call getDate request here
+                var xhttp = new XMLHttpRequest();
+                const url = '/api/acceptDate';
+                var match_id = uid;
+                const jsonStr = JSON.stringify({uid: match_id, response: response});
+                xhttp.open('POST', url);
+                xhttp.send(jsonStr);
+                console.log(jsonStr);
+
+                //close the modal
+                requestModal.style.display = "none";
             }
+
             closeRequest.onclick = function(){
                 requestModal.style.display = "none";
             }
