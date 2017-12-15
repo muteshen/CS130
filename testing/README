@@ -28,3 +28,9 @@ type deactivate
 to exit out of venv
 
 IN ADDITION, use must be running the server so the website would work
+
+usernames.txt has
+all the gmails that have been made from
+running testsC.py
+
+the passwords for all of these accounts are "password"
