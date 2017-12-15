@@ -222,4 +222,5 @@ def meet():
 def matches():
     matches = getMatches()
     pendingDates = getPendingDates()
-    return render_template("matches.html", matches=matches, pendingDate=pendingDates )#, matchJSON=matchJSON)
+    shouldPop=(len(pendingDates)>0)
+    return render_template("matches.html", matches=matches, pendingDate=pendingDates, shouldPop=shouldPop)#, matchJSON=matchJSON)
