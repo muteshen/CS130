@@ -28,11 +28,11 @@ def getUsers():
             2. profile -- JSON: user's public information
     """
 
-    print current_user
+    #print current_user
     #TODO: use current_user to get preferred Gender
     #TODOV2: filter using connections.swiped to only get people you haven't swiped yet
     users = User.objects(profile__gender=defaultGender).only('profile','id')[:5]
-    print users[0].first
+    #print users[0].first
     resp = jsonify(result = users.to_json())
     return resp
 
@@ -232,7 +232,7 @@ def updateProfile():
     """
 
     form = request.form
-    print form
+    #print form
 
     profile = Profile(first=form['first'], last=form['last'], gender=form['gender'][0], age=form['age'],
                         bio=form['bio'], location=form['location']) #need photo
@@ -251,7 +251,6 @@ def updateProfile():
     current_user.answers = answers
 
     password = form['pswd']
-    print password
     if password != "":
         current_user.password_hash = generate_password_hash(form['pswd'])
 
@@ -283,14 +282,12 @@ def createProfile():
     """
 
     form = request.form
-    print form
     profile = Profile(first=form['first'], last=form['last'], gender=form['gender'][0], age=form['age'],
 
                         bio=form['bio'], location=form['location']) #need photo
     file = request.files['profile_image']
 
-    print file == ""
-    print file.filename
+
     profile.photo.new_file()
     profile.photo.write(file)
     profile.photo.close()
@@ -319,7 +316,7 @@ def getPicture():
         1. photo -- String: url that client can use to access image
     """
     uid = request.args['uid']
-    print uid
+    #print uid
     if uid == 'None':
         return '/fakepath'
     if uid == 'curr':

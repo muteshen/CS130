@@ -260,7 +260,6 @@
     top: 50px;
     right: 0;
     font-family: "Avenir";
-    padding-left: 60px;
 }
 #content h1{
   font-size: 25px;
@@ -537,7 +536,6 @@ textarea{
 #match_profile_sidebar
 {
   width: 280px;
-  position: fixed;
   top: 0;
   left: 0;
   min-height: 100vh;
@@ -548,15 +546,16 @@ textarea{
 }
 
 #match_profile_sidebar ul.components {
-    margin-top:40px;
+    margin-top: 0px;
     padding: 40px 0;
     /*border-bottom: 1px solid #47748b;*/
 }
 
 .match_profile_sidebar_element 
 {
+  text-align: center !important;
   color: #606060;
-  padding-left: 25px;
+  /*padding-left: 25px;*/
 }
 
 #match_profile_sidebar ul li a {
@@ -714,5 +713,18 @@ textarea{
     background: #1abc9c;
     color: white !important
 }
+
+#time
+{
+  color: #07080a;
+  margin-left: 15px;
+}
+
+#time_container
+{
+  display: flex;
+  align-items: flex-start;
+}
+
 
 
