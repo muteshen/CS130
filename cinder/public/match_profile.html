@@ -93,6 +93,7 @@
     	<div class="matchProfileItem">
 	    	<p id="match_profile_bio"></p>
 	    </div>
+
     </div>
 
     <div id="decisionModal" class="modal myModal">
@@ -179,7 +180,7 @@
             </div>
           </div>
     </div>
-
+   <!--  <p id="matchId" class="hiddenData">{{target.user.id}}</p> -->
      
 
 <script type="text/javascript">
@@ -450,8 +451,9 @@
     function submitDateFinal(){
     	//call this function when we answer yes upon date confirmation
         var xhttp = new XMLHttpRequest();
-        const url = '/api/proposeDate'
-        const jsonStr = JSON.stringify({year: date_date.year, month: date_date.month, date:date_date.date, hour: date_time.hour , minute: date_time.minute});
+        const url = '/api/proposeDate';
+        var match_id = "{{target.user.id}}";
+        const jsonStr = JSON.stringify({year: date_date.year, month: date_date.month, date:date_date.date, hour: date_time.hour , minute: date_time.minute, mid: match_id});
         xhttp.open('POST', url);
         xhttp.send(jsonStr);
         console.log(jsonStr);

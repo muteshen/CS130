@@ -736,3 +736,10 @@ textarea{
   padding:5px;
   justify-content: flex-start;
 }
+.matchRequestMetaContainer{
+
+}
+
+.hiddenData{
+  display: none;
+}
