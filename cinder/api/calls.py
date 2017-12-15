@@ -23,16 +23,16 @@ def getUsers():
 
     Args: N/A
 
-    Returns:
-        JSON.  Represents an array of users each with::
+    Returns
+        response (list(objects)):  Represents an array of users each with:
             * id (str): user's unique id
             * profile (dict): user's public information
     """
 
-    #print current_user
-    #TODO: use current_user to get preferred Gender
-    #TODOV2: filter using connections.swiped to only get people you haven't swiped yet
-    users = User.objects(profile__gender=defaultGender).only('profile','id')[:15]
+    users = users = User.objects(
+        profile__gender=current_user.interested_in,
+        id__ne=current_user.id,
+        id__nin=current_user.cid.swiped).only('profile','id')[:15]
     resp = jsonify(result = users.to_json())
     return resp
 
@@ -62,6 +62,10 @@ def swipe():
     like = args['like']
     target_id = args['id']
 
+    my_swiped = current_user.cid.swiped
+    my_swiped.append(str(target_id))
+    current_user.cid.swiped = my_swiped
+
     if not like or target_id == 'None':
         return
 
@@ -83,10 +87,6 @@ def swipe():
                           feedbacks=[]).save()
             matchProfile = targets.only('profile','id').first()
             return jsonify(matchProfile.to_json())
-
-    my_swiped = current_user.cid.swiped
-    my_swiped.append(str(target_id))
-    current_user.cid.swiped = my_swiped
 
     current_user.cid.save()
 
