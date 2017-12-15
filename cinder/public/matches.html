@@ -128,7 +128,7 @@
                             <h1 id="nameField" class='feedback-box-header'>{{m_match.name}}</h1>
                              <h2 id="dateField" class='feedback-box-header'>{{m_match.date}}</h2>
                             <button type='button' class='btn btn-primary active' onclick='handleRequest("{{m_match.match.id}}", true)'>Yes</button>
-                            <button type='button' class='btn btn-primary active' onclick='refuseRequest("{{m_match.match.id}}", false)'>No</button>
+                            <button type='button' class='btn btn-primary active' onclick='handleRequest("{{m_match.match.id}}", false)'>No</button>
                         </div>
                     </div>
                 </li>
@@ -136,7 +136,16 @@
             </ul>
           </div>
     </div>
-
+    
+    <div id="congratsModal" class="modal myModal">
+            <!-- Modal content -->
+          <div class="modal-content modalContent">
+            <div id="modalHeader" class="modal-header matchModalHeader">
+              <span class="close" id="closeCongrats">&times;</span>
+              <h2>Congratulations you have a date!</h2>
+            </div>
+          </div>
+    </div>
 <!--         <script>
 
             function add_match(image, name, date)
@@ -168,8 +177,10 @@
         <script>
             //reference to the request modal
             var requestModal = document.getElementById("requestModal");
+            var congratsModal = document.getElementById("congratsModal");
             //reference to the close button in request modal
             var closeRequest = document.getElementById("closeRequest");
+            var closeCongrats = document.getElementById("closeCongrats");
 
             function checkForRequest()
             {
@@ -195,13 +206,20 @@
 
                 //close the modal
                 requestModal.style.display = "none";
+                congratsModal.style.display = "block";
             }
 
             closeRequest.onclick = function(){
                 requestModal.style.display = "none";
             }
+            closeCongrats.onclick = function(){
+                congratsModal.style.display = "none";
+            }
             window.onclick = function(event) {
-                requestModal.style.display = "none";
+                if(event.target == requestModal)
+                    requestModal.style.display = "none";
+                if(event.target == congratsModal)
+                    congratsModal.style.display = "none";
             }
         </script>
 </body>
