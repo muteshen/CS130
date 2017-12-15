@@ -68,14 +68,16 @@ def getTargets():
         location = "The place in your heart"
         _id = 'None'
     else:
-        u = users[0]
-        name = u.profile.first + " " + u.profile.last
-        age = u.profile.age
-        bio = u.profile.bio
-        location = u.profile.location
-        _id = str(u.id)
-    targets = {"name": name, "age": age, "bio":bio, "location": location, "id":_id}
-    return targets
+        targets = []
+        for i in range(len(users)):
+            u = users[i]
+            name = u.profile.first + " " + u.profile.last
+            age = u.profile.age
+            bio = u.profile.bio
+            location = u.profile.location
+            _id = str(u.id)
+            targets.append({"name": name, "age": age, "bio":bio, "location": location, "id":_id})
+        return targets
 
 
 
@@ -112,8 +114,8 @@ def your_feedback():
         target = match.uid2
         for feedback in match.feedbacks:
             if feedback.from_uid2 and feedback.from_uid1:
-                all_feedbacks.append({"name": target.profile.first + " " + target.profile.last, 
-                                      "date": feedback.date, 
+                all_feedbacks.append({"name": target.profile.first + " " + target.profile.last,
+                                      "date": feedback.date,
                                       "prompt": feedback.prompt,
                                       "feedback": feedback.from_uid2,
                                       "mate_id": match.uid2.id})
@@ -123,8 +125,8 @@ def your_feedback():
         target = match.uid1
         for feedback in match.feedbacks:
             if feedback.from_uid1 and feedback.from_uid2:
-                all_feedbacks.append({"name": target.profile.first + " " + target.profile.last, 
-                                      "date": feedback.date, 
+                all_feedbacks.append({"name": target.profile.first + " " + target.profile.last,
+                                      "date": feedback.date,
                                       "prompt": feedback.prompt,
                                       "feedback": feedback.from_uid1,
                                       "mate_id": match.uid1.id})
@@ -134,7 +136,7 @@ def your_feedback():
 @main.route('/give_feedback')
 def give_feedback():
     all_dates = []
-    
+
 
     matches = Match.objects(uid1=current_user.id, feedbacks__not__size=0)
     for match in matches:
@@ -195,8 +197,8 @@ def match_profile():
 @main.route('/meet')
 @login_required
 def meet():
-    target = getTargets()
-    return render_template("meet.html", target=target)
+    targets = getTargets()
+    return render_template("meet.html", targets=targets)
 
 @main.route('/matches')
 @login_required
