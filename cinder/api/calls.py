@@ -58,7 +58,6 @@ def swipe():
           1. id -- String: user's unique id
           2. profile -- JSON: user's public information
     """
-
     args = request.args #cuz he passed a string
     # REST {u'id': u'5a31cb3c151a4b11ad8befbd', u'like': False}
 
@@ -179,6 +178,7 @@ def updateProfile():
         1. redirect_url -- String: url to profile page where user is redirected
     """
 
+
     form = request.form
     #print form
 
@@ -187,10 +187,16 @@ def updateProfile():
 
     file = request.files['profile_image']
 
+    print file.filename
+
+
     if file.filename!="" and file.filename!="null":
+        print "WHY!?"
         profile.photo.new_file()
         profile.photo.write(file)
         profile.photo.close()
+    else:
+        profile.photo = current_user.profile.photo
 
     answers = [form['q1'], form['q2'], form['q3'], form['q4'], form['q5']]
 
@@ -272,3 +278,17 @@ def getPicture():
     else:
         photo = User.objects(id=uid).only('profile')[0].profile.photo.read()
     return photo
+
+
+@api.route('/rateDate', methods=['POST'])
+def rateDate():    
+    target_id = request.args['feedBackTextArea']
+    print target_id
+
+
+    return redirect(url_for('main.giveFeedback'))
+    
+
+
+
+

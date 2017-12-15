@@ -110,8 +110,34 @@ def your_feedback():
 
 @main.route('/give_feedback')
 def give_feedback():
-    matches = getMatches()
-    return render_template('giveFeedback.html', matches=matches)
+    all_dates = []
+    
+
+    matches = Match.objects(uid1=current_user.id, feedbacks__not__size=0)
+    for match in matches:
+        target = match.uid2
+        for feedback in match.feedbacks:
+            if feedback.date < datetime.now() and (not feedback.from_uid1) and feedback.prompt:
+                all_dates.append({"name": target.profile.first + " " + target.profile.last,
+                                  "date": feedback.date.date(),
+                                  "prompt": feedback.prompt,
+                                  "mate_id": target.id,
+                                  })
+
+
+    matches = Match.objects(uid2=current_user.id, feedbacks__not__size=0)
+    for match in matches:
+        target = match.uid1
+        for feedback in match.feedbacks:
+            if feedback.date < datetime.now() and (not feedback.from_uid2) and feedback.prompt:
+                all_dates.append({"name": target.profile.first + " " + target.profile.last,
+                                  "date": feedback.date.date(),
+                                  "prompt": feedback.prompt,
+                                  "mate_id": target.id,
+                                  "bio": target.profile.bio
+                                  })
+
+    return render_template('giveFeedback.html', dates=all_dates)
 
 @main.route('/profile')# @login_required
 def profile():
