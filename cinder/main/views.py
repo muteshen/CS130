@@ -5,28 +5,29 @@ from .. import db
 from ..models import *
 from ..sampleDB import *
 from datetime import *
+import json
 
 
-def getMatchJson():
-    matchObjs = Match.objects(uid2=current_user.id)
-    matches = []
-    for match in matchObjs:
-        curProfile = None
-        if current_user.is_authenticated:
-            _id = match.uid1.id
-            curProfile = match.uid1.profile
+# def getMatchJson():
+#     matchObjs = Match.objects(uid2=current_user.id)
+#     matches = []
+#     for match in matchObjs:
+#         curProfile = None
+#         if current_user.is_authenticated:
+#             _id = match.uid1.id
+#             curProfile = match.uid1.profile
 
-            matches.append({"match": match, "profile": curProfile, "mate_id": _id})
+#             matches.append({"match": match, "profile": curProfile, "mate_id": _id})
 
-    matchObjs = Match.objects(uid1=current_user.id)
-    for match in matchObjs:
-        curProfile = None
-        if current_user.is_authenticated:
-            _id = match.uid2.id
-            curProfile = match.uid2.profile
-            matches.append({"match": match, "profile": curProfile, "mate_id": _id})
+#     matchObjs = Match.objects(uid1=current_user.id)
+#     for match in matchObjs:
+#         curProfile = None
+#         if current_user.is_authenticated:
+#             _id = match.uid2.id
+#             curProfile = match.uid2.profile
+#             matches.append({"match": match, "profile": curProfile, "mate_id": _id})
 
-    return json.dump(matches)
+#     return json.dumps(matches)
 
 
 
@@ -52,9 +53,26 @@ def getMatches():
             curProfile = match.uid2.profile
             matches.append({"match": match, "profile": curProfile, "mate_id": _id})
 
-
-
     return matches
+
+def getPendingDates():
+    pendingDates = []
+    matchObjs = Match.objects(uid1=current_user.id)
+    for match in matchObjs:
+        if match.confirmed2:
+            other = User.objects(id=match.uid2.id)[0]
+            name = other.profile.first + " " + other.profile.last
+            date = match.feedbacks[-1].date
+            pendingDates.append({"name": name, "date": date, "match": match})
+
+    matchObjs = Match.objects(uid2=current_user.id)
+    for match in matchObjs:
+        if match.confirmed1:
+            other = User.objects(id=match.uid1.id)[0]
+            name = other.profile.first + " " + other.profile.last
+            date = match.feedback[-1].date
+            pendingDates.append({"name": name, "date": date, "match": match})
+    return pendingDates
 
 def getTargets():
     users = User.objects(profile__gender=current_user.interested_in, id__ne=current_user.id,
@@ -203,9 +221,5 @@ def meet():
 @login_required
 def matches():
     matches = getMatches()
-    matchJSON = getMatchJson()
-    #here or on frontend note when other user has selected a date
-    #must give new date if reject old one
-    #show the give feedback button when your feedback is empty and date is after today
-    #check if date is after today for the give feedback button
-    return render_template("matches.html", matches=matches, matchJSON=matchJSON)
+    pendingDates = getPendingDates()
+    return render_template("matches.html", matches=matches, pendingDate=pendingDates )#, matchJSON=matchJSON)

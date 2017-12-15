@@ -10,6 +10,7 @@ from .. import db
 from random import randint
 from datetime import *
 import base64
+import bson
 
 
 #note all these routes must be prefixed with /api to be accessed
@@ -93,7 +94,7 @@ def swipe():
 
 
 @api.route('/proposeDate', methods=["POST"])
-# @login_required
+@login_required
 def proposeDate():
     """Allows user to propose a date/time for a date with their Match
 
@@ -110,23 +111,22 @@ def proposeDate():
             * confirmed2 (bool): confirmation of user 2 ready to go on date
             * feedbacks (List(Feedback)): objects for bidirectional feedback
     """
-    #TODO: actually get matchId and date from request
-    #TODO: user = current_user
-    user = User.objects()[0]
-
-
-    #TODO: matchId = Match.objects(uid2=user.id)[0].id
-    matchId = Match.objects()[0].id
-    year, month, day, hour, minute = (2017, 12, 25, 2, 30)
+    #{u'hour': u'17', u'mid': u'5a32ee672f78e6064295afa6', u'month': 12,
+    #   u'year': 2017, u'date': 24, u'minute': u'00'}
+    data = json.loads(request.data)
+    year, month, day, hour, minute = map(int, [data['year'], data['month'], data['date'], data['hour'], data['minute']])
     date = datetime(year, month, day, hour, minute)
+    matchId = bson.objectid.ObjectId(data['mid'])
+    # matchUser = User.objects(id=matchId)[0]
 
-    match = Match.objects(id=matchId).first()
+    if len(Match.objects(uid1=current_user.id, uid2=matchId)) > 0:
+        match = Match.objects(uid1=current_user.id, uid2=matchId)[0]
+        match.confirmed1 = True
+    else:
+        match = Match.objects(uid2=current_user.id, uid1=matchId)[0]
+        match.confirmed2 = True
     feedback = Feedback(date=date)
     match.feedbacks.append(feedback)
-    if user == match.uid1:
-        match.confirmed1 = True
-    else: #assume user is in this match
-        match.confirmed2 = True
     match.save()
     return jsonify(match)
 
@@ -364,13 +364,19 @@ def rateDate():
     """
     target_id = request.args['id']
     date = request.args['date']
+    date = datetime.strptime(date, '%Y-%m-%d').date()
     comment = request.form['feedBackTextArea']
 
     match = Match.objects(uid1=current_user.id, uid2=target_id)
     if len(match) == 0:
-        match = Match.objects(uid2=current_user.id, uid1=target_id)
-
+        match = Match.objects(uid2=current_user.id, uid1=target_id)[0]
+        feedback = filter(lambda a: a.date.date()==date, match.feedbacks)
+        feedback[0].from_uid2 = comment
+        match.save()
     else:
-        print "haha"
+        match = match[0]
+        feedback = filter(lambda a: a.date.date()==date, match.feedbacks)
+        feedback[0].from_uid1 = comment
+        match.save()
 
     return redirect(url_for('main.give_feedback'))

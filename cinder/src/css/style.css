@@ -637,7 +637,7 @@ textarea{
 }
 
 .match-img{
-  width: 200px !important;
+  width: 250px !important;
 }
 
 /* ---------------------------------------------------
@@ -740,4 +740,8 @@ textarea{
 
 .hiddenData{
   display: none;
+}
+
+.feed-img{
+  width: 400px !important;
 }
