@@ -9,6 +9,7 @@ from ..sampleDB import *
 from .. import db
 from random import randint
 from datetime import *
+import base64
 
 
 #note all these routes must be prefixed with /api to be accessed
@@ -17,7 +18,7 @@ defaultGender = 'M'
 @api.route('/getUsers/', methods=["GET"])
 @login_required
 def getUsers():
-    """This functions asks the backend for 5 unseen users with respect to the current user.
+    """This functions asks the backend for 15 unseen users with respect to the current user.
 
     Args: N/A
 
@@ -31,8 +32,7 @@ def getUsers():
     #print current_user
     #TODO: use current_user to get preferred Gender
     #TODOV2: filter using connections.swiped to only get people you haven't swiped yet
-    users = User.objects(profile__gender=defaultGender).only('profile','id')[:5]
-    #print users[0].first
+    users = User.objects(profile__gender=defaultGender).only('profile','id')[:15]
     resp = jsonify(result = users.to_json())
     return resp
 
@@ -58,19 +58,18 @@ def swipe():
           1. id -- String: user's unique id
           2. profile -- JSON: user's public information
     """
-    args = request.args #cuz he passed a string
-    # REST {u'id': u'5a31cb3c151a4b11ad8befbd', u'like': False}
 
+    args = json.loads(request.data) #convert string to json
+    # REST {u'id': u'5a31cb3c151a4b11ad8befbd', u'like': False}
 
     like = args['like']
     target_id = args['id']
 
-
-
     if not like or target_id == 'None':
-        return redirect(url_for('main.meet'))
+        return
 
-    target = User.objects(id=target_id)[0]
+    targets = User.objects(id=target_id)
+    target = targets[0]
 
     if like == 'True':
         my_liked = current_user.cid.liked
@@ -79,8 +78,14 @@ def swipe():
 
         if str(current_user.id) in target.cid.liked:
             print "MATCHED YEAH!!!!"
-            match = Match(uid1=current_user.id, uid2=target_id, match_date=datetime.now(),
-                          confirmed1=False, confirmed2=False, feedbacks=[]).save()
+            match = Match(uid1=current_user.id,
+                          uid2=target_id,
+                          match_date=datetime.today(),
+                          confirmed1=False,
+                          confirmed2=False,
+                          feedbacks=[]).save()
+            matchProfile = targets.only('profile','id').first()
+            return jsonify(matchProfile.to_json())
 
     my_swiped = current_user.cid.swiped
     my_swiped.append(str(target_id))
@@ -88,17 +93,7 @@ def swipe():
 
     current_user.cid.save()
 
-    return redirect(url_for('main.meet'))
-
-    # match = User.objects(id=args['id'])
-    # print "Match profile: match.profile"
-    # if matchId in current_user.cid.liked_you:
-    #     matchProfile = match.only('profile','id').first()
-    #     return jsonify(matchProfile.to_json())
-    # else:
-    #     match.cid.liked_you.append(current_user.id)
-    #     return ('', 204) #empty response
-    #     #connection
+    return ('', 204) #empty response
 
 
 @api.route('/proposeDate', methods=["POST"])
@@ -210,6 +205,9 @@ def logout():
     flash('You have been logged out.')
     return redirect(url_for('main.index'))
 
+
+
+
 @api.route('/updateProfile', methods=["POST"])
 def updateProfile():
     """This functions attempts to update the current user's profile
@@ -311,7 +309,10 @@ def createProfile():
     login_user(user, True)
     return redirect(url_for('main.profile'))
 
-@api.route('/getPicture', methods=["GET"])
+
+
+
+@api.route('/getPicture', methods=['GET', 'POST'])
 def getPicture():
     """This functions attempts get a users profile picture
 
@@ -321,26 +322,43 @@ def getPicture():
     Returns:
         1. photo -- String: url that client can use to access image
     """
-    uid = request.args['uid']
-    #print uid
+
+    uid = ''
+    if request.method == 'POST':
+        args = json.loads(request.data)
+        uid = args['uid'] #convert string to json
+    else:
+        uid = request.args['uid']
+
     if uid == 'None':
         return '/fakepath'
     if uid == 'curr':
         return current_user.profile.photo.read()
     else:
         photo = User.objects(id=uid).only('profile')[0].profile.photo.read()
-    return photo
 
+    if request.method == 'POST':
+        return base64.b64encode(photo)
+    else:
+        return photo
 
 @api.route('/rateDate', methods=['POST'])
-def rateDate():    
-    target_id = request.args['feedBackTextArea']
-    print target_id
+def rateDate():
+    target_id = request.args['id']
+    date = request.args['date']
+    date = datetime.strptime(date, '%Y-%m-%d').date()    
+    comment = request.form['feedBackTextArea']
 
+    match = Match.objects(uid1=current_user.id, uid2=target_id)
+    if len(match) == 0:
+        match = Match.objects(uid2=current_user.id, uid1=target_id)[0]
+        feedback = filter(lambda a: a.date.date()==date, match.feedbacks) 
+        feedback[0].from_uid2 = comment
+        match.save()
+    else:
+        match = match[0]
+        feedback = filter(lambda a: a.date.date()==date, match.feedbacks) 
+        feedback[0].from_uid1 = comment
+        match.save()
 
-    return redirect(url_for('main.giveFeedback'))
-    
-
-
-
-
+    return redirect(url_for('main.give_feedback'))

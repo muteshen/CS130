@@ -96,15 +96,16 @@
                                     <img src="{{url_for('api.getPicture', uid=i.mate_id)}}" class='feed-img'>
                                 </div>    
                                 <div class='feedback_meta_container'>
+
                                     <h1 style="width: 200px;">{{i.name}}</h1>
                                     <p>Date you went out: {{i.date}}</p>
                                    <!--  <p style="width:200px;">{{i.bio}}</p> -->
+
                                     
                                     
                                 </div>
                                 <div class='feedback_meta_container' style="text-align: center;">  
-                                    <form> 
-                                        <input type="text" value="{{i.mate_id}}" hidden>
+                                    <form method='post' action="{{url_for('api.rateDate', id=i.mate_id, date=i.date)}}"> 
                                         <div>
                                             <h4>Prompt: {{i.prompt}}</h4>
                                         </div>
