@@ -103,12 +103,11 @@
                                     
                                 </div>
                                 <div class='feedback_meta_container' style="text-align: center;">  
-                                    <form> 
-                                        <input type="text" value="{{i.mate_id}}" hidden>
+                                    <form method='post' action="{{url_for('api.rateDate', id=i.mate_id, date=i.date)}}"> 
                                         <div>
                                             <h4>Prompt: {{i.prompt}}</h4>
                                         </div>
-                                        <textarea class="form-control" id="feedBackTextArea" rows="8"></textarea>
+                                        <textarea class="form-control" name="feedBackTextArea" rows="8"></textarea>
                                         <br>
                                         <button class="btn btn-primary" type="submit">Rate the Date!</button>
                                     </form>

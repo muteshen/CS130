@@ -334,11 +334,18 @@ def getPicture():
 
 @api.route('/rateDate', methods=['POST'])
 def rateDate():    
-    target_id = request.args['feedBackTextArea']
-    print target_id
+    target_id = request.args['id']
+    date = request.args['date']
+    comment = request.form['feedBackTextArea']
 
+    match = Match.objects(uid1=current_user.id, uid2=target_id)
+    if len(match) == 0:
+        match = Match.objects(uid2=current_user.id, uid1=target_id)
 
-    return redirect(url_for('main.giveFeedback'))
+    else:
+        print "haha"
+
+    return redirect(url_for('main.give_feedback'))
     
 
 
