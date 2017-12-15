@@ -714,3 +714,17 @@ textarea{
     color: white !important
 }
 
+#time
+{
+  color: #07080a;
+  margin-left: 15px;
+}
+
+#time_container
+{
+  display: flex;
+  align-items: flex-start;
+}
+
+
+

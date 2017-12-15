@@ -106,6 +106,20 @@
                     {% endfor %}
                 </div>
         </div>
+        <!-- modal that pops up when a date request is sent -->
+        <div id="requestModal" class="modal myModal">
+            <!-- Modal content -->
+          <div class="modal-content modalContent">
+            <div id="modalHeader" class="modal-header matchModalHeader">
+              <span class="close" id="closeRequest">&times;</span>
+              <h2 id="requestText"></h2>
+              <div id="decisionButtons" class="decisionModalButtons">
+                <button type='button' class='btn btn-primary active' onclick="handleRequest(true)">Yes</button>
+                <button type='button' class='btn btn-primary active' onclick="handleRequest(false)">No</button>
+              </div>
+            </div>
+          </div>
+    </div>
 
 <!--         <script>
 
@@ -135,7 +149,46 @@
             // }
             window.onload = function () {setUpList(true);};
         </script> -->
+        <script>
+            //reference to the request modal
+            var requestModal = document.getElementById("requestModal");
+            //reference to the close button in request modal
+            var closeRequest = document.getElementById("closeRequest");
 
+            function checkForRequest()
+            {
+                if(true)
+                {
+                    //add the text in the modal
+                    var requestText = document.getElementById("requestText");
+                    var name = "sarah";
+                    var date = {month: 1, date: 1, year: 2017, hour: 12, minute: 30};
+                    var m_string = "Your match " + name + " has proposed a date on " + date.month + "/" + date.date + "/" + date.year + " at " + date.hour + ":" + date.minute + " What is your response?";
+                    var requestNode = document.createTextNode(m_string);
+                    requestText.appendChild(requestNode);
+
+                    requestModal.style.display = "block";
+                }
+            }
+            window.onload = checkForRequest;
+
+            function handleRequest(accept)
+            {
+                if(accept)
+                {
+                    //do stuff to handle two users agreeing to date
+                }else
+                {
+                    //notify request sender that his/her request has been declined
+                }
+            }
+            closeRequest.onclick = function(){
+                requestModal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                requestModal.style.display = "none";
+            }
+        </script>
 </body>
 
 </html>
