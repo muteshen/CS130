@@ -136,8 +136,19 @@ def proposeDate():
 @login_required
 def acceptDate():
     """This function allows user to accept a Date proposed by the other.
-    Args: matchId(id of match), accept(bool)"""
-    #TODO: actually get matchId fro the request
+
+    Args: N/A
+
+    Returns:
+        match (dict): object describing a match properties between two users:
+            * uid1 (str): id of user 1 in match
+            * uid2 (str): id of user 2 in match
+            * match_date (dateTime): time stamp to schedule date
+            * confirmed1 (bool): confirmation of user 1 ready to go on date
+            * confirmed2 (bool): confirmation of user 2 ready to go on date
+            * feedbacks (List(Feedback)): objects for bidirectional feedback
+    """
+    #TODO: actually get matchId from the request
     potentialPrompts = ["What did you like best about this date?",
             "What did you like least about this date?",
             "How can this person improve?"]
