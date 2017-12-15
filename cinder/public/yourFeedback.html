@@ -123,7 +123,7 @@
     
     <!-- Page Content Holder -->
     <div id="content">
-        <h1>Here are what some of your dates said about your time together</h1>
+        <h1 class="feedback-header">Here's what your dates had to say about you!</h1>
         <div class="list-group" id="feedbackList">
            {% for feedback in feedbacks %}
                         <li class='list-group-item'>
@@ -134,9 +134,8 @@
                                 <div class='feedback_meta_container'>
                                     <h1>{{feedback.name}}</h1>
                                     <p>Date you matched: {{feedback.date.date()}}</p>
-                                    <h3>Here's what they said about you:</h5>
-                                    <h4>{{feedback.prompt}}</h4>
-                                    <h5>{{feedback.feedback}}</h5>
+                                    <h4 style="width:350px;">In Response to: {{feedback.prompt}}</h4>
+                                    <h5 style="width: 500px;">{{feedback.feedback}}</h5>
                                 </div></div></li>
                 {% endfor %}
         </div>
