@@ -12,6 +12,7 @@ from datetime import *
 import base64
 import bson
 
+potentialPrompts = ["What did you like best about this date?", "What did you like least about this date?", "How can this person improve?"]
 
 #note all these routes must be prefixed with /api to be accessed
 #ie localhost:5000/api/createProfile
@@ -148,14 +149,14 @@ def acceptDate():
             * confirmed2 (bool): confirmation of user 2 ready to go on date
             * feedbacks (List(Feedback)): objects for bidirectional feedback
     """
-    #TODO: actually get matchId from the request
-    potentialPrompts = ["What did you like best about this date?",
-            "What did you like least about this date?",
-            "How can this person improve?"]
+    #TODO: actually get matchId fro the request
+    print "acceptDated"
+    print request.args
     matchId = Match.objects(uid1=current_user.id)[0].id
     accept = True
 
-    match = Match.objects(id=matchId).first()
+    match = Match.objects(id=matchId)[0]
+    print len(match.feedbacks)
     feedback = match.feedbacks[-1]#assume last feedback is the most relevant one
     if accept:
         feedback.prompt = potentialPrompts[randint(0,len(potentialPrompts)-1)]
@@ -164,6 +165,7 @@ def acceptDate():
     else:
         match.confirmed1 = False
         match.confirmed2 = False
+        match.feedbacks.pop() #delete the last element of the list
     match.save()
     return jsonify(match)
 
