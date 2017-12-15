@@ -143,6 +143,20 @@
 				<hr></hr>
 <!-- profile form -->
 				<form method="post" action="{{ url_for('api.updateProfile') }}" enctype="multipart/form-data">
+					<div>
+						<img class="pro_img" style="border: 1px solid black;" src="{{url_for('api.getPicture', uid='curr')}}">
+					</div>
+					<!-- Photo Upload -->
+					<h3 class="photo-upload-header">Upload a Profile Photo:</h3>
+					
+					<div class="form-group">
+					    <input type="file" accept="image/*" class="form-control-file" name="profile_image">
+					</div>
+					<!-- Bio -->
+				    <div class="form-group">
+					    <label for="bio">Please Write a Short Bio:</label>
+					    <textarea name="bio" class="form-control" id="bio" rows="5"></textarea>
+					</div>
 					<div class="form-group">
 			      		<input type="text" name="first" class="form-control"  placeholder="First Name" required>
 			      	</div>
@@ -258,23 +272,6 @@
 					    No
 					  </label>
 					</div>
-					<!-- Bio -->
-				    <div class="form-group">
-					    <label for="bio">Please Write a Short Bio:</label>
-					    <textarea name="bio" class="form-control" id="bio" rows="5"></textarea>
-					</div>
-					<div>
-
-						<img class="pro_img" style="border: 1px solid black;" src="{{url_for('api.getPicture', uid='curr')}}">
-
-					</div>
-					<!-- Photo Upload -->
-					<h3 class="photo-upload-header">Upload a Profile Photo:</h3>
-					
-					<div class="form-group">
-					    <input type="file" accept="image/*" class="form-control-file" name="profile_image">
-					</div>
-					<div >
 				        <button type="submit" class="btn btn-success" style="margin-bottom: 50px; margin-top: 5px;">Save Changes</button>
 					</div>
 
