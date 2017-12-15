@@ -89,19 +89,30 @@
             <div id="content">
                 <h1 class="feedback-header">Help Your Dates by Giving Them Feedback</h1>
                 <div class="list-group" id="feedbackList">
-                    {% for i in matches %}
+                    {% for i in dates %}
                         <li class='list-group-item'>
                             <div class='feedback_container'>
                                 <div class='thumbnail'>
                                     <img src="{{url_for('api.getPicture', uid=i.mate_id)}}" class='match-img'>
                                 </div>    
                                 <div class='feedback_meta_container'>
-                                    <h1>{{i.profile.first}} {{i.profile.last}}</h1>
-                                    <p>Date you matched: {{i.match.match_date.date()}}</p>
-                                    <p>{{i.profile.bio}}</p>
-                                    <button class="btn btn-primary" onclick='displayModal()'>Rate the Date!</button>
+                                    <h1>{{i.name}}</h1>
+                                    <p>Date you matched: {{i.date}}</p>
+                                    <p style="width:200px;">{{i.bio}}</p>
                                     
-                                </div></div></li>
+                                    
+                                </div>
+                                <div class='feedback_meta_container' style="text-align: center;">  
+                                    <form method='post' action="{{url_for('api.rateDate', id=i.mate_id, date=i.date)}}"> 
+                                        <div>
+                                            <h4>Prompt: {{i.prompt}}</h4>
+                                        </div>
+                                        <textarea class="form-control" name="feedBackTextArea" rows="8"></textarea>
+                                        <br>
+                                        <button class="btn btn-primary" type="submit">Rate the Date!</button>
+                                    </form>
+                                </div>
+                                </div></li>
                     {% endfor %}
                 </div>
             </div>
@@ -120,6 +131,7 @@
                     <label for="feedBackTextArea" style="color:white;">Prompt: Some prompt</label>
                     <textarea class="form-control" id="feedBackTextArea" rows="8"></textarea>
                 </div>
+
             
             </div>
             <div id="modalFooter" class="modal-footer">

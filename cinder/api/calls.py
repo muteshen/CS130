@@ -228,6 +228,7 @@ def updateProfile():
         1. redirect_url -- String: url to profile page where user is redirected
     """
 
+
     form = request.form
     #print form
 
@@ -236,10 +237,16 @@ def updateProfile():
 
     file = request.files['profile_image']
 
+    print file.filename
+
+
     if file.filename!="" and file.filename!="null":
+        print "WHY!?"
         profile.photo.new_file()
         profile.photo.write(file)
         profile.photo.close()
+    else:
+        profile.photo = current_user.profile.photo
 
     answers = [form['q1'], form['q2'], form['q3'], form['q4'], form['q5']]
 
@@ -334,3 +341,18 @@ def getPicture():
         return base64.b64encode(photo)
     else:
         return photo
+
+@api.route('/rateDate', methods=['POST'])
+def rateDate():
+    target_id = request.args['id']
+    date = request.args['date']
+    comment = request.form['feedBackTextArea']
+
+    match = Match.objects(uid1=current_user.id, uid2=target_id)
+    if len(match) == 0:
+        match = Match.objects(uid2=current_user.id, uid1=target_id)
+
+    else:
+        print "haha"
+
+    return redirect(url_for('main.give_feedback'))

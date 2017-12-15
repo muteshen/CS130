@@ -7,6 +7,28 @@ from ..sampleDB import *
 from datetime import *
 
 
+def getMatchJson():
+    matchObjs = Match.objects(uid2=current_user.id)
+    matches = []
+    for match in matchObjs:
+        curProfile = None
+        if current_user.is_authenticated:
+            _id = match.uid1.id
+            curProfile = match.uid1.profile
+
+            matches.append({"match": match, "profile": curProfile, "mate_id": _id})
+
+    matchObjs = Match.objects(uid1=current_user.id)
+    for match in matchObjs:
+        curProfile = None
+        if current_user.is_authenticated:
+            _id = match.uid2.id
+            curProfile = match.uid2.profile
+            matches.append({"match": match, "profile": curProfile, "mate_id": _id})
+
+    return json.dump(matches)
+
+
 
 def getMatches():
     """Returns all the matches of the user """
@@ -86,12 +108,11 @@ def index():
 def your_feedback():
 
     all_feedbacks = []
-
     matches = Match.objects(uid1=current_user.id)
     for match in matches:
         target = match.uid2
         for feedback in match.feedbacks:
-            if feedback.from_uid2:
+            if feedback.from_uid2 and feedback.from_uid1:
                 all_feedbacks.append({"name": target.profile.first + " " + target.profile.last,
                                       "date": feedback.date,
                                       "prompt": feedback.prompt,
@@ -102,7 +123,7 @@ def your_feedback():
     for match in matches:
         target = match.uid1
         for feedback in match.feedbacks:
-            if feedback.from_uid1:
+            if feedback.from_uid1 and feedback.from_uid2:
                 all_feedbacks.append({"name": target.profile.first + " " + target.profile.last,
                                       "date": feedback.date,
                                       "prompt": feedback.prompt,
@@ -113,8 +134,34 @@ def your_feedback():
 
 @main.route('/give_feedback')
 def give_feedback():
-    matches = getMatches()
-    return render_template('giveFeedback.html', matches=matches)
+    all_dates = []
+
+
+    matches = Match.objects(uid1=current_user.id, feedbacks__not__size=0)
+    for match in matches:
+        target = match.uid2
+        for feedback in match.feedbacks:
+            if feedback.date < datetime.now() and (not feedback.from_uid1) and feedback.prompt:
+                all_dates.append({"name": target.profile.first + " " + target.profile.last,
+                                  "date": feedback.date.date(),
+                                  "prompt": feedback.prompt,
+                                  "mate_id": target.id,
+                                  })
+
+
+    matches = Match.objects(uid2=current_user.id, feedbacks__not__size=0)
+    for match in matches:
+        target = match.uid1
+        for feedback in match.feedbacks:
+            if feedback.date < datetime.now() and (not feedback.from_uid2) and feedback.prompt:
+                all_dates.append({"name": target.profile.first + " " + target.profile.last,
+                                  "date": feedback.date.date(),
+                                  "prompt": feedback.prompt,
+                                  "mate_id": target.id,
+                                  "bio": target.profile.bio
+                                  })
+
+    return render_template('giveFeedback.html', dates=all_dates)
 
 @main.route('/profile')# @login_required
 def profile():
@@ -156,8 +203,9 @@ def meet():
 @login_required
 def matches():
     matches = getMatches()
+    matchJSON = getMatchJson()
     #here or on frontend note when other user has selected a date
     #must give new date if reject old one
     #show the give feedback button when your feedback is empty and date is after today
     #check if date is after today for the give feedback button
-    return render_template("matches.html", matches=matches)
+    return render_template("matches.html", matches=matches, matchJSON=matchJSON)
