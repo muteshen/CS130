@@ -24,9 +24,8 @@ def getUsers():
 
     Returns:
         JSON.  Represents an array of users each with::
-
-            1. id -- String: user's unique id
-            2. profile -- JSON: user's public information
+            * id (str): user's unique id
+            * profile (dict): user's public information
     """
 
     #print current_user
@@ -42,21 +41,18 @@ def getUsers():
 @api.route('/swipe', methods=["POST"])
 @login_required
 def swipe():
-    """This functions handles user swiping other users. A right swipe implies an
-    intended match. A left swipe implies that the user is not interested.
+    """This functions handles user swiping other users. A right swipe implies an intended match. A left swipe implies that the user is not interested.
 
     Args:
-        1. id -- String: user id for the user being swiped
-        2. like -- Bool: indication of whether current user is interested in
-                         the user with corresponding user id
+        id (str): user id for the user being swiped
+        like (bool): indication of whether current user is interested in
+                     the user with corresponding user id
 
     Returns:
-        JSON.  A JSON that contains the swiped user's id and profile if the swipe
-        action resulted in a match (bi-directional approval). An empty value
-        otherwise::
-
-          1. id -- String: user's unique id
-          2. profile -- JSON: user's public information
+        JSON.  A JSON that contains the swiped user's id and profile if the swipe action resulted in a match (bi-directional approval). An empty
+        value otherwise:
+          * id (str): user's unique id
+          * profile (dict): user's public information
     """
 
     args = json.loads(request.data) #convert string to json
@@ -100,9 +96,19 @@ def swipe():
 # @login_required
 def proposeDate():
     """Allows user to propose a date/time for a date with their Match
+
     Args:
-        1. matchId - Id of the match to set a date for
-        2. date - the time to set the date for
+        matchId (str): id of the match to set a date for
+        date (str): string representing the timestamp to set the date for
+
+    Returns:
+        match (dict): object describing a match properties between two users:
+            * uid1 (str): id of user 1 in match
+            * uid2 (str): id of user 2 in match
+            * match_date (dateTime): time stamp to schedule date
+            * confirmed1 (bool): confirmation of user 1 ready to go on date
+            * confirmed2 (bool): confirmation of user 2 ready to go on date
+            * feedbacks (List(Feedback)): objects for bidirectional feedback
     """
     #TODO: actually get matchId and date from request
     #TODO: user = current_user
@@ -124,10 +130,11 @@ def proposeDate():
     match.save()
     return jsonify(match)
 
+
 @api.route('/acceptDate', methods=["POST"])
 @login_required
 def acceptDate():
-    """Allows user to accept a Date proposed by the other
+    """This function allows user to accept a Date proposed by the other.
     Args: matchId(id of match), accept(bool)"""
     #TODO: actually get matchId fro the request
     potentialPrompts = ["What did you like best about this date?",
@@ -153,12 +160,12 @@ def giveFeedback():
     """This function allows users to submit feedback for one another.
 
     Args:
-        1. matchId -- Int: user id for the user receiving feedback
-        2. feedback -- String: feedback message to be delivered to the recipient
-                               with the corresponding matchId
+        matchId (int): user id for the user receiving feedback
+        feedback (str): feedback message to be delivered to the recipient
+                        with the corresponding matchId
 
     Returns:
-        1. feedback -- String: Feedback that was delivered
+        feedback (str): feedback that was delivered
     """
     #TODO: Implement this
     return jsonify(feedback1)
@@ -168,14 +175,14 @@ def login():
     """This functions attempts to log the user in.
 
     Args:
-        1. email -- String: email of user attempting to login
-        2. password -- String: encrypted password of user attempting to login
+        email (str): email of user attempting to login
+        password (str): encrypted password of user attempting to login
 
     Returns:
-        1. template -- HTML: an html file that tells the browser what page to
-                             display. If login was successful, this will be the
-                             meet page. If login was unsuccessful, this will be
-                             the home page.
+        template (HTML): an html file that tells the browser what page to
+                         display. If login was successful, this will be the
+                         meet page. If login was unsuccessful, this will be
+                         the home page.
     """
 
     email = request.form['email']
@@ -198,7 +205,7 @@ def logout():
     Args: N/A
 
     Returns:
-        1. redirect_url -- String: url to main page where user is redirected
+        redirect_url (str): url to main page where user is redirected
     """
 
     logout_user()
@@ -213,16 +220,16 @@ def updateProfile():
     """This functions attempts to update the current user's profile
 
     Args:
-        1. form -- dictionary: contains new information to update user with the
+        form -- dictionary: contains new information to update user with the
                    following properties:
-            a. first    -- String: first name
-            b. last     -- String: last name
-            c. gender   -- String: single char indicating gender ('M', 'F', 'O')
-            d. age      -- Int: age
-            e. bio      -- String: biography
-            f. location -- String: city, state zip-code
-        2. files -- dictionary: contains new information about profile image
-            a. profile_image -- File: profile picture
+            * first    -- String: first name
+            * last     -- String: last name
+            * gender   -- String: single char indicating gender ('M', 'F', 'O')
+            * age      -- Int: age
+            * bio      -- String: biography
+            * location -- String: city, state zip-code
+        files -- dictionary: contains new information about profile image
+            * profile_image -- File: profile picture
 
     Returns:
         1. redirect_url -- String: url to profile page where user is redirected
@@ -267,22 +274,22 @@ def updateProfile():
 
 @api.route('/createProfile', methods=["POST"])
 def createProfile():
-    """This functions attempts to create a new user profile
+    """This functions attempts to create a new user profile.
 
     Args:
-        1. form -- dictionary: contains information to create a new user with
+        form (dict): contains information to create a new user with
                    the following properties:
-            a. first    -- String: first name
-            b. last     -- String: last name
-            c. gender   -- String: single char indicating gender ('M', 'F', 'O')
-            d. age      -- Int: age
-            e. bio      -- String: biography
-            f. location -- String: city, state zip-code
-        2. files -- dictionary: contains new information about profile image
-            a. profile_image -- File: profile picture
+            * first    -- String: first name
+            * last     -- String: last name
+            * gender   -- String: single char indicating gender ('M', 'F', 'O')
+            * age      -- Int: age
+            * bio      -- String: biography
+            * location -- String: city, state zip-code
+        files (dict): contains new information about profile image
+            * profile_image -- File: profile picture
 
     Returns:
-        1. redirect_url -- String: url to profile page where user is redirected
+        redirect_url (str): url to profile page where user is redirected
     """
 
     form = request.form
@@ -317,10 +324,10 @@ def getPicture():
     """This functions attempts get a users profile picture
 
     Args:
-        1. uid -- Int: id of the user that client wants to retrive a photo of
+        uid (int): id of the user that client wants to retrive a photo of
 
     Returns:
-        1. photo -- String: url that client can use to access image
+        photo (str): url that client can use to access image
     """
 
     uid = ''
@@ -342,8 +349,19 @@ def getPicture():
     else:
         return photo
 
+
 @api.route('/rateDate', methods=['POST'])
 def rateDate():
+    """This functions allows the current user to rate another that they have been on a date with
+
+    Args:
+        id (str): id of the user that rating is about
+        date (str): string representing a time stamp for the day/time of date
+        feedBackTextArea (str): feedback for the user
+
+    Returns:
+        redirect_url -- String: url to main page where user is redirected
+    """
     target_id = request.args['id']
     date = request.args['date']
     comment = request.form['feedBackTextArea']
