@@ -12,7 +12,26 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
+
+import string
+import random
+
+def random_generator(size=6, chars=string.ascii_lowercase + string.digits):
+    return ''.join(random.choice(chars) for x in range(size))
+
+def randomgmail():
+    return random_generator() + "@gmail.com"
+
+
+def random_name():
+    return ''.join(random.choice(string.ascii_lowercase) for x in range(random.randint(5,10)))
+
 my_path = "http://127.0.0.1:5000/"
+passw = "password"
+first = ""
+last = ""
+gmail = randomgmail()
+
 def my_path():
 #    temp = os.getcwd()
  #   my_path = "file://" + temp[:-12] + "cinder/public/"    
@@ -45,7 +64,115 @@ class testing(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
 
+
+    def test_runtest1(self):
+        driver = self.driver
+        driver.get("http://127.0.0.1:5000/")
+        elem = driver.find_element_by_xpath("//input[@name='email']")
+        elem.send_keys("teammates@gmail.com")
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//input[@name='email']/following::input[1]")
+        elem.send_keys("pineapple")
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//button[@id='log']").click()
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//a[@href='/profile']").click()
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(0,document.body.scrollHeight/5);")
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(document.body.scrollHeight/5,document.body.scrollHeight/2);")
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(document.body.scrollHeight/2,document.body.scrollHeight);")                        
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//a[@href='/matches']").click()
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//a[@class='btn btn-primary']/following::a[1]").click()
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//button[@class='nav-btn']").click()
+        time.sleep(3)
+        
     def test_runtest2(self):
+        first = random_name()
+        last = random_name()
+
+        f = open("../usernames.txt","a+")
+        f.write(gmail)
+        f.write("\n")
+        f.close()
+        
+        driver = self.driver
+        driver.get("http://127.0.0.1:5000/")
+        driver.find_element_by_name("sign").click()
+        driver.implicitly_wait(30)
+        time.sleep(5)
+        elem = driver.find_element_by_name("first")
+        elem.send_keys(first)
+        time.sleep(1)
+        elem = driver.find_element_by_name("last")
+        elem.send_keys(last)
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//input[@name='email']//following::input[4]")
+        elem.send_keys(gmail)
+        time.sleep(1)
+        elem = driver.find_element_by_name("pswd")
+        elem.send_keys(passw)
+        time.sleep(1)
+        elem = driver.find_element_by_name("age")
+        elem.send_keys(random.randint(18,70))
+        time.sleep(1)
+        elem = driver.find_element_by_name("location")
+        elem.send_keys("Toronto")
+        elem.send_keys(Keys.ENTER)
+        time.sleep(1)
+        elem = driver.find_element_by_name("gender")
+        if random.randint(0,100) % 2 == 0:
+            elem.send_keys(Keys.DOWN)
+        time.sleep(1)
+        elem.send_keys(Keys.ENTER)
+        time.sleep(1)
+        elem = driver.find_element_by_name("interest")
+        if random.randint(0,100) % 2 == 0:
+            elem.send_keys(Keys.DOWN)
+        time.sleep(1)
+        elem.send_keys(Keys.ENTER)
+        time.sleep(1)
+        elem = driver.find_element_by_name("bio")
+        elem.send_keys(random_generator(100))
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//input[@name='email']//following::input[" + str(random.randint(10,11)) + "]").click()
+        elem = driver.find_element_by_xpath("//input[@name='email']//following::input[" + str(random.randint(12,13)) + "]").click()
+        elem = driver.find_element_by_xpath("//input[@name='email']//following::input[" + str(random.randint(14,15)) + "]").click()
+        elem = driver.find_element_by_xpath("//input[@name='email']//following::input[" + str(random.randint(16,17)) + "]").click()
+        elem = driver.find_element_by_xpath("//input[@name='email']//following::input[" + str(random.randint(18,19)) + "]").click()
+        elem = driver.find_element_by_name("profile_image").send_keys(os.getcwd()[:-5] + "/defaultpic.png")
+        time.sleep(3)
+        elem = driver.find_element_by_id("modal-submit").click()
+        time.sleep(1)
+
+
+    def test_runtest3(self):
+        driver = self.driver
+        driver.get("http://127.0.0.1:5000/")
+        elem = driver.find_element_by_xpath("//input[@name='email']")
+        elem.send_keys(gmail)
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//input[@name='email']/following::input[1]")
+        elem.send_keys(passw)
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//button[@id='log']").click()
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//a[@href='/profile']").click()
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(0,document.body.scrollHeight/5);")
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(document.body.scrollHeight/5,document.body.scrollHeight/2);")
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(document.body.scrollHeight/2,document.body.scrollHeight);")                        
+        time.sleep(1)
+        elem = driver.find_element_by_xpath("//button[@class='nav-btn']").click()
+        time.sleep(3)
+
+    def test_runtest4(self):
         driver = self.driver
         driver.get("http://127.0.0.1:5000/")
         driver.find_element_by_name("sign").click()
@@ -61,7 +188,7 @@ class testing(unittest.TestCase):
         elem.send_keys("coolio@gmail.com")
         time.sleep(1)
         elem = driver.find_element_by_name("pswd")
-        elem.send_keys("calypso")
+        elem.send_keys(passw)
         time.sleep(1)
         elem = driver.find_element_by_name("age")
         elem.send_keys('25')
@@ -88,28 +215,7 @@ class testing(unittest.TestCase):
         elem = driver.find_element_by_id("modal-submit")
         time.sleep(1)
         
-    def test_runtest1(self):
-        driver = self.driver
-        driver.get("http://127.0.0.1:5000/")
-        elem = driver.find_element_by_xpath("//input[@name='email']")
-        elem.send_keys("teammates@gmail.com")
-        time.sleep(1)
-        elem = driver.find_element_by_xpath("//input[@name='email']/following::input[1]")
-        elem.send_keys("pineapple")
-        time.sleep(1)
-        elem = driver.find_element_by_xpath("//button[@id='log']").click()
-        time.sleep(1)
-        elem = driver.find_element_by_xpath("//a[@href='/profile']").click()
-        time.sleep(1)
-        driver.execute_script("window.scrollTo(0,document.body.scrollHeight/5);")
-        time.sleep(1)
-        driver.execute_script("window.scrollTo(document.body.scrollHeight/5,document.body.scrollHeight/2);")
-        time.sleep(1)
-        driver.execute_script("window.scrollTo(document.body.scrollHeight/2,document.body.scrollHeight);")                        
-        time.sleep(1)
-        elem = driver.find_element_by_xpath("//button[@class='nav-btn']").click()
-        time.sleep(3)
-        
+
 
     """       
     def test_runtest1(self):
@@ -202,4 +308,6 @@ if __name__ == "__main__":
    # driver.quit()
     print "http://127.0.0.1:5000/"
     print  os.getcwd()[:-5]
+
+
     unittest.main()
