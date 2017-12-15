@@ -121,18 +121,17 @@
               <h2>The following matches have requested a date!</h2>
             </div>
             <ul>
-                {% for m_match in matches %}
+                {% for m_match in pendingDates %}
                 <li>
                     <div class="matchRequestContainer">
                         <div class='feedback_meta_container'>
-                            <h1 id="nameField" class='feedback-box-header'>{{m_match.profile.first}} {{m_match.profile.last}}</h1>
-                             <h2 id="dateField" class='feedback-box-header'>{{m_match.match_date}}</h2>
-                            <button type='button' class='btn btn-primary active' onclick="handleRequest(true)">Yes</button>
-                            <button type='button' class='btn btn-primary active' onclick="handleRequest(false)">No</button>
+                            <h1 id="nameField" class='feedback-box-header'>{{m_match.profile.name}}</h1>
+                             <h2 id="dateField" class='feedback-box-header'>{{m_match.date}}</h2>
+                            <button type='button' class='btn btn-primary active' onclick='handleRequest("{{m_match.match.id}}"")'>Yes</button>
+                            <button type='button' class='btn btn-primary active' onclick='refuseRequest("{{m_match.match.id}}")'>No</button>
                         </div>
                     </div>
                 </li>
-                    {% endif %}
                {% endfor %}
             </ul>
           </div>
@@ -175,10 +174,11 @@
             function checkForRequest()
             {
                 //check the matches list for potential requests from existing matches
-                if(true)
+                if("{{shouldPop}}" == "True")
                 {
                     requestModal.style.display = "block";
                 }
+                //console.log("{{matches[0].match.id}}");
             }
             window.onload = checkForRequest;
 
