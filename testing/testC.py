@@ -227,7 +227,9 @@ class testing(unittest.TestCase):
         elem = driver.find_element_by_xpath("//button[@class='nav-btn']").click()
         time.sleep(3)
 
-
+        #note test5 will fail because we cleared the database but this test was used to test feedback
+        #which is only possible if the data has transpired which we can't test unless
+        #we directly modify database
     def test_runtest5(self):
         driver = self.driver
         driver.get("http://127.0.0.1:5000/")
@@ -248,6 +250,7 @@ class testing(unittest.TestCase):
         time.sleep(1)
         elem = driver.find_element_by_xpath("//button[@class='btn btn-primary']")
         time.sleep(3)
+        #elem.click()
         #remember to add back click
         
         #fill in user for john and upload john.jpeg
