@@ -49,13 +49,15 @@ def getTargets():
         location = "The place in your heart"
         _id = 'None'
     else:
-        u = users[0]
-        name = u.profile.first + " " + u.profile.last
-        age = u.profile.age
-        bio = u.profile.bio
-        location = u.profile.location
-        _id = str(u.id)
-    targets = {"name": name, "age": age, "bio":bio, "location": location, "id":_id}
+        targets = []
+        for i in range(len(users)):
+            u = users[i]
+            name = u.profile.first + " " + u.profile.last
+            age = u.profile.age
+            bio = u.profile.bio
+            location = u.profile.location
+            _id = str(u.id)
+            targets.append({"name": name, "age": age, "bio":bio, "location": location, "id":_id})
     return targets
 
 
@@ -120,8 +122,8 @@ def match_profile():
 @main.route('/meet')
 @login_required
 def meet():
-    target = getTargets()
-    return render_template("meet.html", target=target)
+    targets = getTargets()
+    return render_template("meet.html", targets=targets)
 
 @main.route('/matches')
 @login_required
