@@ -99,15 +99,20 @@
   border: #4A90E2 20px solid;
   border-radius: 4px;
   display: flex;
-  justify-content: space-around;
-  max-width: 980px;
-  max-height: 620px;
+  /* justify-content: space-around; */
+  max-width: 800px;
+  max-height: 550px;
+  min-height: 550px;
+  min-width: 800px;
   padding: 30px;
 }
 
 .thumbnail {
   display: flex;
-  max-width: 60%;
+  max-height: 450px;
+  max-width: 300px;
+  min-height: 450px;
+  min-width: 300px;
 }
 
 .profile-pic {
@@ -119,9 +124,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 50%;
+  max-width: 400px;
   min-width: 400px;
-  padding: 10px;
+}
+
+.top-right-content {
+  max-width: 400px;
+  min-width: 400px;
+  padding: 10px 30px;
 }
 
 .user-header {
@@ -155,6 +165,8 @@ hr {
   color: #4d4d4d;
   font-family: Avenir;
   font-size: 18px;
+  max-width: 100%;
+  word-wrap: break-word;
 }
 
 .location {
