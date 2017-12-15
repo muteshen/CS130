@@ -50,8 +50,9 @@ def swipe():
                      the user with corresponding user id
 
     Returns:
-        JSON.  A JSON that contains the swiped user's id and profile if the swipe action resulted in a match (bi-directional approval). An empty
-        value otherwise:
+        response (dict): A JSON that contains the swiped user's id and
+        profile if the swipe action resulted in a match (bi-directional
+        approval). An empty value otherwise:
           * id (str): user's unique id
           * profile (dict): user's public information
     """
