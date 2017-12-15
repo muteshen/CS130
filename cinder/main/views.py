@@ -84,12 +84,11 @@ def index():
 def your_feedback():
 
     all_feedbacks = []
-
     matches = Match.objects(uid1=current_user.id)
     for match in matches:
         target = match.uid2
         for feedback in match.feedbacks:
-            if feedback.from_uid2:
+            if feedback.from_uid2 and feedback.from_uid1:
                 all_feedbacks.append({"name": target.profile.first + " " + target.profile.last, 
                                       "date": feedback.date, 
                                       "prompt": feedback.prompt,
@@ -100,7 +99,7 @@ def your_feedback():
     for match in matches:
         target = match.uid1
         for feedback in match.feedbacks:
-            if feedback.from_uid1:
+            if feedback.from_uid1 and feedback.from_uid2:
                 all_feedbacks.append({"name": target.profile.first + " " + target.profile.last, 
                                       "date": feedback.date, 
                                       "prompt": feedback.prompt,
