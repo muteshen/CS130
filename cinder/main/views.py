@@ -53,7 +53,18 @@ def getMatches():
             curProfile = match.uid2.profile
             matches.append({"match": match, "profile": curProfile, "mate_id": _id})
 
+    return matches
 
+def getPendingDates():
+    pendingDates = []
+    matchObjs = Match.objects(uid1=current_user.id)
+    for match in matchObjs:
+        if match.confirmed2:
+            other = User.objects(id=match.uid2)[0]
+            pendingDates.append({''})
+
+    matchObjs = Match.objects(uid2=current_user.id)
+    for match in matchObjs:
 
     return matches
 
@@ -204,10 +215,4 @@ def meet():
 @login_required
 def matches():
     matches = getMatches()
-    #matchJSON = getMatchJson()
-    #print matchJSON
-    #here or on frontend note when other user has selected a date
-    #must give new date if reject old one
-    #show the give feedback button when your feedback is empty and date is after today
-    #check if date is after today for the give feedback button
     return render_template("matches.html", matches=matches)#, matchJSON=matchJSON)
