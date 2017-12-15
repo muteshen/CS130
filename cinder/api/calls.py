@@ -152,17 +152,20 @@ def acceptDate():
     #TODO: actually get matchId fro the request
     print "acceptDated"
     print request.args
+
     matchId = Match.objects(uid1=current_user.id)[0].id
-    accept = True
+    accept = False
 
     match = Match.objects(id=matchId)[0]
     print len(match.feedbacks)
     feedback = match.feedbacks[-1]#assume last feedback is the most relevant one
     if accept:
+        print "accepted"
         feedback.prompt = potentialPrompts[randint(0,len(potentialPrompts)-1)]
         match.confirmed1 = False
         match.confirmed2 = False
     else:
+        print "rejected"
         match.confirmed1 = False
         match.confirmed2 = False
         match.feedbacks.pop() #delete the last element of the list
