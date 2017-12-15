@@ -115,28 +115,19 @@
               <h2>The following matches have requested a date!</h2>
             </div>
             <ul>
+                {% for m_match in matches %}
                 <li>
                     <div class="matchRequestContainer">
-                        <img src='" + image + "' class='img-circle'>
                         <div class='feedback_meta_container'>
-                            <h1 id="nameField" class='feedback-box-header'>Sarah</h1>
-                             <h2 id="dateField" class='feedback-box-header'>10/10/2017 on 12:45</h2>
+                            <h1 id="nameField" class='feedback-box-header'>{{m_match.profile.first}} {{m_match.profile.last}}</h1>
+                             <h2 id="dateField" class='feedback-box-header'>{{m_match.match_date}}</h2>
                             <button type='button' class='btn btn-primary active' onclick="handleRequest(true)">Yes</button>
                             <button type='button' class='btn btn-primary active' onclick="handleRequest(false)">No</button>
                         </div>
                     </div>
                 </li>
-                <li>
-                    <div class="matchRequestContainer">
-                        <img src='" + image + "' class='img-circle'>
-                        <div class='feedback_meta_container'>
-                            <h1 id="nameField" class='feedback-box-header'>Sarah</h1>
-                             <h2 id="dateField" class='feedback-box-header'>10/10/2017 on 12:45</h2>
-                            <button type='button' class='btn btn-primary active' onclick="handleRequest(true)">Yes</button>
-                            <button type='button' class='btn btn-primary active' onclick="handleRequest(false)">No</button>
-                        </div>
-                    </div>
-                </li>
+                    {% endif %}
+               {% endfor %}
             </ul>
           </div>
     </div>
@@ -177,6 +168,7 @@
 
             function checkForRequest()
             {
+                //check the matches list for potential requests from existing matches
                 if(true)
                 {
                     requestModal.style.display = "block";
@@ -186,6 +178,11 @@
 
             function handleRequest(accept)
             {
+                //call getDate request here
+                
+                //close the modal
+                decisionModal.style.display = "none";
+
                 if(accept)
                 {
                     //do stuff to handle two users agreeing to date

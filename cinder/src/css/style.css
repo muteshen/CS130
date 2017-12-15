@@ -735,6 +735,7 @@ textarea{
   display: flex;
   padding:5px;
   justify-content: flex-start;
+  flex-direction: row;
 }
 .matchRequestMetaContainer{
 
