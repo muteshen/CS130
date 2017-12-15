@@ -741,3 +741,7 @@ textarea{
 .hiddenData{
   display: none;
 }
+
+.feed-img{
+  width: 400px !important;
+}
