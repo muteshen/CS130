@@ -98,8 +98,8 @@
                                 </div>    
                                 <div class='feedback_meta_container'>
 
-                                    <h1>{{i.profile.first}} {{i.profile.last}} - {{i.match.match_date.date()}}</h1>
-
+                                    <h1>{{i.profile.first}} {{i.profile.last}}, {{i.profile.age}}</h1>
+                                    <p>Date you matched: {{i.match.match_date.date()}}</p>
                                     <script>console.log("{{i.mate_id}}")</script>
                                     <a href="{{url_for('main.match_profile', uid=i.mate_id)}}" class="btn btn-primary" >View Profile</a>
                                 </div></div></li>
