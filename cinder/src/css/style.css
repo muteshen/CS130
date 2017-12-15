@@ -327,10 +327,12 @@
 
 .feedback_meta_container{
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start; 
   flex-direction: column;
   padding: 20px;
   background-color: #F8F8F8;
+  width: 200px;
 }
 .feedback_meta_container button {
 /*  background-color:#FFB978;
@@ -716,7 +718,7 @@ textarea{
 
 #time
 {
-  color: #07080a;
+  color: black;
   margin-left: 15px;
 }
 
@@ -727,4 +729,10 @@ textarea{
 }
 
 
-
+.matchRequestContainer {
+  width: 1000px;
+  color: red;
+  display: flex;
+  padding:5px;
+  justify-content: flex-start;
+}

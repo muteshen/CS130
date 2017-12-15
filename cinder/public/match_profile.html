@@ -146,7 +146,7 @@
                     <label>Time</label>
                     <input id="time" type="time" value="12:00">
                 </div>
-              <button type="button" onclick="submitDate()" class="btn btn-outline-dark btn-sm">Submit</button>
+              <button type="button" onclick="submitDate()" class="btn btn-primary">Submit</button>
             </div>
           </div>
     </div>
@@ -449,8 +449,15 @@
     //this function is called when user selects yes in decisionModal (date mode)
     function submitDateFinal(){
     	//call this function when we answer yes upon date confirmation
+        var xhttp = new XMLHttpRequest();
+        const url = '/api/proposeDate'
+        const jsonStr = JSON.stringify({year: date_date.year, month: date_date.month, date:date_date.date, hour: date_time.hour , minute: date_time.minute});
+        xhttp.open('POST', url);
+        xhttp.send(jsonStr);
+        console.log(jsonStr);
 
-
+        //close the modal
+        decisionModal.style.display = "none";
     }
 
     function reportAction()

@@ -154,4 +154,8 @@ def meet():
 @login_required
 def matches():
     matches = getMatches()
+    #here or on frontend note when other user has selected a date
+    #must give new date if reject old one
+    #show the give feedback button when your feedback is empty and date is after today
+    #check if date is after today for the give feedback button
     return render_template("matches.html", matches=matches)
