@@ -16,39 +16,21 @@ def getMatches():
     matches = []
     for match in matchObjs:
         curProfile = None
-        curFeedback = []
         if current_user.is_authenticated:
             _id = match.uid1.id
             curProfile = match.uid1.profile
-            print "FEEDBACK from 1"
-            print match.feedbacks
-            for feedback in match.feedbacks:
-                print "******"
-                print feedback.from_uid1
-                print "******"                
-                if feedback.from_uid1:
-                    curFeedback.append(feedback)
-        matches.append({"match": match, "profile": curProfile, "feedbacks": curFeedback, "mate_id": _id})
+
+            matches.append({"match": match, "profile": curProfile, "mate_id": _id})
 
     matchObjs = Match.objects(uid1=current_user.id)
     for match in matchObjs:
         curProfile = None
-        curFeedback = []
         if current_user.is_authenticated:
             _id = match.uid2.id
             curProfile = match.uid2.profile
-            print "FEEDBACK from 2"
-            print match.feedbacks
+            matches.append({"match": match, "profile": curProfile, "mate_id": _id})
 
-            for feedback in match.feedbacks:
-                print "******"
-                print feedback.from_uid2
-                print "******"
-                if feedback.from_uid2:
-                    curFeedback.append(feedback)                
-        matches.append({"match": match, "profile": curProfile, "feedbacks": curFeedback, "mate_id": _id})
 
-    print matches
 
     return matches
 
@@ -142,13 +124,13 @@ def match_profile():
     #use login_required
 
     target_id = request.args['uid']
-    print target_id
+
 
     # matchObjs = Match.objects(uid1=current_user.id, uid2=target_id).extend(Match.objects(uid2=current_user.id, uid1=target_id))
     # matchObjs = matchObjs[0]
 
     target_id = request.args['uid']
-    print target_id
+
 
     if len(Match.objects(uid1=current_user.id, uid2=target_id)) >0:
         target = Match.objects(uid1=current_user.id, uid2=target_id)[0].uid2
