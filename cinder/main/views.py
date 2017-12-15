@@ -5,6 +5,29 @@ from .. import db
 from ..models import *
 from ..sampleDB import *
 from datetime import *
+import json
+
+
+# def getMatchJson():
+#     matchObjs = Match.objects(uid2=current_user.id)
+#     matches = []
+#     for match in matchObjs:
+#         curProfile = None
+#         if current_user.is_authenticated:
+#             _id = match.uid1.id
+#             curProfile = match.uid1.profile
+
+#             matches.append({"match": match, "profile": curProfile, "mate_id": _id})
+
+#     matchObjs = Match.objects(uid1=current_user.id)
+#     for match in matchObjs:
+#         curProfile = None
+#         if current_user.is_authenticated:
+#             _id = match.uid2.id
+#             curProfile = match.uid2.profile
+#             matches.append({"match": match, "profile": curProfile, "mate_id": _id})
+
+#     return json.dumps(matches)
 
 
 
@@ -45,14 +68,16 @@ def getTargets():
         location = "The place in your heart"
         _id = 'None'
     else:
-        u = users[0]
-        name = u.profile.first + " " + u.profile.last
-        age = u.profile.age
-        bio = u.profile.bio
-        location = u.profile.location
-        _id = str(u.id)
-    targets = {"name": name, "age": age, "bio":bio, "location": location, "id":_id}
-    return targets
+        targets = []
+        for i in range(len(users)):
+            u = users[i]
+            name = u.profile.first + " " + u.profile.last
+            age = u.profile.age
+            bio = u.profile.bio
+            location = u.profile.location
+            _id = str(u.id)
+            targets.append({"name": name, "age": age, "bio":bio, "location": location, "id":_id})
+        return targets
 
 
 
@@ -84,14 +109,13 @@ def index():
 def your_feedback():
 
     all_feedbacks = []
-
     matches = Match.objects(uid1=current_user.id)
     for match in matches:
         target = match.uid2
         for feedback in match.feedbacks:
-            if feedback.from_uid2:
-                all_feedbacks.append({"name": target.profile.first + " " + target.profile.last, 
-                                      "date": feedback.date, 
+            if feedback.from_uid2 and feedback.from_uid1:
+                all_feedbacks.append({"name": target.profile.first + " " + target.profile.last,
+                                      "date": feedback.date,
                                       "prompt": feedback.prompt,
                                       "feedback": feedback.from_uid2,
                                       "mate_id": match.uid2.id})
@@ -100,9 +124,9 @@ def your_feedback():
     for match in matches:
         target = match.uid1
         for feedback in match.feedbacks:
-            if feedback.from_uid1:
-                all_feedbacks.append({"name": target.profile.first + " " + target.profile.last, 
-                                      "date": feedback.date, 
+            if feedback.from_uid1 and feedback.from_uid2:
+                all_feedbacks.append({"name": target.profile.first + " " + target.profile.last,
+                                      "date": feedback.date,
                                       "prompt": feedback.prompt,
                                       "feedback": feedback.from_uid1,
                                       "mate_id": match.uid1.id})
@@ -111,8 +135,34 @@ def your_feedback():
 
 @main.route('/give_feedback')
 def give_feedback():
-    matches = getMatches()
-    return render_template('giveFeedback.html', matches=matches)
+    all_dates = []
+
+
+    matches = Match.objects(uid1=current_user.id, feedbacks__not__size=0)
+    for match in matches:
+        target = match.uid2
+        for feedback in match.feedbacks:
+            if feedback.date < datetime.now() and (not feedback.from_uid1) and feedback.prompt:
+                all_dates.append({"name": target.profile.first + " " + target.profile.last,
+                                  "date": feedback.date.date(),
+                                  "prompt": feedback.prompt,
+                                  "mate_id": target.id,
+                                  })
+
+
+    matches = Match.objects(uid2=current_user.id, feedbacks__not__size=0)
+    for match in matches:
+        target = match.uid1
+        for feedback in match.feedbacks:
+            if feedback.date < datetime.now() and (not feedback.from_uid2) and feedback.prompt:
+                all_dates.append({"name": target.profile.first + " " + target.profile.last,
+                                  "date": feedback.date.date(),
+                                  "prompt": feedback.prompt,
+                                  "mate_id": target.id,
+                                  "bio": target.profile.bio
+                                  })
+
+    return render_template('giveFeedback.html', dates=all_dates)
 
 @main.route('/profile')# @login_required
 def profile():
@@ -147,11 +197,17 @@ def match_profile():
 @main.route('/meet')
 @login_required
 def meet():
-    target = getTargets()
-    return render_template("meet.html", target=target)
+    targets = getTargets()
+    return render_template("meet.html", targets=targets)
 
 @main.route('/matches')
 @login_required
 def matches():
     matches = getMatches()
-    return render_template("matches.html", matches=matches)
+    #matchJSON = getMatchJson()
+    #print matchJSON
+    #here or on frontend note when other user has selected a date
+    #must give new date if reject old one
+    #show the give feedback button when your feedback is empty and date is after today
+    #check if date is after today for the give feedback button
+    return render_template("matches.html", matches=matches)#, matchJSON=matchJSON)
