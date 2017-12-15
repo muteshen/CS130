@@ -1,4 +1,4 @@
-from flask import render_template, session, redirect, url_for, jsonify
+from flask import render_template, session, redirect, url_for, jsonify, request
 from flask_login import login_required, current_user
 from . import main
 from .. import db
@@ -16,25 +16,21 @@ def getMatches():
     matches = []
     for match in matchObjs:
         curProfile = None
-        curFeedback = []
         if current_user.is_authenticated:
             _id = match.uid1.id
             curProfile = match.uid1.profile
-            for feedback in match.feedbacks:
-                curFeedback.append(feedback.from_uid1)
-        matches.append({"match": match, "profile": curProfile, "feedbacks": curFeedback, "mate_id": _id})
 
+            matches.append({"match": match, "profile": curProfile, "mate_id": _id})
 
     matchObjs = Match.objects(uid1=current_user.id)
     for match in matchObjs:
         curProfile = None
-        curFeedback = []
         if current_user.is_authenticated:
             _id = match.uid2.id
             curProfile = match.uid2.profile
-            for feedback in match.feedbacks:
-                curFeedback.append(feedback.from_uid2)
-        matches.append({"match": match, "profile": curProfile, "feedbacks": curFeedback, "mate_id": _id})
+            matches.append({"match": match, "profile": curProfile, "mate_id": _id})
+
+
 
     return matches
 
@@ -58,7 +54,7 @@ def getTargets():
             location = u.profile.location
             _id = str(u.id)
             targets.append({"name": name, "age": age, "bio":bio, "location": location, "id":_id})
-    return targets
+        return targets
 
 
 
@@ -82,41 +78,72 @@ def index():
     # User.objects(email="sw@gmail.com").delete()
 
     if current_user.is_authenticated:
-        return render_template("meet.html")
+        return redirect(url_for("main.meet"))
     else:
         return render_template("home.html")
 
 @main.route('/your_feedback')
+def your_feedback():
+
+    all_feedbacks = []
+
+    matches = Match.objects(uid1=current_user.id)
+    for match in matches:
+        target = match.uid2
+        for feedback in match.feedbacks:
+            if feedback.from_uid2:
+                all_feedbacks.append({"name": target.profile.first + " " + target.profile.last,
+                                      "date": feedback.date,
+                                      "prompt": feedback.prompt,
+                                      "feedback": feedback.from_uid2,
+                                      "mate_id": match.uid2.id})
+
+    matches = Match.objects(uid2=current_user.id)
+    for match in matches:
+        target = match.uid1
+        for feedback in match.feedbacks:
+            if feedback.from_uid1:
+                all_feedbacks.append({"name": target.profile.first + " " + target.profile.last,
+                                      "date": feedback.date,
+                                      "prompt": feedback.prompt,
+                                      "feedback": feedback.from_uid1,
+                                      "mate_id": match.uid1.id})
+
+    return render_template('yourFeedback.html', feedbacks=all_feedbacks)
+
+@main.route('/give_feedback')
 def give_feedback():
     matches = getMatches()
     return render_template('giveFeedback.html', matches=matches)
-
-@main.route('/give_feedback')
-def your_feedback():
-    matches = getMatches()
-    return render_template('yourFeedback.html', matches=matches)
 
 @main.route('/profile')# @login_required
 def profile():
     return render_template('profile.html')
 
 @main.route('/match_profile')
+@login_required
 def match_profile():
     #use login_required
 
-    #matchObjs = Match.objects(uid1=current_user.id).extend(Match.objects(uid2=current_user.id))
+    target_id = request.args['uid']
 
-    matchObjs = Match.objects[:2]
-    print matchObjs
-    matches = []
-    for match in matchObjs:
-        curProfile = None
-        if current_user.is_authenticated and match.uid1 == current_user.id:
-            curProfile = match.uid2.profile
-        else: #assumes you are definitely part of this match
-            curProfile = match.uid1.profile
-        matches.append({"match": match, "profile": curProfile})
-    return render_template('match_profile.html', matches=matches)
+
+    # matchObjs = Match.objects(uid1=current_user.id, uid2=target_id).extend(Match.objects(uid2=current_user.id, uid1=target_id))
+    # matchObjs = matchObjs[0]
+
+    target_id = request.args['uid']
+
+
+    if len(Match.objects(uid1=current_user.id, uid2=target_id)) >0:
+        target = Match.objects(uid1=current_user.id, uid2=target_id)[0].uid2
+    else:
+        target = Match.objects(uid2=current_user.id, uid1=target_id)[0].uid1
+
+    profile = target.profile
+    matches = {"user": target, "profile":profile}
+
+
+    return render_template('match_profile.html', target=matches)
 
 
 @main.route('/meet')
@@ -129,4 +156,8 @@ def meet():
 @login_required
 def matches():
     matches = getMatches()
+    #here or on frontend note when other user has selected a date
+    #must give new date if reject old one
+    #show the give feedback button when your feedback is empty and date is after today
+    #check if date is after today for the give feedback button
     return render_template("matches.html", matches=matches)

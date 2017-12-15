@@ -21,6 +21,7 @@
         $(document).ready(function(){
 
           
+
           $(function() {
               $('#hamburger').hover(function() {
                 $('.icon-bar').css('background-color', '#FFB978');
@@ -67,9 +68,9 @@
             </div>
         </div>
     </nav>
-     <div class="wrapper">
+    <!--  <div class="wrapper"> -->
             <!-- Sidebar Holder -->
-            <nav id="sidebar">
+ <!--            <nav id="sidebar">
                 <ul class="list-unstyled components">
                     <li class = "active">
                         <a href="#" role="button" onclick="setUpList(true);">New Matches</a>
@@ -80,25 +81,65 @@
                     </li>
                 </ul>
             </nav>
-    </div>
+    </div> -->
 
      <!-- Page Content Holder -->
-            <div id="content">
-                <h1>Your Matches</h1>
+            <div id="content_1">
+                <h1 class="feedback-header">You can view your matches here</h1>
+                <hr>
+                <h5 style="text-align: center; color: #606060;">Click "View Profile" to learn more about them and arrange a date!</h5>
+                <hr>
                 <div class="list-group" id="feedbackList">
                     {% for i in matches %}
                         <li class='list-group-item'>
                             <div class='feedback_container'>
                                 <div class='thumbnail'>
-                                    <img src="{{url_for('api.getPicture', uid=i.mate_id)}}" class='img-circle'>
+                                    <img src="{{url_for('api.getPicture', uid=i.mate_id)}}" class='match-img'>
                                 </div>    
                                 <div class='feedback_meta_container'>
-                                    <h1>{{i.profile.first}} {{i.profile.last}} - {{i.match.match_date}}</h1>
-                                    <a href='/match_profile'>View Profile</a>
+
+                                    <h1>{{i.profile.first}} {{i.profile.last}}, {{i.profile.age}}</h1>
+                                    <p>Date you matched: {{i.match.match_date.date()}}</p>
+                                    <script>console.log("{{i.mate_id}}")</script>
+                                    <a href="{{url_for('main.match_profile', uid=i.mate_id)}}" class="btn btn-primary" >View Profile</a>
                                 </div></div></li>
                     {% endfor %}
                 </div>
         </div>
+        <!-- modal that pops up when a date request is sent -->
+        <div id="requestModal" class="modal myModal">
+            <!-- Modal content -->
+          <div class="modal-content modalContent">
+            <div id="modalHeader" class="modal-header matchModalHeader">
+              <span class="close" id="closeRequest">&times;</span>
+              <h2>The following matches have requested a date!</h2>
+            </div>
+            <ul>
+                <li>
+                    <div class="matchRequestContainer">
+                        <img src='" + image + "' class='img-circle'>
+                        <div class='feedback_meta_container'>
+                            <h1 id="nameField" class='feedback-box-header'>Sarah</h1>
+                             <h2 id="dateField" class='feedback-box-header'>10/10/2017 on 12:45</h2>
+                            <button type='button' class='btn btn-primary active' onclick="handleRequest(true)">Yes</button>
+                            <button type='button' class='btn btn-primary active' onclick="handleRequest(false)">No</button>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="matchRequestContainer">
+                        <img src='" + image + "' class='img-circle'>
+                        <div class='feedback_meta_container'>
+                            <h1 id="nameField" class='feedback-box-header'>Sarah</h1>
+                             <h2 id="dateField" class='feedback-box-header'>10/10/2017 on 12:45</h2>
+                            <button type='button' class='btn btn-primary active' onclick="handleRequest(true)">Yes</button>
+                            <button type='button' class='btn btn-primary active' onclick="handleRequest(false)">No</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+          </div>
+    </div>
 
 <!--         <script>
 
@@ -128,7 +169,38 @@
             // }
             window.onload = function () {setUpList(true);};
         </script> -->
+        <script>
+            //reference to the request modal
+            var requestModal = document.getElementById("requestModal");
+            //reference to the close button in request modal
+            var closeRequest = document.getElementById("closeRequest");
 
+            function checkForRequest()
+            {
+                if(true)
+                {
+                    requestModal.style.display = "block";
+                }
+            }
+            window.onload = checkForRequest;
+
+            function handleRequest(accept)
+            {
+                if(accept)
+                {
+                    //do stuff to handle two users agreeing to date
+                }else
+                {
+                    //notify request sender that his/her request has been declined
+                }
+            }
+            closeRequest.onclick = function(){
+                requestModal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                requestModal.style.display = "none";
+            }
+        </script>
 </body>
 
 </html>

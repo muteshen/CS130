@@ -139,8 +139,10 @@ window.onload = () => {
     const url = '/api/swipe'
     const jsonStr = JSON.stringify({
       id: `${currentPotentialMatch._id.$oid}`,
-      like: dir === 'right' ? true : false,
+      like: dir === 'right' ? 'True' : 'False',
     })
+    console.log('Print JSON')
+    console.log(jsonStr)
     xhttp.open("POST", url)
     xhttp.setRequestHeader('content-type', 'application/json')
     xhttp.send(jsonStr)

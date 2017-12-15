@@ -6,6 +6,20 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <script>
+    $(document).ready(function(){
+
+
+        function interest(){
+        var interest;
+        if("{{target.user.interested_in}}" == "M" ){ interest = "Male"}
+            else if("{{target.user.interested_in}}" == 'F'){interest = "Female"}
+            else if("{{target.user.interested_in}}" == 'O'){interest = "Other"}
+            return interest;
+        };
+    });
+    </script>
+
 	<title>Cinder</title>
 </head>
 <body>
@@ -29,7 +43,7 @@
     				<li><a href="/profile">Profile</a></li>
     				<li><a href="/meet">Meet People</a></li>
     				<li><a href="/matches">Matches</a></li>
-    				<li><a href="/yourFeedback">Feedback</a></li>
+    				<li><a href="/your_feedback">Feedback</a></li>
                     {% if current_user.is_authenticated %}
                     <li>
                     <form class="form-inline" method="post" action="{{ url_for('api.logout') }}">
@@ -46,23 +60,24 @@
 	 <div class="wrapper">
             <!-- Sidebar Holder -->
             <nav id="match_profile_sidebar">
-                <ul class="list-unstyled components">
+                <ul class="list-unstyled components grey_list">
                 	 <li>
                     <!-- name field added by generateData function below -->
                     	<h2 class="match_profile_sidebar_element" id="match_profile_name"></h2>
                     </li>
-                    <li>
-                        <img src="sarah.jpeg" alt="profile picture" class="match_profile_sidebar_element">
+                    <li><p style="text-align: center;">
+                        <img class="match-img" src="{{url_for('api.getPicture', uid=target.user.id)}}" alt="profile picture" class="match_profile_sidebar_element">
+                        </p>
                     </li>
                     <li>
-                    	<h3 class="match_profile_sidebar_element" id="match_interestedIn">Interested-in: </h3>
+                    	<h3 class="match_profile_sidebar_element" id="match_interestedIn">Interested In: </h3>
                     </li>
                     <li>
                     	<button type="button" class="btn btn-primary btn-lg match_profile_sidebar_element" id="date_button" onclick="displayDateModal()">It's a Date!</button>
                     </li>
                     <li class="matches_button">
-                    	<button type="button" class="btn btn-primary active" onclick="displayDecisionModal('unmatch')">unmatch</button>
-						<button type="button" class="btn btn-primary active" onclick="displayReportModal()">report</button>
+                    	<button type="button" class="btn btn-primary active" onclick="displayDecisionModal('unmatch')">Unmatch</button>
+						<button type="button" class="btn btn-primary active" onclick="displayReportModal()">Report</button>
                     </li>
                 </ul>
             </nav>
@@ -72,12 +87,13 @@
     <div id="content">
     	<!-- we populate the following elements by the generateData function below -->
     	<div class="matchProfileItem">
-    		<h2 id="match_email">email: </h2>
-    		<h2 id="match_location">location: </h2>
+    		<h2 id="match_email">Email: </h2>
+    		<h2 id="match_location">Location: </h2>
     	</div>
     	<div class="matchProfileItem">
 	    	<p id="match_profile_bio"></p>
 	    </div>
+
     </div>
 
     <div id="decisionModal" class="modal myModal">
@@ -105,7 +121,7 @@
             <!-- calendar interface -->
             	<div class="month"> 
 				  <ul>
-				    <li class="prev"><a href="#" onclick="setMonth(-1)">&#10094;</a>></li>
+				    <li class="prev"><a href="#" onclick="setMonth(-1)">&#10094;</a></li>
 				    <li class="next"><a href="#" onclick="setMonth(1)">&#10095;</a></li>
 				    <li id="monthText">
 				     
@@ -127,7 +143,11 @@
 				</ul>
             </div>
             <div id="modalFooter" class="modal-footer">
-              <button type="button" onclick="submitDate()" class="btn btn-outline-dark btn-sm">Submit</button>
+                <div id="time_container">
+                    <label>Time</label>
+                    <input id="time" type="time" value="12:00">
+                </div>
+              <button type="button" onclick="submitDate()" class="btn btn-primary">Submit</button>
             </div>
           </div>
     </div>
@@ -142,25 +162,25 @@
               <h3>Is this person bothering you? Tell us what they did.</h3>
               <ul style="list-style-type:disc">
             		<li>
-            			<a href="#">Inappropriate Messages</a>
+            			<a href="#" onclick="reportAction()">Inappropriate Messages</a>
             		</li>
             		<li>
-            			<a href="#">Inappropriate Photos</a>
+            			<a href="#" onclick="reportAction()">Inappropriate Photos</a>
             		</li>
             		<li>
-            			<a href="#">Bad offline Behavior</a>
+            			<a href="#" onclick="reportAction()">Bad offline Behavior</a>
             		</li>
             		<li>
-            			<a href="#">Feels Like Spam</a>
+            			<a href="#" onclick="reportAction()">Feels Like Spam</a>
             		</li>
             		<li>
-            			<a href="#">Other</a>
+            			<a href="#" onclick="reportAction()">Other</a>
             		</li>
             	</ul>
             </div>
           </div>
     </div>
-
+   <!--  <p id="matchId" class="hiddenData">{{target.user.id}}</p> -->
      
 
 <script type="text/javascript">
@@ -172,39 +192,37 @@
 
 		//handles bio
 		// add some code to get the matches bio from the backend
-		var bio_node = document.createTextNode("Hey my name is Sarah Im from blahblah OMG i love blah blah blah yeah I also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blah I also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blahI also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blahI also like blah blah blah blah fowajfeowafeoewafoewajfoewafwa blah blah");
+		var bio_node = document.createTextNode("{{target.user.profile.bio}}");
 		var bio_container = document.getElementById("match_profile_bio");
 		bio_container.appendChild(bio_node);
 
 		//handles name
 		//add some code to get the matches name from the backend
-		var name_node = document.createTextNode("Sarah");
+		var name_node = document.createTextNode("{{target.user.profile.first}} {{target.user.profile.last}}");
 		var name_container = document.getElementById("match_profile_name");
 		name_container.appendChild(name_node);
 
 		//handles age
 		//add some code to get the matches age from the backend
 		//add a coma and space + the age
-		var match_age = 23;
-		var age_string = ", " + match_age;
-		var age_node = document.createTextNode(age_string);
+		var age_node = document.createTextNode(", {{target.user.profile.age}}");
 		name_container.appendChild(age_node);
 
 		//handles email
 		//add some code to get the matches email from the backend
-		var email_node = document.createTextNode("helloWorld@gmail.com");
+		var email_node = document.createTextNode("{{target.user.email}}");
 		var email_container = document.getElementById("match_email");
 		email_container.appendChild(email_node);
 
 		//handles location
 		//add some code to get the matches location from backend
-		var location_node = document.createTextNode("santa monica");
+		var location_node = document.createTextNode("{{target.user.profile.location}}");
 		var location_container = document.getElementById("match_location");
 		location_container.appendChild(location_node);
 
 		//handles interest
 		//add some code to get interested field from backend, consider omitting
-		var interested_node = document.createTextNode("male");
+		var interested_node = document.createTextNode("{{target.user.interested_in}}");
 		var interested_container = document.getElementById("match_interestedIn");
 		interested_container.appendChild(interested_node);
 		
@@ -222,10 +240,14 @@
     var spanReport = document.getElementById("closeReport");
     var spanDecision = document.getElementById("closeDecision");
 
+    //get the reference for time input
+    var timeField = document.getElementById("time");
+
     //variable that will be initialized to the current date
     var curr_date;
     //variable that will contain the date of the date
     var date_date;
+    var date_time;
 
     //this function populates the calendar in dateModal with the correct values based on the month and year
     function generateCalendar(month, year)
@@ -363,6 +385,9 @@
     //this function hides the dateModal and brings up the congratsModal
     function submitDate()
     {
+        var temp_time = timeField.value;
+        date_time = {hour: temp_time[0] + temp_time[1], minute: temp_time[3] + temp_time[4]};
+        
     	dateModal.style.display = "none";
     	displayDecisionModal("date");
     }
@@ -406,7 +431,7 @@
     	$('#decisionButtons').empty();
     	$('#decisionButtons').append(yesButton);
     	$('#decisionButtons').append(noButton);
-
+        console.log(date_time);
     	decisionModal.style.display = "block";
     }
 
@@ -425,6 +450,21 @@
     //this function is called when user selects yes in decisionModal (date mode)
     function submitDateFinal(){
     	//call this function when we answer yes upon date confirmation
+        var xhttp = new XMLHttpRequest();
+        const url = '/api/proposeDate';
+        var match_id = "{{target.user.id}}";
+        const jsonStr = JSON.stringify({year: date_date.year, month: date_date.month, date:date_date.date, hour: date_time.hour , minute: date_time.minute, mid: match_id});
+        xhttp.open('POST', url);
+        xhttp.send(jsonStr);
+        console.log(jsonStr);
+
+        //close the modal
+        decisionModal.style.display = "none";
+    }
+
+    function reportAction()
+    {
+        reportModal.style.display = "none";
     }
 
     // When the user clicks on <span> (x), close the modal

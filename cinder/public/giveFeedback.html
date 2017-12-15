@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Your Feedback</title>
+  <title>Give Feedback</title>
   <meta charset="utf-8" />
 
 
@@ -11,12 +11,16 @@
   src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
   integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
   crossorigin="anonymous"></script>
+<!--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"> -->
+   <!-- To change color of hamburger icon when hovering over it -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
-  <!-- To change color of hamburger icon when hovering over it -->
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
    <!-- To change color of hamburger icon when hovering over it -->
+
      <link rel="stylesheet" type="text/css" href="../src/css/style.css">
     <script type="text/javascript">
         $(document).ready(function(){
@@ -30,48 +34,7 @@
             });
         });
 
-        function add_Feedback(image, name, date, prompt, feedbackGiven, feedBack)
-        {
-            var feedBackString;
-            if(feedbackGiven)
-                feedBackString = "<p class='feedback-text'>" + feedBack + "</p>";
-            else{
-                feedBackString = "<p class='feedback-text'> This match has not given you feedback yet. </p>";
-            }
-            var curr = "<li class='list-group-item'>"
-                +           "<div class='feedback_container'>"
-                +               "<img src='" + image + "' class='img-circle'>"
-                +               "<div class='feedback_meta_container'>"
-                +               "<h1 class='feedback-box-header'>" + name + " - " + date + "</h1>"
-                +               "<h2 class='prompt-header'> Prompt - " + prompt + "</h2>"
-                +               feedBackString
-                +    "</div></div></li>";
-            $('#feedbackList').append(curr); 
-        }
-        function setUpList()
-        {
-            //add database access here
-            $.ajax({
-                url: "api.myFeedback",
-                type: 'GET',
-                success: function(res) {
-                    console.log(res);
-                    alert(res);
-                }
-            });
 
-
-
-            var m_data = [  {name:"Sarah", date:"10-10-2017", prompt: "how do you", feedbackGiven: false, feedBack: "", image:"sarah.jpeg"},
-                        {name:"Becky", date:"11-11-2017", prompt: "some prompt", feedbackGiven: true, feedBack: "i thought you were nice", image:"sarah.jpeg"},
-                        {name:"Mandy", date:"12-12-2017", prompt: "what do you think?", feedbackGiven: false, feedBack:"", image: "sarah.jpeg"}];
-            var test;
-            for(i = 0; i < m_data.length; i++)
-            {
-                add_Feedback(m_data[i].image, m_data[i].name, m_data[i].date, m_data[i].prompt, m_data[i].feedbackGiven, m_data[i].feedBack);   
-            }
-        }
-        window.onload = setUpList;
     </script>
 
 </head>
@@ -92,18 +55,19 @@
 
             <!-- This is for desktop/wider screens, i.e. not collapsed, tabs displayed -->
             <div class="collapse navbar-collapse" id="navbar-options">
-                <ul class="nav navbar-nav">
-                    <li><a href="/profile">Profile</a></li>
-                    <li><a href="/meet">Meet People</a></li>
-                    <li><a href="/matches">Matches</a></li>
-                    <li><a href="/yourFeedback">Feedback</a></li>
-                    {% if current_user.is_authenticated %}
+              <ul class="nav navbar-nav">
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/meet">Meet People</a></li>
+                <li><a href="/matches">Matches</a></li>
+                <li><a href="/your_feedback">Feedback</a></li>
+                {% if current_user.is_authenticated %}
                     <li>
                     <form class="form-inline" method="post" action="{{ url_for('api.logout') }}">
                         <button class="nav-btn" type="submit">Logout</button>
                     </form>
                     </li>
-                    {% endif %}
+                {% endif %}
+              </ul>
             </div>
         </div>
     </nav>
@@ -111,25 +75,123 @@
             <!-- Sidebar Holder -->
             <nav id="sidebar">
                 <ul class="list-unstyled components">
-                    <li>
+                    <li class = "active">
                         <a href="/give_feedback">Give Feedback</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="/your_feedback">Your Feedback</a>
                     </li>
                 </ul>
             </nav>
     </div>
-    
-    <!-- Page Content Holder -->
-    <div id="content">
-        <h1>Here are what some of your dates said about your time together</h1>
-        <div class="list-group" id="feedbackList">
+
+     <!-- Page Content Holder -->
+            <div id="content">
+                <h1 class="feedback-header">Help Your Dates by Giving Them Feedback</h1>
+                <div class="list-group" id="feedbackList">
+                    {% for i in matches %}
+                        <li class='list-group-item'>
+                            <div class='feedback_container'>
+                                <div class='thumbnail'>
+                                    <img src="{{url_for('api.getPicture', uid=i.mate_id)}}" class='match-img'>
+                                </div>    
+                                <div class='feedback_meta_container'>
+                                    <h1>{{i.profile.first}} {{i.profile.last}}</h1>
+                                    <p>Date you matched: {{i.match.match_date.date()}}</p>
+                                    <p>{{i.profile.bio}}</p>
+                                    <button class="btn btn-primary" onclick='displayModal()'>Rate the Date!</button>
+                                    
+                                </div></div></li>
+                    {% endfor %}
+                </div>
+            </div>
+
+        <!-- The Modal -->
+        <div id="feedbackModal" class="modal myModal">
+            <!-- Modal content -->
+          <div class="modal-content modalContent">
+            <div id="modalHeader" class="modal-header">
+              <span class="close">&times;</span>
+              <h2>Give some feedback on your date!</h2>
+            </div>
+            <div  id="modalBody" class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="feedBackTextArea" style="color:white;">Prompt: Some prompt</label>
+                    <textarea class="form-control" id="feedBackTextArea" rows="8"></textarea>
+                </div>
+            
+            </div>
+            <div id="modalFooter" class="modal-footer">
+              <!-- <h3>Your feedback will only be delivered once your date gives you feedback</h3> -->
+              <button type="button" type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
         </div>
-        <p id="demo"></p>
-    </div>
-        
-        
+        <script>
+            // function add_Feedback(image, name, date, prompt, feedBackGiven,feedBack)
+            // {
+            //     var feedBackString;
+            //     if(feedBackGiven)
+            //         feedBackString = "<p class='feedback-text'>" + feedBack + "</p>";
+            //     else{
+            //         feedBackString = "<button type='button' id='giveFeedBackBtn' onclick='displayModal()' class='btn btn-primary btn-sm btn btn-outline-light'>Click here to give Feedback</button>";
+            //     }
+            //     var curr = "<li class='list-group-item'>"
+            //         +           "<div class='feedback_container'>"
+            //         +               "<img src='" + image + "' class='img-circle'>"
+            //         +               "<div class='feedback_meta_container'>"
+            //         +               "<h1 class='feedback-box-header'>" + name + " - " + date + "</h1>"
+            //         +               "<h2 class='prompt-header'> Prompt - " + prompt + "</h2>"
+            //         +               feedBackString
+            //         +    "</div></div></li>";
+            //     $('#feedbackList').append(curr);
+            // }
+            // function setUpList()
+            // {
+            //     var m_data = [  {name:"Sarah", date:"10-10-2017", prompt: "how do you", feedbackGiven: false, feedBack: "", image:"sarah.jpeg"},
+            //                 {name:"Becky", date:"11-11-2017", prompt: "some prompt", feedbackGiven: true, feedBack: "i thought you were nice", image:"sarah.jpeg"},
+            //                 {name:"Mandy", date:"12-12-2017", prompt: "what do you think?", feedbackGiven: false, feedBack:"", image: "sarah.jpeg"}];
+            //     var test;
+            //     for(i = 0; i < m_data.length; i++)
+            //     {
+            //         add_Feedback(m_data[i].image, m_data[i].name, m_data[i].date, m_data[i].prompt, m_data[i].feedbackGiven, m_data[i].feedBack);
+            //     }
+            // }
+            // window.onload = setUpList;
+
+            function submitFeedback()
+            {
+                var m_feedback = document.getElementById("feedBackTextArea").value;
+                //do stuff to update database
+
+            }
+
+            // Get the modal
+            var modal = document.getElementById('feedbackModal');
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            function displayModal()
+            {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+
 </body>
 
 </html>

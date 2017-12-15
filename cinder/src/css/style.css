@@ -260,7 +260,6 @@
     top: 50px;
     right: 0;
     font-family: "Avenir";
-    padding-left: 60px;
 }
 #content h1{
   font-size: 25px;
@@ -269,6 +268,25 @@
     width: 100%;
 }
 
+#content_1 {
+    width: calc(100% - 250px);
+    padding: 0px 40px 40px 40px
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: relative;
+    top: 50px;
+    right: 0;
+    font-family: "Avenir";
+    padding-left: 60px;
+    margin: auto;
+}
+
+#content_1 h1{
+  font-size: 25px;
+}
+#content_1.active {
+    width: 100%;
+}
 
 /* ---------------------------------------------------
     Feedbacks
@@ -309,10 +327,12 @@
 
 .feedback_meta_container{
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start; 
   flex-direction: column;
   padding: 20px;
   background-color: #F8F8F8;
+  width: 200px;
 }
 .feedback_meta_container button {
 /*  background-color:#FFB978;
@@ -374,6 +394,10 @@
     background: #fff;
     text-decoration: none;
 
+}
+
+#sidebar ul li a:focus {
+  text-decoration: 
 }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
@@ -514,25 +538,26 @@ textarea{
 #match_profile_sidebar
 {
   width: 280px;
-  position: fixed;
   top: 0;
   left: 0;
   min-height: 100vh;
   z-index: 999;
-  background: #FFB978;
+  background:  #F8F8F8;
   color: #fff;
   transition: all 0.3s;
 }
 
 #match_profile_sidebar ul.components {
-    margin-top:40px;
+    margin-top: 0px;
     padding: 40px 0;
     /*border-bottom: 1px solid #47748b;*/
 }
 
 .match_profile_sidebar_element 
 {
-  padding-left: 25px;
+  text-align: center !important;
+  color: #606060;
+  /*padding-left: 25px;*/
 }
 
 #match_profile_sidebar ul li a {
@@ -577,6 +602,7 @@ textarea{
 
 #date_button
 {
+  color: #fff;
   width:180px;
   text-align: center;
   margin-left: 50px;
@@ -612,6 +638,9 @@ textarea{
   color: white;
 }
 
+.match-img{
+  width: 200px !important;
+}
 
 /* ---------------------------------------------------
     Calendar styling
@@ -685,4 +714,32 @@ textarea{
     padding: 5px;
     background: #1abc9c;
     color: white !important
+}
+
+#time
+{
+  color: black;
+  margin-left: 15px;
+}
+
+#time_container
+{
+  display: flex;
+  align-items: flex-start;
+}
+
+
+.matchRequestContainer {
+  width: 1000px;
+  color: red;
+  display: flex;
+  padding:5px;
+  justify-content: flex-start;
+}
+.matchRequestMetaContainer{
+
+}
+
+.hiddenData{
+  display: none;
 }
