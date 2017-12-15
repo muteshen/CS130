@@ -121,14 +121,14 @@
               <h2>The following matches have requested a date!</h2>
             </div>
             <ul>
-                {% for m_match in pendingDates %}
+                {% for m_match in pendingDate %}
                 <li>
                     <div class="matchRequestContainer">
                         <div class='feedback_meta_container'>
-                            <h1 id="nameField" class='feedback-box-header'>{{m_match.profile.name}}</h1>
+                            <h1 id="nameField" class='feedback-box-header'>{{m_match.name}}</h1>
                              <h2 id="dateField" class='feedback-box-header'>{{m_match.date}}</h2>
-                            <button type='button' class='btn btn-primary active' onclick='handleRequest("{{m_match.match.id}}"")'>Yes</button>
-                            <button type='button' class='btn btn-primary active' onclick='refuseRequest("{{m_match.match.id}}")'>No</button>
+                            <button type='button' class='btn btn-primary active' onclick='handleRequest("{{m_match.match.id}}", true)'>Yes</button>
+                            <button type='button' class='btn btn-primary active' onclick='refuseRequest("{{m_match.match.id}}", false)'>No</button>
                         </div>
                     </div>
                 </li>
@@ -182,21 +182,21 @@
             }
             window.onload = checkForRequest;
 
-            function handleRequest(accept)
+            function handleRequest(uid, response)
             {
                 //call getDate request here
-                
-                //close the modal
-                decisionModal.style.display = "none";
+                var xhttp = new XMLHttpRequest();
+                const url = '/api/acceptDate';
+                var match_id = uid;
+                const jsonStr = JSON.stringify({uid: match_id, response: response});
+                xhttp.open('POST', url);
+                xhttp.send(jsonStr);
+                console.log(jsonStr);
 
-                if(accept)
-                {
-                    //do stuff to handle two users agreeing to date
-                }else
-                {
-                    //notify request sender that his/her request has been declined
-                }
+                //close the modal
+                requestModal.style.display = "none";
             }
+
             closeRequest.onclick = function(){
                 requestModal.style.display = "none";
             }
