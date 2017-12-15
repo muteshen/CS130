@@ -746,3 +746,7 @@ textarea{
 .feed-img{
   width: 400px !important;
 }
+
+ul{
+  list-style-type: none;
+}
