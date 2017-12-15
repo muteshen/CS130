@@ -346,13 +346,19 @@ def getPicture():
 def rateDate():
     target_id = request.args['id']
     date = request.args['date']
+    date = datetime.strptime(date, '%Y-%m-%d').date()    
     comment = request.form['feedBackTextArea']
 
     match = Match.objects(uid1=current_user.id, uid2=target_id)
     if len(match) == 0:
-        match = Match.objects(uid2=current_user.id, uid1=target_id)
-        feedback = filter(lambda a: a.date==date, match) 
+        match = Match.objects(uid2=current_user.id, uid1=target_id)[0]
+        feedback = filter(lambda a: a.date.date()==date, match.feedbacks) 
+        feedback[0].from_uid2 = comment
+        match.save()
     else:
-        print "haha"
+        match = match[0]
+        feedback = filter(lambda a: a.date.date()==date, match.feedbacks) 
+        feedback[0].from_uid1 = comment
+        match.save()
 
     return redirect(url_for('main.give_feedback'))
