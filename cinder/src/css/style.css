@@ -729,4 +729,10 @@ textarea{
 }
 
 
-
+.matchRequestContainer {
+  width: 1000px;
+  color: red;
+  display: flex;
+  padding:5px;
+  justify-content: flex-start;
+}
