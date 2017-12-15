@@ -32,7 +32,17 @@ import json
 
 
 def getMatches():
-    """Returns all the matches of the user """
+    """Retrieve all matches for the current user
+
+    Args: N/A
+
+    Returns:
+        matches (List(dict)): a list of objects, each of which contains:
+            * match (dict): match object w/ both user ids, the match date,
+            their confirmation booleans, and optional feedback
+            * profile (dict): profile of other user
+            * mate_id (dateTime): id of other user
+    """
     #matchObjs = Match.objects(uid1=current_user.id).extend(Match.objects(uid2=current_user.id))
     #only call for login_required
     matchObjs = Match.objects(uid2=current_user.id)
@@ -56,6 +66,17 @@ def getMatches():
     return matches
 
 def getPendingDates():
+    """Retrieve all pending dates of the current user
+
+    Args: N/A
+
+    Returns:
+        pendingDates (List(dict)): a list of objects, each of which contains:
+            * name (str): first and last name of other user
+            * date (str): timestamp for date of the scheduled 'romantic date'
+            * match (dict): match object w/ both user ids, the match date,
+            their confirmation booleans, and optional feedback
+    """
     pendingDates = []
     matchObjs = Match.objects(uid1=current_user.id)
     for match in matchObjs:
@@ -74,27 +95,27 @@ def getPendingDates():
             pendingDates.append({"name": name, "date": date, "match": match})
     return pendingDates
 
-def getTargets():
-    users = User.objects(profile__gender=current_user.interested_in, id__ne=current_user.id,
-                     id__nin=current_user.cid.swiped).only('profile','id')
-
-    if len(users) == 0:
-        name = "No more candidates"
-        age = ''
-        bio = "Check back later!"
-        location = "The place in your heart"
-        _id = 'None'
-    else:
-        targets = []
-        for i in range(len(users)):
-            u = users[i]
-            name = u.profile.first + " " + u.profile.last
-            age = u.profile.age
-            bio = u.profile.bio
-            location = u.profile.location
-            _id = str(u.id)
-            targets.append({"name": name, "age": age, "bio":bio, "location": location, "id":_id})
-        return targets
+# def getTargets():
+#     users = User.objects(profile__gender=current_user.interested_in, id__ne=current_user.id,
+#                      id__nin=current_user.cid.swiped).only('profile','id')
+#
+#     if len(users) == 0:
+#         name = "No more candidates"
+#         age = ''
+#         bio = "Check back later!"
+#         location = "The place in your heart"
+#         _id = 'None'
+#     else:
+#         targets = []
+#         for i in range(len(users)):
+#             u = users[i]
+#             name = u.profile.first + " " + u.profile.last
+#             age = u.profile.age
+#             bio = u.profile.bio
+#             location = u.profile.location
+#             _id = str(u.id)
+#             targets.append({"name": name, "age": age, "bio":bio, "location": location, "id":_id})
+#         return targets
 
 
 
@@ -124,6 +145,13 @@ def index():
 
 @main.route('/your_feedback')
 def your_feedback():
+    '''Routing function to send client to your feedback page
+
+    Args: N/A
+
+    Returns:
+        template (html): html data for the your feedback page
+    '''
 
     all_feedbacks = []
     matches = Match.objects(uid1=current_user.id)
@@ -152,8 +180,15 @@ def your_feedback():
 
 @main.route('/give_feedback')
 def give_feedback():
-    all_dates = []
+    '''Routing function to send client to give feedback page
 
+    Args: N/A
+
+    Returns:
+        template (html): html data for the give feedback page
+    '''
+
+    all_dates = []
 
     matches = Match.objects(uid1=current_user.id, feedbacks__not__size=0)
     for match in matches:
@@ -183,21 +218,30 @@ def give_feedback():
 
 @main.route('/profile')# @login_required
 def profile():
+    '''Routing function to send client to profile page
+
+    Args: N/A
+
+    Returns:
+        template (html): html data for the your profile page
+    '''
     return render_template('profile.html')
 
 @main.route('/match_profile')
 @login_required
 def match_profile():
-    #use login_required
+    '''Routing function to send client to match page
+
+    Args: N/A
+
+    Returns:
+        template (html): html data for the match page
+    '''
 
     target_id = request.args['uid']
-
 
     # matchObjs = Match.objects(uid1=current_user.id, uid2=target_id).extend(Match.objects(uid2=current_user.id, uid1=target_id))
     # matchObjs = matchObjs[0]
-
-    target_id = request.args['uid']
-
 
     if len(Match.objects(uid1=current_user.id, uid2=target_id)) >0:
         target = Match.objects(uid1=current_user.id, uid2=target_id)[0].uid2
@@ -207,19 +251,32 @@ def match_profile():
     profile = target.profile
     matches = {"user": target, "profile":profile}
 
-
     return render_template('match_profile.html', target=matches)
 
 
 @main.route('/meet')
 @login_required
 def meet():
+    '''Routing function to send client to meet page
+
+    Args: N/A
+
+    Returns:
+        template (html): html data for the meet page
+    '''
     targets = getTargets()
     return render_template("meet.html", targets=targets)
 
 @main.route('/matches')
 @login_required
 def matches():
+    '''Routing function to send client to matches page
+
+    Args: N/A
+
+    Returns:
+        template (html): html data for the matches page
+    '''
     matches = getMatches()
     pendingDates = getPendingDates()
     shouldPop=(len(pendingDates)>0)
