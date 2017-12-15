@@ -265,7 +265,8 @@ def meet():
         template (html): html data for the meet page
     '''
     # targets = getTargets()
-    return render_template("meet.html", targets=targets)
+    # return render_template("meet.html", targets=targets)
+    return render_template("meet.html")
 
 @main.route('/matches')
 @login_required
