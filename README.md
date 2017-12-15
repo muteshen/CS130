@@ -26,16 +26,27 @@ http://jinja.pocoo.org/docs/2.10/
 
 Testing
 -------------------
-All tests are executed with the seleniumExample.py script in /testing/examples. Instructions on running the script can be found in the README in the /testing directory
+All tests are executed with the testC.py in the testing folder under cs130-cinder/testing. Instructions on running the script can be found in the README in the /testing directory
 
-Test One - navbar is functional and a user can click through the pages. We expect clicking on the various page links will take you to the correct page.
+Again we are using selenium Webdriver and Python to make unit test cases for our website.
 
-Test Two - Sign-up workflow. We expect filling out the required information and hitting "Submit" will create and account and redirect you to the "Meet People" page.
+Test case 1: login into an existing account and navigate
+to the matches page
 
-Test Three - Feedback Response. We expect navigating to the "Feedback" page and clicking "Give Feedback" will open a pop-up feedback form.
+Test case 2: login into the same account and navigate through the feedback page
+Ensures the features of the feedback pages are displayed and functions correctly
 
+Test case 3: create a new user account and fill in random data, and navigate through the profile page to see if the database have been updated.
+This test also test if the upload picture works and is stored in the database and shows if the profile picture is correctly displayed on the profile page.
+This test tells if the backend and the frontend is connected or not
 
-Test Four - Swiping Right. We expect clicking the right pointing arrow on the "Meet People" page will 'swipe right' to a new user (currently dummy data).
+Test case 4: sign in into the new account to see if we can sign in with the email and password that we previously input.
+This test ensures that we can re login into the same account when we open a new session. In addition, it ensures whether the backend is storing the user's’ login information correctly.
+
+Test case 5: sign in into existing user account with a give feedback available, and test if it can actually submit feedback to prior date.
+This test is to ensure that the feedback submit form reaches the backend. Note: this test will fail because we cleared the database and a feedback only shows up
+when the two parties have been on a date, which we can only do if we wait till the date or we manually modify the database in mllabs
+
 
 Directory Structure
 -----------------------
