@@ -341,7 +341,7 @@ def rateDate():
     match = Match.objects(uid1=current_user.id, uid2=target_id)
     if len(match) == 0:
         match = Match.objects(uid2=current_user.id, uid1=target_id)
-
+        feedback = filter(lambda a: a.date==date, match) 
     else:
         print "haha"
 
