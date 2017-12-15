@@ -141,8 +141,6 @@ window.onload = () => {
       id: `${currentPotentialMatch._id.$oid}`,
       like: dir === 'right' ? 'True' : 'False',
     })
-    console.log('Print JSON')
-    console.log(jsonStr)
     xhttp.open("POST", url)
     xhttp.setRequestHeader('content-type', 'application/json')
     xhttp.send(jsonStr)
