@@ -60,13 +60,19 @@ def getPendingDates():
     matchObjs = Match.objects(uid1=current_user.id)
     for match in matchObjs:
         if match.confirmed2:
-            other = User.objects(id=match.uid2)[0]
-            pendingDates.append({''})
+            other = User.objects(id=match.uid2.id)[0]
+            name = other.profile.first + " " + other.profile.last
+            date = match.feedbacks[-1].date
+            pendingDates.append({"name": name, "date": date, "match": match})
 
     matchObjs = Match.objects(uid2=current_user.id)
     for match in matchObjs:
-
-    return matches
+        if match.confirmed1:
+            other = User.objects(id=match.uid1.id)[0]
+            name = other.profile.first + " " + other.profile.last
+            date = match.feedback[-1].date
+            pendingDates.append({"name": name, "date": date, "match": match})
+    return pendingDates
 
 def getTargets():
     users = User.objects(profile__gender=current_user.interested_in, id__ne=current_user.id,
@@ -215,4 +221,5 @@ def meet():
 @login_required
 def matches():
     matches = getMatches()
-    return render_template("matches.html", matches=matches)#, matchJSON=matchJSON)
+    pendingDates = getPendingDates()
+    return render_template("matches.html", matches=matches, pendingDate=pendingDates )#, matchJSON=matchJSON)
