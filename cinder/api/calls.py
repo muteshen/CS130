@@ -120,7 +120,7 @@ def proposeDate():
     else:
         match = Match.objects(uid2=current_user.id, uid1=matchId)[0]
         match.confirmed2 = True
-    feedback = Feedback(date=date)
+    feedback = Feedback(date=date, from_uid1="", from_uid2="")
     match.feedbacks.append(feedback)
     match.save()
     return jsonify(match)
