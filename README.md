@@ -2,7 +2,8 @@
 
 Cinder is a dating app where you can swipe left or right to match with other people, schedule a date with your matches, and provide/receive feedback from your matches after the scheduled date time has passed. Class project for CS130, Software Engineering.
 
-Team "Need One More" from Lab 1A
+HTML files found in ~/cinder/public
+CSS found in ~/cinder/src/css, particularly style.css
 
 First Time Setup
 -------------------
